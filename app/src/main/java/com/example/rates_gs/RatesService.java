@@ -17,21 +17,24 @@ import retrofit2.adapter.rxjava2.*;
 
 public class RatesService {
 
-    private RatesAPI ratesAPI;
+    private static RatesAPI ratesAPI;
+    private static Retrofit retrofit = null;
 
-    RatesService() {
+    static Retrofit getRetrofitService() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.github.com/")
+                .baseUrl("https://hiring.revolut.codes/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
         ratesAPI = retrofit.create(RatesAPI.class);
+
+        return retrofit;
     }
-/*
-    Observable<Double> getRate(String current_rate) throws IOException {
-        return ratesAPI.returnRate("AUD");
+
+    Observable<RatesApiAllData> observableGetRate() throws IOException {
+        return ratesAPI.getRates();
     }
-*/
+
 
 }

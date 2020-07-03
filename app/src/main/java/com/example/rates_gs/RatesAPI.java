@@ -13,6 +13,11 @@ public interface RatesAPI {
     @GET("rates/{current_rate}")
     Observable<Double> returnRate(@Path("current_rate") String current_rate);
 
+    @GET("api/android/latest?base=GBP") //this is the end part of our URL that we want, so for
+        // rates this would be @GET("EUR") and the rest is ... api/android/latest?base=
+    Observable<RatesApiAllData> getRates();
+
+
     //The listRepos() method retrieves a list of all rates.
     @GET("rates")
     Observable<List> listAllRates();
