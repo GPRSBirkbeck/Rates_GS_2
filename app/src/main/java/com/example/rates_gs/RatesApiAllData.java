@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 public class RatesApiAllData {
 
 
-
     @SerializedName("baseCurrency")
     @Expose
     private String baseCurrency;
