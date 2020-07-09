@@ -10,6 +10,7 @@ import java.io.IOException;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.functions.Action;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.adapter.rxjava2.*;
@@ -31,10 +32,4 @@ public class RatesService {
 
         return retrofit;
     }
-
-    Observable<RatesApiAllData> observableGetRate() throws IOException {
-        return ratesAPI.getRates();
-    }
-
-
 }
