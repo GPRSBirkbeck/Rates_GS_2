@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         Observable<Double> ratesApiAllDataObservable =
                 ratesAPI.getObservableRates()
                         .toObservable()
+                        .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
                         .map(new Function<RatesApiAllData, Double>() {
                             @Override
                             public Double apply(RatesApiAllData ratesApiAllData) throws Exception {
@@ -105,13 +106,13 @@ public class MainActivity extends AppCompatActivity {
 
         //TODO needs to be handleable with zero
         Observable<Double> multipliedRateObservable =
+
                 (Observable<Double>) Observable.combineLatest(baseRateInput, ratesApiAllDataObservable,
                         (a, b) -> Double.parseDouble(a.toString()) * b);
 
         //subscriber
         multipliedRateObservable
                 .subscribeOn(Schedulers.io())
-                .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
                 .subscribe(new Observer<Double>(){
                     @Override
                     public void onSubscribe(Disposable d) {
