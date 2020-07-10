@@ -23,6 +23,8 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static java.lang.Math.round;
+
 public class MainActivity extends AppCompatActivity {
     public RatesService ratesService;
     private TextView textView;
@@ -50,8 +52,6 @@ public class MainActivity extends AppCompatActivity {
 
         EditText editText = (EditText) findViewById(R.id.edit_text);
         EditText editText2 = (EditText) findViewById(R.id.edit_text_2);
-        EditText base_rate_editText = (EditText) findViewById(R.id.edit_text_base_rate);
-        base_rate_editText.setText("300");
 
 
 
@@ -68,17 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         getObservableRateCalls();
 
-/*        InitialValueObservable<CharSequence> baseRateInput =
-                RxTextView.textChanges(base_rate_editText);
 
-        InitialValueObservable<CharSequence> usdRateInput =
-                RxTextView.textChanges(textView_observable);
-
-        Observable<String> combinedRate =
-                (Observable<String>) Observable.combineLatest(baseRateInput, usdRateInput,
-                        ((a, b) -> Double.toString(Double.parseDouble(a.toString()) * Double.parseDouble(b.toString()))));
-
-        //combinedRate.subscribe(usd_rate_textView::setText);*/
     }
 
 
@@ -94,20 +84,32 @@ public class MainActivity extends AppCompatActivity {
         RatesAPI ratesAPI = retrofit.create(RatesAPI.class);
         //Observable
 
+
+        EditText base_rate_editText = (EditText) findViewById(R.id.edit_text_base_rate);
+        base_rate_editText.setText("300");
+
+        InitialValueObservable<CharSequence> baseRateInput =
+                RxTextView.textChanges(base_rate_editText);
+
         Observable<Double> ratesApiAllDataObservable =
                 ratesAPI.getObservableRates()
                         .toObservable()
                         .map(new Function<RatesApiAllData, Double>() {
                             @Override
                             public Double apply(RatesApiAllData ratesApiAllData) throws Exception {
-                                return ratesApiAllData.getRates().getuSD();
+                                return (ratesApiAllData.getRates().getuSD());
                             }
                         })
                         //adding this seems to speed up the UI load
                         .observeOn(AndroidSchedulers.mainThread());
 
+        //TODO needs to be handleable with zero
+        Observable<Double> multipliedRateObservable =
+                (Observable<Double>) Observable.combineLatest(baseRateInput, ratesApiAllDataObservable,
+                        (a, b) -> Double.parseDouble(a.toString()) * b);
+
         //subscriber
-        ratesApiAllDataObservable
+        multipliedRateObservable
                 .subscribeOn(Schedulers.io())
                 .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
                 .subscribe(new Observer<Double>(){
@@ -132,5 +134,6 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+
     }
 }
