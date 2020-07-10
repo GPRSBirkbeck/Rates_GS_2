@@ -7,4 +7,22 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <!-- The default font for RecyclerView items is too small.
+T        The margin is a simple delimiter between the words. -->
+    <style name="rate_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.Medium</item>
+    </style>
+
+    <style name="country_flag">
+        <item name ="android:innerRadius">0dp</item>
+        <item name = "android:shape">ring</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.Large</item>
+    </style>
+
 </resources>

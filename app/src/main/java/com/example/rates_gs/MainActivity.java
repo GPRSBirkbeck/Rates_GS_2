@@ -9,21 +9,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding2.InitialValueObservable;
-import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.disposables.SerialDisposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -33,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView;
     private TextView textView_result;
     private TextView textView_observable;
+    private TextView usd_rate_textView;
+    private EditText base_rate_editText;
 
 
     Handler handler = new Handler();
@@ -52,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
 
         EditText editText = (EditText) findViewById(R.id.edit_text);
         EditText editText2 = (EditText) findViewById(R.id.edit_text_2);
+        usd_rate_textView = findViewById(R.id.textview_num_usd);
+        EditText base_rate_editText = (EditText) findViewById(R.id.edit_text_base_rate);
+        base_rate_editText.setHint("300");
+
 
 
         InitialValueObservable<CharSequence> input1 =
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 (Observable<String>) Observable.combineLatest(input1, input2,
                         (a, b) -> a + " " + b);
 
-        getRateCalls();
+    //    getRateCalls();
         getObservableRateCalls();
 
         combinedString.subscribe(textView::setText);
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //this works as the start/stop signal.
+/*    //this works as the start/stop signal.
     @Override
     protected void onResume(){
         super.onResume();
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         handler.removeCallbacks(runnable); //stop handler when activity not visible
-    }
+    }*/
 
     //this should all be in the viewModel
     private void getObservableRateCalls() {
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(RatesApiAllData ratesApiAllData) {
-                        textView_observable.setText(ratesApiAllData.returnRates());
+                        usd_rate_textView.setText(ratesApiAllData.getRates().getuSD().toString());
                     }
 
                     @Override
@@ -142,8 +142,12 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    public void setEditText(RatesApiAllData ratesApiAllData){
+        usd_rate_textView.setHint(ratesApiAllData.getRates().getuSD().toString());
+    }
 
-    //uses non reactive code
+
+/*    //uses non reactive code
     private void getRateCalls() {
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -172,5 +176,5 @@ public class MainActivity extends AppCompatActivity {
                 textView_result.setText(t.getMessage());
             }
         });
-    }
+    }*/
 }

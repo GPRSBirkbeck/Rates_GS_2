@@ -9,14 +9,14 @@ public class RatesApiAllData {
     @SerializedName("baseCurrency")
     @Expose
     private String baseCurrency;
-   // @SerializedName("rates")
-   // @Expose
-    //private Rates rates;
-
+    @SerializedName("rates")
+    @Expose
+    private Rates rates;
+/*
     private Object rates;
     public String returnRates() {
         return rates.toString();
-    }
+    }*/
 
     public String getBaseCurrency() {
         return baseCurrency;
@@ -26,9 +26,9 @@ public class RatesApiAllData {
         this.baseCurrency = baseCurrency;
     }
 
-/*    public Rates getRates() {
+    public Rates getRates() {
         return rates;
-    }*/
+    }
 
     public void setRates(Rates rates) {
         this.rates = rates;

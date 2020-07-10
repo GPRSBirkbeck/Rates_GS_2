@@ -223,4 +223,123 @@ public class Rates {
         return iSK;
     }
 
+    public Double getjPY() {
+        return jPY;
+    }
+
+    public void setjPY(Double jPY) {
+        this.jPY = jPY;
+    }
+
+    public Double getkRW() {
+        return kRW;
+    }
+
+    public void setkRW(Double kRW) {
+        this.kRW = kRW;
+    }
+
+    public Double getmXN() {
+        return mXN;
+    }
+
+    public void setmXN(Double mXN) {
+        this.mXN = mXN;
+    }
+
+    public Double getmYR() {
+        return mYR;
+    }
+
+    public void setmYR(Double mYR) {
+        this.mYR = mYR;
+    }
+
+    public Double getnOK() {
+        return nOK;
+    }
+
+    public void setnOK(Double nOK) {
+        this.nOK = nOK;
+    }
+
+    public Double getnZD() {
+        return nZD;
+    }
+
+    public void setnZD(Double nZD) {
+        this.nZD = nZD;
+    }
+
+    public Double getpHP() {
+        return pHP;
+    }
+
+    public void setpHP(Double pHP) {
+        this.pHP = pHP;
+    }
+
+    public Double getpLN() {
+        return pLN;
+    }
+
+    public void setpLN(Double pLN) {
+        this.pLN = pLN;
+    }
+
+    public Double getrON() {
+        return rON;
+    }
+
+    public void setrON(Double rON) {
+        this.rON = rON;
+    }
+
+    public Double getrUB() {
+        return rUB;
+    }
+
+    public void setrUB(Double rUB) {
+        this.rUB = rUB;
+    }
+
+    public Double getsEK() {
+        return sEK;
+    }
+
+    public void setsEK(Double sEK) {
+        this.sEK = sEK;
+    }
+
+    public Double getsGD() {
+        return sGD;
+    }
+
+    public void setsGD(Double sGD) {
+        this.sGD = sGD;
+    }
+
+    public Double gettHB() {
+        return tHB;
+    }
+
+    public void settHB(Double tHB) {
+        this.tHB = tHB;
+    }
+
+    public Double getuSD() {
+        return uSD;
+    }
+
+    public void setuSD(Double uSD) {
+        this.uSD = uSD;
+    }
+
+    public Double getzAR() {
+        return zAR;
+    }
+
+    public void setzAR(Double zAR) {
+        this.zAR = zAR;
+    }
 }

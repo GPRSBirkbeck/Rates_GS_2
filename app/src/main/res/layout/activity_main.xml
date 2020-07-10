@@ -5,11 +5,132 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/base_currency_layout"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:cardCornerRadius="50dp"
+            android:layout_margin="8dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:id="@+id/imageButton_Flag"
+                android:contentDescription="flag for this nation"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/flag_aud"/>
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="8"
+            android:paddingRight="64dp">
+
+            <TextView
+                android:id="@+id/textView_currency_short"
+                style="@style/rate_title"
+                android:text="BAR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/textView_currency_long"
+                android:layout_width="match_parent"
+                android:text="Central Base Rate"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <EditText
+            android:layout_weight="3"
+            android:id="@+id/edit_text_base_rate"
+            android:layout_width="0dp"
+            android:paddingRight="8dp"
+            android:layout_marginRight="8dp"
+            android:inputType="number"
+            android:hint="200"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/dollar_currency_layout"
+        app:layout_constraintTop_toBottomOf="@id/base_currency_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:cardCornerRadius="50dp"
+            android:layout_margin="8dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:id="@+id/imageButton_Flag_2"
+                android:contentDescription="flag for this nation"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/flag_usd"/>
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="8"
+            android:paddingRight="64dp">
+
+            <TextView
+                android:id="@+id/textView_currency_short_2"
+                style="@style/rate_title"
+                android:text="USD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/textView_currency_long_2"
+                android:layout_width="match_parent"
+                android:text="Mighty American Dollar"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <EditText
+            android:layout_weight="3"
+            android:id="@+id/textview_num_usd"
+            android:layout_width="0dp"
+            android:paddingRight="8dp"
+            android:layout_marginRight="8dp"
+            android:inputType="number"
+            android:hint="200"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse"
+            android:textColor="?attr/editTextColor"
+            android:background="?attr/editTextBackground"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/text_view_result"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/dollar_currency_layout"/>
 
     <TextView
         android:layout_width="match_parent"
