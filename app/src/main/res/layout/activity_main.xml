@@ -58,7 +58,6 @@
             android:paddingRight="8dp"
             android:layout_marginRight="8dp"
             android:inputType="number"
-            android:hint="200"
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
