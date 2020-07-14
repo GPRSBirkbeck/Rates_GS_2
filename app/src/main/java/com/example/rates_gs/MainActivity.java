@@ -140,7 +140,14 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(Double aDouble) {
-                        usd_rate_textView.setText(aDouble.toString());
+                        if(aDouble == 0){
+                            usd_rate_textView.setText("");
+                        }
+                        else{
+                            String strDouble = String.format("%.2f", aDouble);
+                            usd_rate_textView.setText(strDouble);
+                        }
+
                     }
 
                     @Override
