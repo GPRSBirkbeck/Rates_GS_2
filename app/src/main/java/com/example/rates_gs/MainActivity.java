@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.jakewharton.rxbinding2.InitialValueObservable;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
+import java.nio.charset.Charset;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -86,29 +87,47 @@ public class MainActivity extends AppCompatActivity {
 
 
         EditText base_rate_editText = (EditText) findViewById(R.id.edit_text_base_rate);
-        base_rate_editText.setText("300");
+        base_rate_editText.setText("100");
 
         InitialValueObservable<CharSequence> baseRateInput =
                 RxTextView.textChanges(base_rate_editText);
+
+
+        //this sets the baserate observable to zero when empty
+        Observable<Double> baseRateObservable =
+                baseRateInput.map(new Function<CharSequence, Double>() {
+                    @Override
+                    public Double apply(CharSequence charSequence) throws Exception {
+                        if(charSequence.length()<1){
+                            return 0.00;
+                        }
+                        else{
+                            return Double.parseDouble(charSequence.toString());
+                        }
+                    }
+                });
 
         Observable<Double> ratesApiAllDataObservable =
                 ratesAPI.getObservableRates()
                         .toObservable()
                         .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
+
                         .map(new Function<RatesApiAllData, Double>() {
                             @Override
                             public Double apply(RatesApiAllData ratesApiAllData) throws Exception {
                                 return (ratesApiAllData.getRates().getuSD());
                             }
-                        })
-                        //adding this seems to speed up the UI load
+                        });
+
+        Observable<Double> multipliedRateObservable =
+                (Observable<Double>) Observable.combineLatest(baseRateObservable, ratesApiAllDataObservable,
+                        (a, b) -> (a * b))
+                        //adding this to the observable to be subscribed to by subscriber seems to speed up the UI load
                         .observeOn(AndroidSchedulers.mainThread());
 
-        //TODO needs to be handleable with zero
-        Observable<Double> multipliedRateObservable =
 
-                (Observable<Double>) Observable.combineLatest(baseRateInput, ratesApiAllDataObservable,
-                        (a, b) -> Double.parseDouble(a.toString()) * b);
+
+
 
         //subscriber
         multipliedRateObservable
@@ -121,8 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(Double aDouble) {
-                        textView_observable.setText(aDouble.toString());
-
+                        usd_rate_textView.setText(aDouble.toString());
                     }
 
                     @Override
@@ -135,6 +153,5 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
-
     }
 }
