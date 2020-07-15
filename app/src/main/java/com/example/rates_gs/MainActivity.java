@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.jakewharton.rxbinding2.InitialValueObservable;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
-import java.nio.charset.Charset;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -32,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView_result;
     private TextView textView_observable;
     private TextView usd_rate_textView;
+    private TextView eur_rate_textView;
+    private TextView brl_rate_textView;
+    private TextView cad_rate_textView;
 
 
     Handler handler = new Handler();
@@ -46,35 +48,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         RatesService.getRetrofitService();
-        textView = findViewById(R.id.text_view);
-        textView_result = findViewById(R.id.text_view_result);
-        textView_observable = findViewById(R.id.observable_text_view);
+
         usd_rate_textView = findViewById(R.id.textview_num_usd);
+        eur_rate_textView = findViewById(R.id.textview_num_eur);
+        brl_rate_textView = findViewById(R.id.textview_num_brl);
+        cad_rate_textView = findViewById(R.id.textview_num_cad);
 
-        EditText editText = (EditText) findViewById(R.id.edit_text);
-        EditText editText2 = (EditText) findViewById(R.id.edit_text_2);
-
-
-
-        InitialValueObservable<CharSequence> input1 =
-                RxTextView.textChanges(editText);
-        InitialValueObservable<CharSequence> input2 =
-                RxTextView.textChanges(editText2);
-
-
-        Observable<String> combinedString =
-                (Observable<String>) Observable.combineLatest(input1, input2,
-                        (a, b) -> a + " " + b);
-        combinedString.subscribe(textView::setText);
-
-        getObservableRateCalls();
+        //TODO find an efficient way of doing this
+        getCadObservableRateCalls();
+        getUsdObservableRateCalls();
+        getEurObservableRateCalls();
+        getBrlObservableRateCalls();
 
 
     }
 
-
     //this should all be in the viewModel
-    private void getObservableRateCalls() {
+    private void getUsdObservableRateCalls() {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://hiring.revolut.codes/")
@@ -107,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        Observable<Double> ratesApiAllDataObservable =
+        Observable<Double> usdRatesApiAllDataObservable =
                 ratesAPI.getObservableRates()
                         .toObservable()
                         .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
@@ -120,14 +110,10 @@ public class MainActivity extends AppCompatActivity {
                         });
 
         Observable<Double> multipliedRateObservable =
-                (Observable<Double>) Observable.combineLatest(baseRateObservable, ratesApiAllDataObservable,
+                (Observable<Double>) Observable.combineLatest(baseRateObservable, usdRatesApiAllDataObservable,
                         (a, b) -> (a * b))
                         //adding this to the observable to be subscribed to by subscriber seems to speed up the UI load
                         .observeOn(AndroidSchedulers.mainThread());
-
-
-
-
 
         //subscriber
         multipliedRateObservable
@@ -146,6 +132,264 @@ public class MainActivity extends AppCompatActivity {
                         else{
                             String strDouble = String.format("%.2f", aDouble);
                             usd_rate_textView.setText(strDouble);
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "Onerror: ", e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    //this should all be in the viewModel
+    //EUR
+    private void getEurObservableRateCalls() {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://hiring.revolut.codes/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+
+        RatesAPI ratesAPI = retrofit.create(RatesAPI.class);
+        //Observable
+
+
+        EditText base_rate_editText = (EditText) findViewById(R.id.edit_text_base_rate);
+        base_rate_editText.setText("100");
+
+        InitialValueObservable<CharSequence> baseRateInput =
+                RxTextView.textChanges(base_rate_editText);
+
+
+        //this sets the baserate observable to zero when empty
+        Observable<Double> baseRateObservable =
+                baseRateInput.map(new Function<CharSequence, Double>() {
+                    @Override
+                    public Double apply(CharSequence charSequence) throws Exception {
+                        if(charSequence.length()<1){
+                            return 0.00;
+                        }
+                        else{
+                            return Double.parseDouble(charSequence.toString());
+                        }
+                    }
+                });
+
+        Observable<Double> eurRatesApiAllDataObservable =
+                ratesAPI.getObservableRates()
+                        .toObservable()
+                        .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
+
+                        .map(new Function<RatesApiAllData, Double>() {
+                            @Override
+                            public Double apply(RatesApiAllData ratesApiAllData) throws Exception {
+                                return (ratesApiAllData.getRates().getIDR());
+                            }
+                        });
+
+        Observable<Double> multipliedRateObservable =
+                (Observable<Double>) Observable.combineLatest(baseRateObservable, eurRatesApiAllDataObservable,
+                        (a, b) -> (a * b))
+                        //adding this to the observable to be subscribed to by subscriber seems to speed up the UI load
+                        .observeOn(AndroidSchedulers.mainThread());
+
+        //subscriber
+        multipliedRateObservable
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Double>(){
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Double aDouble) {
+                        if(aDouble == 0){
+                            eur_rate_textView.setText("");
+                        }
+                        else{
+                            String strDouble = String.format("%.2f", aDouble);
+                            eur_rate_textView.setText(strDouble);
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "Onerror: ", e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    //BRL
+    //this should all be in the viewModel
+    private void getBrlObservableRateCalls() {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://hiring.revolut.codes/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+
+        RatesAPI ratesAPI = retrofit.create(RatesAPI.class);
+        //Observable
+
+
+        EditText base_rate_editText = (EditText) findViewById(R.id.edit_text_base_rate);
+        base_rate_editText.setText("100");
+
+        InitialValueObservable<CharSequence> baseRateInput =
+                RxTextView.textChanges(base_rate_editText);
+
+
+        //this sets the baserate observable to zero when empty
+        Observable<Double> baseRateObservable =
+                baseRateInput.map(new Function<CharSequence, Double>() {
+                    @Override
+                    public Double apply(CharSequence charSequence) throws Exception {
+                        if(charSequence.length()<1){
+                            return 0.00;
+                        }
+                        else{
+                            return Double.parseDouble(charSequence.toString());
+                        }
+                    }
+                });
+
+        Observable<Double> brlRatesApiAllDataObservable =
+                ratesAPI.getObservableRates()
+                        .toObservable()
+                        .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
+
+                        .map(new Function<RatesApiAllData, Double>() {
+                            @Override
+                            public Double apply(RatesApiAllData ratesApiAllData) throws Exception {
+                                return (ratesApiAllData.getRates().getBRL());
+                            }
+                        });
+
+        Observable<Double> multipliedRateObservable =
+                (Observable<Double>) Observable.combineLatest(baseRateObservable, brlRatesApiAllDataObservable,
+                        (a, b) -> (a * b))
+                        //adding this to the observable to be subscribed to by subscriber seems to speed up the UI load
+                        .observeOn(AndroidSchedulers.mainThread());
+
+        //subscriber
+        multipliedRateObservable
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Double>(){
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Double aDouble) {
+                        if(aDouble == 0){
+                            brl_rate_textView.setText("");
+                        }
+                        else{
+                            String strDouble = String.format("%.2f", aDouble);
+                            brl_rate_textView.setText(strDouble);
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "Onerror: ", e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    //CAD
+    //this should all be in the viewModel
+    private void getCadObservableRateCalls() {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://hiring.revolut.codes/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+
+        RatesAPI ratesAPI = retrofit.create(RatesAPI.class);
+        //Observable
+
+
+        EditText base_rate_editText = (EditText) findViewById(R.id.edit_text_base_rate);
+        base_rate_editText.setText("100");
+
+        InitialValueObservable<CharSequence> baseRateInput =
+                RxTextView.textChanges(base_rate_editText);
+
+
+        //this sets the baserate observable to zero when empty
+        Observable<Double> baseRateObservable =
+                baseRateInput.map(new Function<CharSequence, Double>() {
+                    @Override
+                    public Double apply(CharSequence charSequence) throws Exception {
+                        if(charSequence.length()<1){
+                            return 0.00;
+                        }
+                        else{
+                            return Double.parseDouble(charSequence.toString());
+                        }
+                    }
+                });
+
+        Observable<Double> cadRatesApiAllDataObservable =
+                ratesAPI.getObservableRates()
+                        .toObservable()
+                        .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
+
+                        .map(new Function<RatesApiAllData, Double>() {
+                            @Override
+                            public Double apply(RatesApiAllData ratesApiAllData) throws Exception {
+                                return (ratesApiAllData.getRates().getCAD());
+                            }
+                        });
+
+        Observable<Double> multipliedRateObservable =
+                (Observable<Double>) Observable.combineLatest(baseRateObservable, cadRatesApiAllDataObservable,
+                        (a, b) -> (a * b))
+                        //adding this to the observable to be subscribed to by subscriber seems to speed up the UI load
+                        .observeOn(AndroidSchedulers.mainThread());
+
+        //subscriber
+        multipliedRateObservable
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Double>(){
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Double aDouble) {
+                        if(aDouble == 0){
+                            cad_rate_textView.setText("");
+                        }
+                        else{
+                            String strDouble = String.format("%.2f", aDouble);
+                            cad_rate_textView.setText(strDouble);
                         }
 
                     }

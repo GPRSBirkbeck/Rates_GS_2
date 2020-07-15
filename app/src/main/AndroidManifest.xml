@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.rates_gs">
 
+    <!--state information - needed to say whether or not device has internet access -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <!--Internet Permission-->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
