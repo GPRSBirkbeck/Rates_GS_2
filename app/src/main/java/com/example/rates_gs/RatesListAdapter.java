@@ -1,12 +1,14 @@
 package com.example.rates_gs;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -27,14 +29,17 @@ public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate
     // up-calls for application-level operations such as launching activities, broadcasting and receiving intents, etc."
     private Context mContext;
 
-    private ArrayList<String> mImageNames = new ArrayList<>();
+    private ArrayList<String> mRateNamesLong = new ArrayList<>();
+    private ArrayList<String> mRateNamesShort = new ArrayList<>();
     private ArrayList<String> mImages = new ArrayList<>();
 
 
+
     //default constructor.
-    public RatesListAdapter(Context mContext, ArrayList<String> mImageNames, ArrayList<String> mImages) {
+    public RatesListAdapter(Context mContext, ArrayList<String> mRateNamesLong, ArrayList<String> mRateNamesShort, ArrayList<String> mImages) {
         this.mContext = mContext;
-        this.mImageNames = mImageNames;
+        this.mRateNamesLong = mRateNamesLong;
+        this.mRateNamesShort = mRateNamesShort;
         this.mImages = mImages;
     }
 
@@ -55,11 +60,21 @@ public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate
     public void onBindViewHolder(@NonNull Rate_view_holder holder, int position) {
         //this will tell me after how many items the binding crashed (by printing out each time it passed)
         Log.d(TAG, "onBindViewHolder: called.");
+        holder.textView_short.setText(mRateNamesShort.get(position));
+        holder.textView_long.setText(mRateNamesLong.get(position));
+        holder.circleImageView.setImageDrawable(Drawable.createFromPath(mImages.get(position)));
+        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: clicked on" + mRateNamesShort.get(position));
+                Toast.makeText(mContext, mRateNamesShort.get(position), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mRateNamesShort.size();
     }
 
     //this class is our viewholder for the recyclerview.
@@ -72,6 +87,7 @@ public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate
         TextView textView_short;
         EditText editText_rate;
         ConstraintLayout constraintLayout;
+
         public Rate_view_holder(@NonNull View itemView) {
             super(itemView);
             circleImageView = itemView.findViewById(R.id.flag_image);
