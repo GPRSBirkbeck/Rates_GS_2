@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent_layout">
+    <!-- this layout is used to populate the recylcerview -->
+
+    <LinearLayout
+        android:id="@+id/canadian_dollar_currency_layout"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/flag_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/flag_hkd"
+            >
+
+        </de.hdodenhof.circleimageview.CircleImageView>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="8"
+            android:paddingRight="64dp">
+
+            <TextView
+                android:id="@+id/textView_currency_short"
+                style="@style/rate_title"
+                android:text="CAD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/textView_currency_long"
+                android:layout_width="match_parent"
+                android:text="Kind Canadian Dollar"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/edittext_rate"
+            android:hint="0"
+            android:layout_width="wrap_content"
+            android:paddingRight="8dp"
+            android:layout_marginRight="8dp"
+            android:inputType="number"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse"
+            android:textColor="?attr/editTextColor"
+            android:background="?attr/editTextBackground"
+            android:textAlignment="textEnd"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

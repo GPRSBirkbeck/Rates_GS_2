@@ -27,21 +27,12 @@ import static java.lang.Math.round;
 
 public class MainActivity extends AppCompatActivity {
     public RatesService ratesService;
-    private TextView textView;
-    private TextView textView_result;
-    private TextView textView_observable;
     private TextView usd_rate_textView;
     private TextView eur_rate_textView;
     private TextView brl_rate_textView;
     private TextView cad_rate_textView;
 
-
-    Handler handler = new Handler();
-    int waitInt = 1000; //1second
-    Runnable runnable;
     private String TAG;
-    Double usd_rate;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

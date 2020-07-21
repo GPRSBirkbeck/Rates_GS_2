@@ -20,6 +20,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true">
 
+            <!--TODO make the image views circular so heigh = width -->
             <ImageView
                 android:id="@+id/imageButton_Flag"
                 android:contentDescription="flag for this nation"
@@ -307,6 +308,13 @@
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/canadian_dollar_currency_layout">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 
 
