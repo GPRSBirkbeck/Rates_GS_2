@@ -14,10 +14,8 @@
         
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/flag_image"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/flag_hkd"
-            >
+            android:layout_width="40dp"
+            android:layout_height="40dp">
 
         </de.hdodenhof.circleimageview.CircleImageView>
 
@@ -26,6 +24,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_weight="8"
+            android:paddingLeft="8dp"
             android:paddingRight="64dp">
 
             <TextView
