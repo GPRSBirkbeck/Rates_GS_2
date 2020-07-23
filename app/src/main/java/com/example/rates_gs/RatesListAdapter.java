@@ -121,12 +121,13 @@ public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate
 
             //onclick listener is attached to the entire viewholder
             itemView.setOnClickListener(this::onClick);
+
+
         }
         @Override
         public void onClick(View v) {
             onRateListener.onRateClick(getAdapterPosition());
-
-            notifyDataSetChanged();
+            swapRates(this.getAdapterPosition());
         }
     }
 

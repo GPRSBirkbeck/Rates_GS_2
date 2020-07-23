@@ -110,14 +110,7 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
     @Override
     public void onRateClick(int position) {
         mRateNamesLong.get(position);
-        Toast.makeText(this, mRateNamesShort.get(position), Toast.LENGTH_SHORT).show();
-        Collections.swap(mRateNamesLong, position, 0);
-        Collections.swap(mRateNamesShort, position, 0);
-        Collections.swap(mImages, position, 0);
-
-        Log.d(TAG, "onRateClick: clicked");
-
-
+        Toast.makeText(this, mRateNamesLong.get(position), Toast.LENGTH_SHORT).show();
     }
 
 
