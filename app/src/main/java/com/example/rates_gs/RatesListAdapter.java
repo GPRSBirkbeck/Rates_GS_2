@@ -39,8 +39,6 @@ public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate
     //declare onRateListener within the Adapter class;
     private OnRateListener mOnRateListener;
 
-
-
     //default constructor.
     public RatesListAdapter(Context mContext, ArrayList<String> mRateNamesLong, ArrayList<String> mRateNamesShort, ArrayList<Integer> mImages, ArrayList<Double> mRateDouble, OnRateListener onRateListener) {
         this.mContext = mContext;
@@ -77,14 +75,6 @@ public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate
         holder.textView_long.setText(mRateNamesLong.get(position));
         holder.circleImageView.setImageResource(mImages.get(position));
         holder.editText_rate.setText(mRateDouble.get(position).toString());
-/*        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked on " + mRateNamesShort.get(position));
-                //Toast.makeText(mContext, mRateNamesShort.get(position), Toast.LENGTH_SHORT).show();
-                swapRates(swapInt);
-            }
-    });*/
     }
 
     @Override
@@ -127,8 +117,6 @@ public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate
 
             //onclick listener is attached to the entire viewholder
             itemView.setOnClickListener(this::onClick);
-
-
         }
         @Override
         public void onClick(View v) {

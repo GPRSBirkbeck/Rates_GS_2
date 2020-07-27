@@ -8,13 +8,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.InitialValueObservable;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -124,6 +122,19 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
     }
 
 
+    public Observable<Double> getUsdObservableRateforArray(Observable<Rates> ratesObservable){
+        Observable<Double> usdRatesApiAllDataObservable =
+                ratesObservable
+                        .map(new Function<Rates, Double>() {
+                            @Override
+                            public Double apply(Rates rates) throws Exception {
+                                return (rates.getuSD());
+                            }
+                        });
+
+        return usdRatesApiAllDataObservable;
+    }
+
 
 
 
@@ -162,29 +173,75 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
                     }
                 });
 
-        getUsdRates(ratesAPI, baseRateObservable);
-        getEurRates(ratesAPI, baseRateObservable);
-
-        getBrlRates(ratesAPI, baseRateObservable);
-        getCadRates(ratesAPI, baseRateObservable);
-
-    }
-
-    public void getUsdRates(RatesAPI ratesAPI, Observable<Double> baseRateObservable){
-        Observable<Double> usdRatesApiAllDataObservable =
+        Observable<Rates> ratesObservable =
                 ratesAPI.getObservableRates()
                         .toObservable()
                         .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
+                .map(new Function<RatesApiAllData, Rates>() {
+                    @Override
+                    public Rates apply(RatesApiAllData ratesApiAllData) throws Exception {
+                        return ratesApiAllData.getRates();
+                    }
+                });
+        setDouble(baseRateObservable, usd_rate_textView, getUsdObservableRate(ratesObservable));
+        setDouble(baseRateObservable, eur_rate_textView, getEurbservableRate(ratesObservable));
+        setDouble(baseRateObservable, brl_rate_textView, getBrlObservableRate(ratesObservable));
+        setDouble(baseRateObservable, cad_rate_textView, getCadObservableRate(ratesObservable));
+    }
 
-                        .map(new Function<RatesApiAllData, Double>() {
+    public Observable<Double> getUsdObservableRate(Observable<Rates> ratesObservable){
+        Observable<Double> usdRatesApiAllDataObservable =
+                ratesObservable
+                        .map(new Function<Rates, Double>() {
                             @Override
-                            public Double apply(RatesApiAllData ratesApiAllData) throws Exception {
-                                return (ratesApiAllData.getRates().getuSD());
+                            public Double apply(Rates rates) throws Exception {
+                                return (rates.getuSD());
                             }
                         });
 
+        return usdRatesApiAllDataObservable;
+    }
+    public Observable<Double> getEurbservableRate(Observable<Rates> ratesObservable){
+        Observable<Double> usdRatesApiAllDataObservable =
+                ratesObservable
+                        .map(new Function<Rates, Double>() {
+                            @Override
+                            public Double apply(Rates rates) throws Exception {
+                                return (rates.getCNY());
+                            }
+                        });
+
+        return usdRatesApiAllDataObservable;
+    }
+    public Observable<Double> getBrlObservableRate(Observable<Rates> ratesObservable){
+        Observable<Double> usdRatesApiAllDataObservable =
+                ratesObservable
+                        .map(new Function<Rates, Double>() {
+                            @Override
+                            public Double apply(Rates rates) throws Exception {
+                                return (rates.getBRL());
+                            }
+                        });
+
+        return usdRatesApiAllDataObservable;
+    }
+    public Observable<Double> getCadObservableRate(Observable<Rates> ratesObservable){
+        Observable<Double> usdRatesApiAllDataObservable =
+                ratesObservable
+                        .map(new Function<Rates, Double>() {
+                            @Override
+                            public Double apply(Rates rates) throws Exception {
+                                return (rates.getCAD());
+                            }
+                        });
+
+        return usdRatesApiAllDataObservable;
+    }
+
+    public void setDouble(Observable<Double> baseRateObservable, TextView textView, Observable<Double> ratesDoubleObservable){
+
         Observable<Double> multipliedRateObservable =
-                (Observable<Double>) Observable.combineLatest(baseRateObservable, usdRatesApiAllDataObservable,
+                (Observable<Double>) Observable.combineLatest(baseRateObservable, ratesDoubleObservable,
                         (a, b) -> (a * b))
                         //adding this to the observable to be subscribed to by subscriber seems to speed up the UI load
                         .observeOn(AndroidSchedulers.mainThread());
@@ -201,168 +258,11 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
                     @Override
                     public void onNext(Double aDouble) {
                         if(aDouble == 0){
-                            usd_rate_textView.setText("");
+                            textView.setText("");
                         }
                         else{
                             String strDouble = String.format("%.2f", aDouble);
-                            usd_rate_textView.setText(strDouble);
-                            //this wont work as no way of notifying datachanges
-                            mRateDouble.set(3, aDouble);
-                        }
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e(TAG, "Onerror: ", e);
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
-
-    public void getEurRates(RatesAPI ratesAPI, Observable<Double> baseRateObservable){
-        Observable<Double> eurRatesApiAllDataObservable =
-                ratesAPI.getObservableRates()
-                        .toObservable()
-                        .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
-
-                        .map(new Function<RatesApiAllData, Double>() {
-                            @Override
-                            public Double apply(RatesApiAllData ratesApiAllData) throws Exception {
-                                return (ratesApiAllData.getRates().getIDR());
-                            }
-                        });
-
-        Observable<Double> multipliedEurRateObservable =
-                (Observable<Double>) Observable.combineLatest(baseRateObservable, eurRatesApiAllDataObservable,
-                        (a, b) -> (a * b))
-                        //adding this to the observable to be subscribed to by subscriber seems to speed up the UI load
-                        .observeOn(AndroidSchedulers.mainThread());
-
-        //subscriber
-        multipliedEurRateObservable
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Double>(){
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Double aDouble) {
-                        if(aDouble == 0){
-                            eur_rate_textView.setText("");
-                        }
-                        else{
-                            String strDouble = String.format("%.2f", aDouble);
-                            eur_rate_textView.setText(strDouble);
-                        }
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e(TAG, "Onerror: ", e);
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
-
-    public void getBrlRates(RatesAPI ratesAPI, Observable<Double> baseRateObservable){
-        Observable<Double> brlRatesApiAllDataObservable =
-                ratesAPI.getObservableRates()
-                        .toObservable()
-                        .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
-
-                        .map(new Function<RatesApiAllData, Double>() {
-                            @Override
-                            public Double apply(RatesApiAllData ratesApiAllData) throws Exception {
-                                return (ratesApiAllData.getRates().getBRL());
-                            }
-                        });
-
-        Observable<Double> multipliedBrlRateObservable =
-                (Observable<Double>) Observable.combineLatest(baseRateObservable, brlRatesApiAllDataObservable,
-                        (a, b) -> (a * b))
-                        //adding this to the observable to be subscribed to by subscriber seems to speed up the UI load
-                        .observeOn(AndroidSchedulers.mainThread());
-
-        //subscriber
-        multipliedBrlRateObservable
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Double>(){
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Double aDouble) {
-                        if(aDouble == 0){
-                            brl_rate_textView.setText("");
-                        }
-                        else{
-                            String strDouble = String.format("%.2f", aDouble);
-                            brl_rate_textView.setText(strDouble);
-                        }
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e(TAG, "Onerror: ", e);
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
-    public void getCadRates(RatesAPI ratesAPI, Observable<Double> baseRateObservable) {
-        Observable<Double> cadRatesApiAllDataObservable =
-                ratesAPI.getObservableRates()
-                        .toObservable()
-                        .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
-
-                        .map(new Function<RatesApiAllData, Double>() {
-                            @Override
-                            public Double apply(RatesApiAllData ratesApiAllData) throws Exception {
-                                return (ratesApiAllData.getRates().getCAD());
-                            }
-                        });
-
-        Observable<Double> multipliedCadRateObservable =
-                (Observable<Double>) Observable.combineLatest(baseRateObservable, cadRatesApiAllDataObservable,
-                        (a, b) -> (a * b))
-                        //adding this to the observable to be subscribed to by subscriber seems to speed up the UI load
-                        .observeOn(AndroidSchedulers.mainThread());
-
-        //subscriber
-        multipliedCadRateObservable
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Double>(){
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Double aDouble) {
-                        if(aDouble == 0){
-                            cad_rate_textView.setText("");
-                        }
-                        else{
-                            String strDouble = String.format("%.2f", aDouble);
-                            cad_rate_textView.setText(strDouble);
+                            textView.setText(strDouble);
                         }
 
                     }
