@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
     private ArrayList<String> mRateNamesLong = new ArrayList<>();
     private ArrayList<String> mRateNamesShort = new ArrayList<>();
     private ArrayList<Integer> mImages = new ArrayList<>();
+    private ArrayList<Double> mRateDouble = new ArrayList<>();
+
     private static final String TAG = "MainActivity";
 
     @Override
@@ -72,24 +74,32 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
         mRateNamesLong.add("USD");
         mRateNamesShort.add("Second set of Dollars");
         mImages.add(R.drawable.flag_usd);
+        mRateDouble.add(100.00);
+        //maybe make these observers?
 
         mRateNamesLong.add("Zar");
         mRateNamesShort.add("Zuid Afrikaanse Rand");
         mImages.add(R.drawable.flag_zar);
-
+        mRateDouble.add(130.00);
 
         mRateNamesLong.add("TBH");
         mRateNamesShort.add("Thai Bhat");
         mImages.add(R.drawable.flag_thb);
+        mRateDouble.add(2450.00);
+
 
         mRateNamesLong.add("SGD");
         mRateNamesShort.add("Singapore Dollar");
         mImages.add(R.drawable.flag_sgd);
+        mRateDouble.add(22.57);
+
 
         mRateNamesLong.add("SEK");
         mRateNamesShort.add("Swedish Krona");
         //something about the type of this flag makes android studio happy
         mImages.add(R.drawable.flag_sek);
+        mRateDouble.add(146.12);
+
 
         //TODO make all flags of the preferred image type for android
 
@@ -101,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
         RecyclerView recyclerView = findViewById(R.id.currency_recycler_view);
 
         //to populate our recyclerview i need to pass the adapter our context, ratenames long and short and imageviews
-        RatesListAdapter ratesListAdapter = new RatesListAdapter(this, mRateNamesLong, mRateNamesShort, mImages, this);
+        RatesListAdapter ratesListAdapter = new RatesListAdapter(this, mRateNamesLong, mRateNamesShort, mImages,mRateDouble, this);
         //use the above adapter as the adapter for this recyclerview
         recyclerView.setAdapter(ratesListAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -110,18 +120,8 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
     @Override
     public void onRateClick(int position) {
         mRateNamesLong.get(position);
-        Toast.makeText(this, mRateNamesLong.get(position), Toast.LENGTH_SHORT).show();
+
     }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -162,6 +162,15 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
                     }
                 });
 
+        getUsdRates(ratesAPI, baseRateObservable);
+        getEurRates(ratesAPI, baseRateObservable);
+
+        getBrlRates(ratesAPI, baseRateObservable);
+        getCadRates(ratesAPI, baseRateObservable);
+
+    }
+
+    public void getUsdRates(RatesAPI ratesAPI, Observable<Double> baseRateObservable){
         Observable<Double> usdRatesApiAllDataObservable =
                 ratesAPI.getObservableRates()
                         .toObservable()
@@ -176,64 +185,6 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
 
         Observable<Double> multipliedRateObservable =
                 (Observable<Double>) Observable.combineLatest(baseRateObservable, usdRatesApiAllDataObservable,
-                        (a, b) -> (a * b))
-                        //adding this to the observable to be subscribed to by subscriber seems to speed up the UI load
-                        .observeOn(AndroidSchedulers.mainThread());
-
-
-        Observable<Double> eurRatesApiAllDataObservable =
-                ratesAPI.getObservableRates()
-                        .toObservable()
-                        .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
-
-                        .map(new Function<RatesApiAllData, Double>() {
-                            @Override
-                            public Double apply(RatesApiAllData ratesApiAllData) throws Exception {
-                                return (ratesApiAllData.getRates().getIDR());
-                            }
-                        });
-
-        Observable<Double> multipliedEurRateObservable =
-                (Observable<Double>) Observable.combineLatest(baseRateObservable, eurRatesApiAllDataObservable,
-                        (a, b) -> (a * b))
-                        //adding this to the observable to be subscribed to by subscriber seems to speed up the UI load
-                        .observeOn(AndroidSchedulers.mainThread());
-
-
-        Observable<Double> brlRatesApiAllDataObservable =
-                ratesAPI.getObservableRates()
-                        .toObservable()
-                        .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
-
-                        .map(new Function<RatesApiAllData, Double>() {
-                            @Override
-                            public Double apply(RatesApiAllData ratesApiAllData) throws Exception {
-                                return (ratesApiAllData.getRates().getBRL());
-                            }
-                        });
-
-        Observable<Double> multipliedBrlRateObservable =
-                (Observable<Double>) Observable.combineLatest(baseRateObservable, brlRatesApiAllDataObservable,
-                        (a, b) -> (a * b))
-                        //adding this to the observable to be subscribed to by subscriber seems to speed up the UI load
-                        .observeOn(AndroidSchedulers.mainThread());
-
-
-
-        Observable<Double> cadRatesApiAllDataObservable =
-                ratesAPI.getObservableRates()
-                        .toObservable()
-                        .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
-
-                        .map(new Function<RatesApiAllData, Double>() {
-                            @Override
-                            public Double apply(RatesApiAllData ratesApiAllData) throws Exception {
-                                return (ratesApiAllData.getRates().getCAD());
-                            }
-                        });
-
-        Observable<Double> multipliedCadRateObservable =
-                (Observable<Double>) Observable.combineLatest(baseRateObservable, cadRatesApiAllDataObservable,
                         (a, b) -> (a * b))
                         //adding this to the observable to be subscribed to by subscriber seems to speed up the UI load
                         .observeOn(AndroidSchedulers.mainThread());
@@ -255,6 +206,8 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
                         else{
                             String strDouble = String.format("%.2f", aDouble);
                             usd_rate_textView.setText(strDouble);
+                            //this wont work as no way of notifying datachanges
+                            mRateDouble.set(3, aDouble);
                         }
 
                     }
@@ -269,7 +222,26 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
 
                     }
                 });
+    }
 
+    public void getEurRates(RatesAPI ratesAPI, Observable<Double> baseRateObservable){
+        Observable<Double> eurRatesApiAllDataObservable =
+                ratesAPI.getObservableRates()
+                        .toObservable()
+                        .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
+
+                        .map(new Function<RatesApiAllData, Double>() {
+                            @Override
+                            public Double apply(RatesApiAllData ratesApiAllData) throws Exception {
+                                return (ratesApiAllData.getRates().getIDR());
+                            }
+                        });
+
+        Observable<Double> multipliedEurRateObservable =
+                (Observable<Double>) Observable.combineLatest(baseRateObservable, eurRatesApiAllDataObservable,
+                        (a, b) -> (a * b))
+                        //adding this to the observable to be subscribed to by subscriber seems to speed up the UI load
+                        .observeOn(AndroidSchedulers.mainThread());
 
         //subscriber
         multipliedEurRateObservable
@@ -302,6 +274,26 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
 
                     }
                 });
+    }
+
+    public void getBrlRates(RatesAPI ratesAPI, Observable<Double> baseRateObservable){
+        Observable<Double> brlRatesApiAllDataObservable =
+                ratesAPI.getObservableRates()
+                        .toObservable()
+                        .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
+
+                        .map(new Function<RatesApiAllData, Double>() {
+                            @Override
+                            public Double apply(RatesApiAllData ratesApiAllData) throws Exception {
+                                return (ratesApiAllData.getRates().getBRL());
+                            }
+                        });
+
+        Observable<Double> multipliedBrlRateObservable =
+                (Observable<Double>) Observable.combineLatest(baseRateObservable, brlRatesApiAllDataObservable,
+                        (a, b) -> (a * b))
+                        //adding this to the observable to be subscribed to by subscriber seems to speed up the UI load
+                        .observeOn(AndroidSchedulers.mainThread());
 
         //subscriber
         multipliedBrlRateObservable
@@ -334,6 +326,25 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
 
                     }
                 });
+    }
+    public void getCadRates(RatesAPI ratesAPI, Observable<Double> baseRateObservable) {
+        Observable<Double> cadRatesApiAllDataObservable =
+                ratesAPI.getObservableRates()
+                        .toObservable()
+                        .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
+
+                        .map(new Function<RatesApiAllData, Double>() {
+                            @Override
+                            public Double apply(RatesApiAllData ratesApiAllData) throws Exception {
+                                return (ratesApiAllData.getRates().getCAD());
+                            }
+                        });
+
+        Observable<Double> multipliedCadRateObservable =
+                (Observable<Double>) Observable.combineLatest(baseRateObservable, cadRatesApiAllDataObservable,
+                        (a, b) -> (a * b))
+                        //adding this to the observable to be subscribed to by subscriber seems to speed up the UI load
+                        .observeOn(AndroidSchedulers.mainThread());
 
         //subscriber
         multipliedCadRateObservable
@@ -367,5 +378,4 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
                     }
                 });
     }
-
 }

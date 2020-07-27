@@ -34,6 +34,7 @@ public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate
     private ArrayList<String> mRateNamesLong = new ArrayList<>();
     private ArrayList<String> mRateNamesShort = new ArrayList<>();
     private ArrayList<Integer> mImages = new ArrayList<>();
+    private ArrayList<Double> mRateDouble = new ArrayList<>();
 
     //declare onRateListener within the Adapter class;
     private OnRateListener mOnRateListener;
@@ -41,11 +42,12 @@ public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate
 
 
     //default constructor.
-    public RatesListAdapter(Context mContext, ArrayList<String> mRateNamesLong, ArrayList<String> mRateNamesShort, ArrayList<Integer> mImages, OnRateListener onRateListener) {
+    public RatesListAdapter(Context mContext, ArrayList<String> mRateNamesLong, ArrayList<String> mRateNamesShort, ArrayList<Integer> mImages, ArrayList<Double> mRateDouble, OnRateListener onRateListener) {
         this.mContext = mContext;
         this.mRateNamesLong = mRateNamesLong;
         this.mRateNamesShort = mRateNamesShort;
         this.mImages = mImages;
+        this.mRateDouble = mRateDouble;
         this.mOnRateListener = onRateListener;
     }
 
@@ -74,6 +76,7 @@ public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate
         holder.textView_short.setText(mRateNamesShort.get(position));
         holder.textView_long.setText(mRateNamesLong.get(position));
         holder.circleImageView.setImageResource(mImages.get(position));
+        holder.editText_rate.setText(mRateDouble.get(position).toString());
 /*        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,10 +92,13 @@ public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate
         return mRateNamesShort.size();
     }
 
+    //TODO refactor these all as CurrencyRates (new class to hold this data type)
     public void swapRates(int fromPosition){
+        Toast.makeText(mContext, mRateNamesLong.get(fromPosition), Toast.LENGTH_SHORT).show();
         Collections.swap(mRateNamesLong, fromPosition, 0);
         Collections.swap(mRateNamesShort, fromPosition, 0);
         Collections.swap(mImages, fromPosition, 0);
+        Collections.swap(mRateDouble, fromPosition, 0);
         notifyItemMoved(fromPosition, 0);
     }
 
