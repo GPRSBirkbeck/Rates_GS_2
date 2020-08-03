@@ -1,6 +1,7 @@
 package com.example.rates_gs;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,10 +11,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.rates_gs.adapters.RatesListAdapter;
+import com.example.rates_gs.models.CurrencyRate;
+import com.example.rates_gs.viewmodels.MainActivityViewModel;
 import com.jakewharton.rxbinding2.InitialValueObservable;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -36,12 +40,17 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
     private TextView brl_rate_textView;
     private TextView cad_rate_textView;
 
+    //adapter for our ViewModel
+    private RatesListAdapter mRatesListAdapter;
 
     //variables -arraylists that populate the recyclerview
     private ArrayList<String> mRateNamesLong = new ArrayList<>();
     private ArrayList<String> mRateNamesShort = new ArrayList<>();
     private ArrayList<Integer> mImages = new ArrayList<>();
     private ArrayList<Double> mRateDouble = new ArrayList<>();
+
+    //viewmodel object for running the viewmodel
+    private MainActivityViewModel mMainActivityViewModel;
 
     private static final String TAG = "MainActivity";
 
@@ -58,8 +67,22 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
         brl_rate_textView = findViewById(R.id.textview_num_brl);
         cad_rate_textView = findViewById(R.id.textview_num_cad);
 
-        getObservableRateCalls();
+        //instantiation of the viewmodelprovider
+        mMainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
+        //to observe changes done to viewmodel and the objects in it (live data objects)
+        mMainActivityViewModel.getCurrencyRates().observe(this, new androidx.lifecycle.Observer<List<CurrencyRate>>() {
+            @Override
+            public void onChanged(List<CurrencyRate> currencyRates) {
+                //we are viewing livedata so that the data doesnt change if the user changes state (e.g. screen lock)
+                //we want the adapter below to be notified if changes are made to our livedata
+                mRatesListAdapter.notifyDataSetChanged();;
+
+            }
+        });
+
+        //call our function to call and set all our observables
+        getObservableRateCalls();
 
         //call our function to initiate this dataset
         initFlagList();
@@ -110,13 +133,15 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
 
     //this method finds the recyclerview, and then sets the adapter for the recyclerview as the RatesListAdapter created in that class
     private void initRecyclerView(){
+        //the below sets the mRatesListAdapater to a list of CurrencyRates
+        //to populate our recyclerview i need to pass the adapter our context, ratenames long and short and imageviews - this is now all handled in the rateslist
+        //adapter class due to refactoring
+        mRatesListAdapter = new RatesListAdapter(this, mMainActivityViewModel.getCurrencyRates().getValue(), this);
         Log.d(TAG, "initRecyclerView: started");
         RecyclerView recyclerView = findViewById(R.id.currency_recycler_view);
 
-        //to populate our recyclerview i need to pass the adapter our context, ratenames long and short and imageviews
-        RatesListAdapter ratesListAdapter = new RatesListAdapter(this, mRateNamesLong, mRateNamesShort, mImages,mRateDouble, this);
         //use the above adapter as the adapter for this recyclerview
-        recyclerView.setAdapter(ratesListAdapter);
+        recyclerView.setAdapter(mRatesListAdapter);
         //this attaches the layout manager to the RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -260,7 +285,6 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
                     public void onSubscribe(Disposable d) {
 
                     }
-
                     @Override
                     public void onNext(Double aDouble) {
                         if(aDouble == 0){
@@ -271,7 +295,6 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
                             textView.setText(strDouble);
                             mRateDouble.set(0,aDouble);
                         }
-
                     }
 
                     @Override

@@ -14,9 +14,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rates_gs.R;
+import com.example.rates_gs.models.CurrencyRate;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -31,21 +33,16 @@ public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate
     // up-calls for application-level operations such as launching activities, broadcasting and receiving intents, etc."
     private Context mContext;
 
-    private ArrayList<String> mRateNamesLong = new ArrayList<>();
-    private ArrayList<String> mRateNamesShort = new ArrayList<>();
-    private ArrayList<Integer> mImages = new ArrayList<>();
-    private ArrayList<Double> mRateDouble = new ArrayList<>();
+    private List<CurrencyRate> mCurrencyRate = new ArrayList<>();
+
 
     //declare onRateListener within the Adapter class;
     private OnRateListener mOnRateListener;
 
     //default constructor.
-    public RatesListAdapter(Context mContext, ArrayList<String> mRateNamesLong, ArrayList<String> mRateNamesShort, ArrayList<Integer> mImages, ArrayList<Double> mRateDouble, OnRateListener onRateListener) {
+    public RatesListAdapter(Context mContext, List<CurrencyRate> mCurrencyRate, OnRateListener onRateListener) {
         this.mContext = mContext;
-        this.mRateNamesLong = mRateNamesLong;
-        this.mRateNamesShort = mRateNamesShort;
-        this.mImages = mImages;
-        this.mRateDouble = mRateDouble;
+        this.mCurrencyRate = mCurrencyRate;
         this.mOnRateListener = onRateListener;
     }
 
@@ -71,24 +68,21 @@ public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate
         //this int is used for swapping as position will lead to incorrect usage
         int swapInt = position;
         
-        holder.textView_short.setText(mRateNamesShort.get(position));
-        holder.textView_long.setText(mRateNamesLong.get(position));
-        holder.circleImageView.setImageResource(mImages.get(position));
-        holder.editText_rate.setText(mRateDouble.get(position).toString());
+        holder.textView_short.setText(mCurrencyRate.get(position).getRateNamesShort());
+        holder.textView_long.setText(mCurrencyRate.get(position).getRateNamesLong());
+        holder.circleImageView.setImageResource(mCurrencyRate.get(position).getFlagImage());
+        holder.editText_rate.setText(mCurrencyRate.get(position).getRateDouble().toString());
     }
 
     @Override
     public int getItemCount() {
-        return mRateNamesShort.size();
+        return mCurrencyRate.size();
     }
 
     //TODO refactor these all as CurrencyRates (new class to hold this data type)
     public void swapRates(int fromPosition){
-        Toast.makeText(mContext, mRateNamesLong.get(fromPosition), Toast.LENGTH_SHORT).show();
-        Collections.swap(mRateNamesLong, fromPosition, 0);
-        Collections.swap(mRateNamesShort, fromPosition, 0);
-        Collections.swap(mImages, fromPosition, 0);
-        Collections.swap(mRateDouble, fromPosition, 0);
+        Toast.makeText(mContext, mCurrencyRate.get(fromPosition).getRateNamesLong(), Toast.LENGTH_SHORT).show();
+        Collections.swap(mCurrencyRate, fromPosition, 0);
         notifyItemMoved(fromPosition, 0);
     }
 
