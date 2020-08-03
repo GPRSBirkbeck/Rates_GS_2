@@ -81,7 +81,6 @@ public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate
 
     //TODO refactor these all as CurrencyRates (new class to hold this data type)
     public void swapRates(int fromPosition){
-        Toast.makeText(mContext, mCurrencyRate.get(fromPosition).getRateNamesLong(), Toast.LENGTH_SHORT).show();
         Collections.swap(mCurrencyRate, fromPosition, 0);
         notifyItemMoved(fromPosition, 0);
     }

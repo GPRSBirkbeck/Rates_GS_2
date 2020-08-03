@@ -70,13 +70,17 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
         //instantiation of the viewmodelprovider
         mMainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
+        //call init on the viewmodel to instantiate the data (which comes from repository)
+        mMainActivityViewModel.init();
+
+
         //to observe changes done to viewmodel and the objects in it (live data objects)
         mMainActivityViewModel.getCurrencyRates().observe(this, new androidx.lifecycle.Observer<List<CurrencyRate>>() {
             @Override
             public void onChanged(List<CurrencyRate> currencyRates) {
                 //we are viewing livedata so that the data doesnt change if the user changes state (e.g. screen lock)
                 //we want the adapter below to be notified if changes are made to our livedata
-                mRatesListAdapter.notifyDataSetChanged();;
+                mRatesListAdapter.notifyDataSetChanged();
 
             }
         });
