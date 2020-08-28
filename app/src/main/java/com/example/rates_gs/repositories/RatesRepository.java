@@ -1,12 +1,10 @@
 package com.example.rates_gs.repositories;
 
-import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.rates_gs.R;
 import com.example.rates_gs.Rates;
-import com.example.rates_gs.RatesAPI;
+import com.example.rates_gs.requests.RatesAPI;
 import com.example.rates_gs.RatesApiAllData;
 import com.example.rates_gs.models.CurrencyRate;
 
@@ -15,15 +13,10 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * THis uses the singleton pattern, which is needed for accessing webservices or accessing database
@@ -74,7 +67,7 @@ public class RatesRepository {
         RatesAPI ratesAPI = retrofit.create(RatesAPI.class);
 
         Observable<Rates> ratesObservable =
-                ratesAPI.getObservableRates()
+                ratesAPI.getObservableRates("GBP")
                         .toObservable()
                         .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
                         .map(new Function<RatesApiAllData, Rates>() {

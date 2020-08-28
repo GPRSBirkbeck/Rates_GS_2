@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.rates_gs.adapters.RatesListAdapter;
 import com.example.rates_gs.models.CurrencyRate;
+import com.example.rates_gs.requests.RatesAPI;
 import com.example.rates_gs.viewmodels.MainActivityViewModel;
 import com.jakewharton.rxbinding2.InitialValueObservable;
 import com.jakewharton.rxbinding2.widget.RxTextView;
@@ -204,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
         //create an observable by turning the instance of the ratesAPI into an observable of type Rates
         //it also refreshes every second
         Observable<Rates> ratesObservable =
-                ratesAPI.getObservableRates()
+                ratesAPI.getObservableRates("GBP")
                         .toObservable()
                         .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
                 .map(new Function<RatesApiAllData, Rates>() {
