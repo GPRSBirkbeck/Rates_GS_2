@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         RatesService.getRetrofitService();
+        setTitle("Rates");
 
         Log.d(TAG, "onCreate: started");
 

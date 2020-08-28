@@ -14,6 +14,9 @@ public class MainActivityViewModel extends ViewModel {
     //allows setting and posting - if not needed make it livedata
     private MutableLiveData<List<CurrencyRate>> mCurrencyRates;
     private RatesRepository mRatesRepository;
+    private CurrencyRate mBaseRate;
+
+    // TODO Add the logic for updating based on the baserate here
 
     public void init(){
         if(mCurrencyRates!=null){
