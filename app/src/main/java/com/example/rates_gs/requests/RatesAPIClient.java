@@ -6,8 +6,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.rates_gs.AppExecutors;
-import com.example.rates_gs.models.CurrencyRate;
 import com.example.rates_gs.requests.responses.RatesResponse;
+import com.example.rates_gs.models.CurrencyRate;
+import com.example.rates_gs.requests.responses.RevolutApiResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,6 +17,9 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.functions.Function;
+import retrofit2.Call;
 import retrofit2.Response;
 
 import static com.example.rates_gs.util.Constants.NETWORK_TIMEOUT;
@@ -32,7 +36,7 @@ public class RatesAPIClient {
         }
         return instance;
     }
-    private RatesAPIClient{
+    private RatesAPIClient(){
         mCurrencyRate = new MutableLiveData<>();
     }
     public LiveData<List<CurrencyRate>> getRates(){
@@ -76,7 +80,7 @@ public class RatesAPIClient {
                     return;
                 }
                 if(response.code() ==200){
-                    List<CurrencyRate> list = new ArrayList<>(((RatesResponse)response.body()).getResults());
+                    List<CurrencyRate> list = new ArrayList<CurrencyRate>(((RatesResponse)response.body()).getAUD());
                  }
                 else{
                     String error = response.errorBody().string();
@@ -88,14 +92,38 @@ public class RatesAPIClient {
                 mCurrencyRate.postValue(null);
             }
         }
-        private Flowable<RatesResponse> getRates(String baseRate){
+        private Call<RevolutApiResponse> getRates(String baseRate){
             return ServiceGenerator.getRecipeApi().getObservableRates(
                     baseRate
             );
+/*            return revolutApiResponseToRatesResponse(ServiceGenerator.getRecipeApi().getObservableRates(
+                    baseRate
+            ));*/
         }
+        //TODO figure out what to do with the below...
+/*        private Observable<RatesResponse> getRates(String baseRate){
+            return revolutApiResponseToRatesReponse(ServiceGenerator.getRecipeApi().getObservableRates(
+                    baseRate
+            ));
+        }*/
         private void cancelRequest(){
             Log.d(TAG, "instance initializer: cancelling the search request");
             cancelRequest = true;
         }
+
     }
+/*    private Observable<RatesResponse> observableRevolutApiResponseToRatesReponse(Flowable<RevolutApiResponse> revolutApiResponseFlowable){
+        return revolutApiResponseFlowable.
+                toObservable()
+                .map(new Function<RevolutApiResponse, RatesResponse>() {
+                    @Override
+                    public RatesResponse apply(Call<RevolutApiResponse> revolutApiResponse) throws Exception {
+                        return revolutApiResponse.getRates();
+                    }
+                });
+    }*/
+/*    private RatesResponse revolutApiResponseToRatesResponse(RevolutApiResponse revolutApiResponse){
+        return revolutApiResponse.getRates();
+    }*/
+
 }

@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.example.rates_gs.adapters.RatesListAdapter;
 import com.example.rates_gs.models.CurrencyRate;
 import com.example.rates_gs.requests.RatesAPI;
+import com.example.rates_gs.requests.responses.RatesResponse;
+import com.example.rates_gs.requests.responses.RevolutApiResponse;
 import com.example.rates_gs.viewmodels.MainActivityViewModel;
 import com.jakewharton.rxbinding2.InitialValueObservable;
 import com.jakewharton.rxbinding2.widget.RxTextView;
@@ -204,13 +206,13 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
 
         //create an observable by turning the instance of the ratesAPI into an observable of type Rates
         //it also refreshes every second
-        Observable<Rates> ratesObservable =
+        Observable<RatesResponse> ratesObservable =
                 ratesAPI.getObservableRates("GBP")
                         .toObservable()
                         .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
-                .map(new Function<RatesApiAllData, Rates>() {
+                .map(new Function<RevolutApiResponse, RatesResponse>() {
                     @Override
-                    public Rates apply(RatesApiAllData ratesApiAllData) throws Exception {
+                    public RatesResponse apply(RevolutApiResponse ratesApiAllData) throws Exception {
                         return ratesApiAllData.getRates();
                     }
                 });
@@ -222,12 +224,12 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
     }
 
     //each of the below four returns an observable double of the intended currency
-    public Observable<Double> getUsdObservableRate(Observable<Rates> ratesObservable){
+    public Observable<Double> getUsdObservableRate(Observable<RatesResponse> ratesObservable){
         Observable<Double> usdRatesApiAllDataObservable =
                 ratesObservable
-                        .map(new Function<Rates, Double>() {
+                        .map(new Function<RatesResponse, Double>() {
                             @Override
-                            public Double apply(Rates rates) throws Exception {
+                            public Double apply(RatesResponse rates) throws Exception {
                                 return (rates.getuSD());
                             }
                         });
@@ -235,36 +237,36 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
         return usdRatesApiAllDataObservable;
     }
     //as above
-    public Observable<Double> getEurbservableRate(Observable<Rates> ratesObservable){
+    public Observable<Double> getEurbservableRate(Observable<RatesResponse> ratesObservable){
         Observable<Double> usdRatesApiAllDataObservable =
                 ratesObservable
-                        .map(new Function<Rates, Double>() {
+                        .map(new Function<RatesResponse, Double>() {
                             @Override
-                            public Double apply(Rates rates) throws Exception {
+                            public Double apply(RatesResponse rates) throws Exception {
                                 return (rates.getCNY());
                             }
                         });
 
         return usdRatesApiAllDataObservable;
     }
-    public Observable<Double> getBrlObservableRate(Observable<Rates> ratesObservable){
+    public Observable<Double> getBrlObservableRate(Observable<RatesResponse> ratesObservable){
         Observable<Double> usdRatesApiAllDataObservable =
                 ratesObservable
-                        .map(new Function<Rates, Double>() {
+                        .map(new Function<RatesResponse, Double>() {
                             @Override
-                            public Double apply(Rates rates) throws Exception {
+                            public Double apply(RatesResponse rates) throws Exception {
                                 return (rates.getBRL());
                             }
                         });
 
         return usdRatesApiAllDataObservable;
     }
-    public Observable<Double> getCadObservableRate(Observable<Rates> ratesObservable){
+    public Observable<Double> getCadObservableRate(Observable<RatesResponse> ratesObservable){
         Observable<Double> usdRatesApiAllDataObservable =
                 ratesObservable
-                        .map(new Function<Rates, Double>() {
+                        .map(new Function<RatesResponse, Double>() {
                             @Override
-                            public Double apply(Rates rates) throws Exception {
+                            public Double apply(RatesResponse rates) throws Exception {
                                 return (rates.getCAD());
                             }
                         });

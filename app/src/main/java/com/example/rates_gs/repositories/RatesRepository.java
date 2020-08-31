@@ -3,9 +3,9 @@ package com.example.rates_gs.repositories;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.rates_gs.R;
-import com.example.rates_gs.Rates;
+import com.example.rates_gs.requests.responses.RatesResponse;
 import com.example.rates_gs.requests.RatesAPI;
-import com.example.rates_gs.RatesApiAllData;
+import com.example.rates_gs.requests.responses.RevolutApiResponse;
 import com.example.rates_gs.models.CurrencyRate;
 
 import java.util.ArrayList;
@@ -66,13 +66,13 @@ public class RatesRepository {
         //This creates an instance of the ratesAPI interface we made
         RatesAPI ratesAPI = retrofit.create(RatesAPI.class);
 
-        Observable<Rates> ratesObservable =
+        Observable<RatesResponse> ratesObservable =
                 ratesAPI.getObservableRates("GBP")
                         .toObservable()
                         .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
-                        .map(new Function<RatesApiAllData, Rates>() {
+                        .map(new Function<RevolutApiResponse, RatesResponse>() {
                             @Override
-                            public Rates apply(RatesApiAllData ratesApiAllData) throws Exception {
+                            public RatesResponse apply(RevolutApiResponse ratesApiAllData) throws Exception {
                                 return ratesApiAllData.getRates();
                             }
                         });

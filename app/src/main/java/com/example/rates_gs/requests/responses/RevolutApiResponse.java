@@ -1,9 +1,10 @@
-package com.example.rates_gs;
+package com.example.rates_gs.requests.responses;
 
+import com.example.rates_gs.requests.responses.RatesResponse;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class RatesApiAllData {
+public class RevolutApiResponse {
 
 
     @SerializedName("baseCurrency")
@@ -11,7 +12,7 @@ public class RatesApiAllData {
     private String baseCurrency;
     @SerializedName("rates")
     @Expose
-    private Rates rates;
+    private RatesResponse rates;
 /*
     private Object rates;
     public String returnRates() {
@@ -26,11 +27,11 @@ public class RatesApiAllData {
         this.baseCurrency = baseCurrency;
     }
 
-    public Rates getRates() {
+    public RatesResponse getRates() {
         return rates;
     }
 
-    public void setRates(Rates rates) {
+    public void setRates(RatesResponse rates) {
         this.rates = rates;
     }
 
