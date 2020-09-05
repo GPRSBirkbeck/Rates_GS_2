@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.rates_gs.AppExecutors;
+import com.example.rates_gs.R;
 import com.example.rates_gs.requests.responses.RatesResponse;
 import com.example.rates_gs.models.CurrencyRate;
 import com.example.rates_gs.requests.responses.RevolutApiResponse;
@@ -80,7 +81,10 @@ public class RatesAPIClient {
                     return;
                 }
                 if(response.code() ==200){
-                    List<CurrencyRate> list = new ArrayList<CurrencyRate>(((RatesResponse)response.body()).getAUD());
+                    List<CurrencyRate> list = new ArrayList<CurrencyRate>();
+                    double aud = ((RatesResponse)response.body()).getAUD();
+                    CurrencyRate currrencyRate1 = new CurrencyRate("Australian Dollar", "AUD", R.drawable.flag_aud, aud);
+                    list.add(currrencyRate1);
                  }
                 else{
                     String error = response.errorBody().string();

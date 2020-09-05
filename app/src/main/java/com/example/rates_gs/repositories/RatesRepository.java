@@ -1,8 +1,10 @@
 package com.example.rates_gs.repositories;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.rates_gs.R;
+import com.example.rates_gs.requests.RatesAPIClient;
 import com.example.rates_gs.requests.responses.RatesResponse;
 import com.example.rates_gs.requests.RatesAPI;
 import com.example.rates_gs.requests.responses.RevolutApiResponse;
@@ -28,9 +30,9 @@ public class RatesRepository {
 
     //the data gets into the VM from this repository class.
     //TODO add methods for accessing webservices and databases here
-
     private static RatesRepository instance;
-    private ArrayList<CurrencyRate> currencyRatesDataSet = new ArrayList<>();
+    //private ArrayList<CurrencyRate> currencyRatesDataSet = new ArrayList<>();
+    private RatesAPIClient mRatesAPIClient;
 
     //return method for our instance
     public static RatesRepository getInstance() {
@@ -40,7 +42,18 @@ public class RatesRepository {
         }
         return instance;
     }
+    private RatesRepository(){
+        mRatesAPIClient = RatesAPIClient.getInstance();
+    }
+    public LiveData<List<CurrencyRate>> getCurrencyRates(){
+        return mRatesAPIClient.getRates();
+    }
 
+    //method below takes inputs for our client search query
+    public void searchRates(String baseRate){
+        mRatesAPIClient.getRatesApi(baseRate);
+    }
+/*
     //this is the method to get cache, database or API or whatever, improve this.
     public MutableLiveData<List<CurrencyRate>> getCurrencyRates() {
         //this is mimicking what it would be like to get the data from the webservices by calling the set method.
@@ -49,7 +62,6 @@ public class RatesRepository {
         //this sets our data to the currencyRatesDataSet which theoretically is called from the API and DB just not done eyt, having called this method
         data.setValue(currencyRatesDataSet);
         return data;
-
     }
 
     private void setCurrencyRates() {
@@ -86,7 +98,7 @@ public class RatesRepository {
         currencyRatesDataSet.add(new CurrencyRate("Thai Bhat", "TBH", R.drawable.flag_thb, 100.00));
         currencyRatesDataSet.add(new CurrencyRate("Singapore Dollar", "SGD", R.drawable.flag_sgd, 100.00));
         currencyRatesDataSet.add(new CurrencyRate("Swedish Krona", "SEK", R.drawable.flag_sek, 100.00));
-    }
+    }*/
 
 /*
     //each of the below four returns an observable double of the intended currency

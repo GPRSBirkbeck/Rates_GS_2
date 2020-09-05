@@ -1,5 +1,6 @@
 package com.example.rates_gs;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -74,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
         //instantiation of the viewmodelprovider
         mMainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
+
+/*
         //call init on the viewmodel to instantiate the data (which comes from repository)
         mMainActivityViewModel.init();
 
@@ -87,14 +90,29 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
                 mRatesListAdapter.notifyDataSetChanged();
 
             }
-        });
+        });*/
 
         //call our function to call and set all our observables
-        getObservableRateCalls();
+        //getObservableRateCalls();
 
         //call our function to initiate this dataset
         initFlagList();
+        subScribeObservers();
 
+    }
+
+    public void subScribeObservers(){
+        mMainActivityViewModel.getRates().observe(this, new androidx.lifecycle.Observer<List<CurrencyRate>>() {
+            @Override
+            public void onChanged(@Nullable List<CurrencyRate> rates) {
+                if(rates!= null){
+                    for(CurrencyRate rate: rates){
+                        System.out.println(rate);
+                        //Log.d(TAG, "onChanged: ", rate.getRateNamesLong());
+                    }
+                }
+            }
+        });
     }
 
     //TODO refactor so this is a list of rates
@@ -144,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
         //the below sets the mRatesListAdapater to a list of CurrencyRates
         //to populate our recyclerview i need to pass the adapter our context, ratenames long and short and imageviews - this is now all handled in the rateslist
         //adapter class due to refactoring
-        mRatesListAdapter = new RatesListAdapter(this, mMainActivityViewModel.getCurrencyRates().getValue(), this);
+        mRatesListAdapter = new RatesListAdapter(this, mMainActivityViewModel.getRates().getValue(), this);
         Log.d(TAG, "initRecyclerView: started");
         RecyclerView recyclerView = findViewById(R.id.currency_recycler_view);
 
@@ -168,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
     //this class first builds a retrofit call, and then makes an observable for
     //the baserate, which is taken by making the edittext an observable using Jake Whartons RxBinding work
     //it then builds an observable for the rates class
-    private void getObservableRateCalls() {
+ /*   private void getObservableRateCalls() {
 
         //refactor: make this a seperate service class
         //retrofit call for our rates from the revolut API
@@ -221,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
         setDouble(baseRateObservable, eur_rate_textView, getEurbservableRate(ratesObservable));
         setDouble(baseRateObservable, brl_rate_textView, getBrlObservableRate(ratesObservable));
         setDouble(baseRateObservable, cad_rate_textView, getCadObservableRate(ratesObservable));
-    }
+    }*/
 
     //each of the below four returns an observable double of the intended currency
     public Observable<Double> getUsdObservableRate(Observable<RatesResponse> ratesObservable){
