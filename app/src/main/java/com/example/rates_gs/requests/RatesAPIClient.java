@@ -17,34 +17,34 @@ import java.util.List;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Flowable;
-import io.reactivex.Observable;
-import io.reactivex.functions.Function;
 import retrofit2.Call;
 import retrofit2.Response;
 
 import static com.example.rates_gs.util.Constants.NETWORK_TIMEOUT;
 
 public class RatesAPIClient {
-    private static final String TAG = "RecipeApiClient";
+    private static final String TAG = "RatesAPIClient";
     private static RatesAPIClient instance;
-    private MutableLiveData<List<CurrencyRate>> mCurrencyRate;
+    private MutableLiveData<List<CurrencyRate>> mCurrencyRates;
     private RetrieveRatesRunnable mRetrieveRatesRunnable;
 
-    public static RatesAPIClient getInstance(){
-        if(instance == null){
+    public static RatesAPIClient getInstance() {
+        if (instance == null) {
             instance = new RatesAPIClient();
         }
         return instance;
     }
-    private RatesAPIClient(){
-        mCurrencyRate = new MutableLiveData<>();
+
+    private RatesAPIClient() {
+        mCurrencyRates = new MutableLiveData<>();
     }
-    public LiveData<List<CurrencyRate>> getRates(){
-        return mCurrencyRate;
+
+    public LiveData<List<CurrencyRate>> getRates() {
+        return mCurrencyRates;
     }
-    public void getRatesApi(String baseRate){
-        if(mRetrieveRatesRunnable != null){
+
+    public void getRatesApi(String baseRate) {
+        if (mRetrieveRatesRunnable != null) {
             mRetrieveRatesRunnable = null;
         }
         mRetrieveRatesRunnable = new RetrieveRatesRunnable(baseRate);
@@ -58,15 +58,16 @@ public class RatesAPIClient {
                 //it will interrupt background thread from running the request to the API
                 handler.cancel(true);
                 //TODO let user know network has timed out
-                }
+            }
         }, NETWORK_TIMEOUT, TimeUnit.MILLISECONDS);
     }
+
     // runnable class used to retrieve the data from the restAPI
-    private class RetrieveRatesRunnable implements Runnable{
+    private class RetrieveRatesRunnable implements Runnable {
         private String baseRate;
         boolean cancelRequest;
 
-        public RetrieveRatesRunnable(String baseRate){
+        public RetrieveRatesRunnable(String baseRate) {
             this.baseRate = baseRate;
             cancelRequest = false;
         }
@@ -77,26 +78,31 @@ public class RatesAPIClient {
             //This is the actual line of code that will run on the background thread
             try {
                 Response response = getRates(baseRate).execute();
-                if(cancelRequest){
+                if (cancelRequest) {
                     return;
                 }
-                if(response.code() ==200){
-                    List<CurrencyRate> list = new ArrayList<CurrencyRate>();
-                    double aud = ((RatesResponse)response.body()).getAUD();
+                if (response.code() == 200) {
+                    List<CurrencyRate> list = new ArrayList<>();
+                    double aud = ((RatesResponse) response.body()).getAUD();
                     CurrencyRate currrencyRate1 = new CurrencyRate("Australian Dollar", "AUD", R.drawable.flag_aud, aud);
                     list.add(currrencyRate1);
-                 }
-                else{
+                    double bgn = ((RatesResponse) response.body()).getBGN();
+                    currrencyRate1 = new CurrencyRate("US Dollar", "AUD", R.drawable.flag_bgn, bgn);
+                    list.add(currrencyRate1);
+                    mCurrencyRates.postValue(list);
+                    Log.d(TAG, "run: it worked");
+                } else {
                     String error = response.errorBody().string();
                     Log.e(TAG, "run: " + error);
-                    mCurrencyRate.postValue(null);
+                    mCurrencyRates.postValue(null);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                mCurrencyRate.postValue(null);
+                mCurrencyRates.postValue(null);
             }
         }
-        private Call<RevolutApiResponse> getRates(String baseRate){
+
+        private Call<RevolutApiResponse> getRates(String baseRate) {
             return ServiceGenerator.getRecipeApi().getObservableRates(
                     baseRate
             );
@@ -104,18 +110,19 @@ public class RatesAPIClient {
                     baseRate
             ));*/
         }
+
         //TODO figure out what to do with the below...
 /*        private Observable<RatesResponse> getRates(String baseRate){
             return revolutApiResponseToRatesReponse(ServiceGenerator.getRecipeApi().getObservableRates(
                     baseRate
             ));
         }*/
-        private void cancelRequest(){
+        private void cancelRequest() {
             Log.d(TAG, "instance initializer: cancelling the search request");
             cancelRequest = true;
         }
-
     }
+}
 /*    private Observable<RatesResponse> observableRevolutApiResponseToRatesReponse(Flowable<RevolutApiResponse> revolutApiResponseFlowable){
         return revolutApiResponseFlowable.
                 toObservable()
@@ -130,4 +137,4 @@ public class RatesAPIClient {
         return revolutApiResponse.getRates();
     }*/
 
-}
+

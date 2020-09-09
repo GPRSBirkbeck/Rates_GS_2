@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import com.example.rates_gs.models.CurrencyRate;
 import com.example.rates_gs.requests.RatesAPI;
 import com.example.rates_gs.requests.responses.RatesResponse;
 import com.example.rates_gs.requests.responses.RevolutApiResponse;
+import com.example.rates_gs.util.Testing;
 import com.example.rates_gs.viewmodels.MainActivityViewModel;
 import com.jakewharton.rxbinding2.InitialValueObservable;
 import com.jakewharton.rxbinding2.widget.RxTextView;
@@ -98,21 +100,34 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
         //call our function to initiate this dataset
         initFlagList();
         subScribeObservers();
-
+        findViewById(R.id.test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                testRetrofitGetRequest();
+            }
+        });
     }
 
     public void subScribeObservers(){
         mMainActivityViewModel.getRates().observe(this, new androidx.lifecycle.Observer<List<CurrencyRate>>() {
             @Override
-            public void onChanged(@Nullable List<CurrencyRate> rates) {
-                if(rates!= null){
-                    for(CurrencyRate rate: rates){
-                        System.out.println(rate);
-                        //Log.d(TAG, "onChanged: ", rate.getRateNamesLong());
-                    }
+            public void onChanged(@Nullable List<CurrencyRate> currencyRates) {
+                if(currencyRates!= null){
+                    Testing.printRates(currencyRates, "rates test");
                 }
             }
         });
+    }
+
+    //method below takes inputs for our repository search method
+    public void searchRatesApi(String baseRate){
+        mMainActivityViewModel.searchRates(baseRate);
+    }
+
+    private void testRetrofitGetRequest(){
+        searchRatesApi("EUR");
+        Log.d(TAG, "testRetrofitGetRequest: Success!");
+
     }
 
     //TODO refactor so this is a list of rates
@@ -154,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
 
         //TODO make all flags of the preferred image type for android
 
-        initRecyclerView();
+        //initRecyclerView();
     }
 
     //this method finds the recyclerview, and then sets the adapter for the recyclerview as the RatesListAdapter created in that class
@@ -242,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
     }*/
 
     //each of the below four returns an observable double of the intended currency
-    public Observable<Double> getUsdObservableRate(Observable<RatesResponse> ratesObservable){
+ /*   public Observable<Double> getUsdObservableRate(Observable<RatesResponse> ratesObservable){
         Observable<Double> usdRatesApiAllDataObservable =
                 ratesObservable
                         .map(new Function<RatesResponse, Double>() {
@@ -333,5 +348,7 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
 
                     }
                 });
-    }
+    }*/
+
+
 }

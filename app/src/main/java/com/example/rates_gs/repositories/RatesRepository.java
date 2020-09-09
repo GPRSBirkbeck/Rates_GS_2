@@ -53,6 +53,8 @@ public class RatesRepository {
     public void searchRates(String baseRate){
         mRatesAPIClient.getRatesApi(baseRate);
     }
+
+
 /*
     //this is the method to get cache, database or API or whatever, improve this.
     public MutableLiveData<List<CurrencyRate>> getCurrencyRates() {

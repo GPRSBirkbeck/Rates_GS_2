@@ -16,8 +16,6 @@ public class MainActivityViewModel extends ViewModel {
     private RatesRepository mRatesRepository;
     private CurrencyRate mBaseRate;
 
-    //private RatesRepository mRatesRepository;
-
     public MainActivityViewModel(){
         mRatesRepository = RatesRepository.getInstance();
     }
