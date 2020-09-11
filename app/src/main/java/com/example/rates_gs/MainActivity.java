@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //TODO tidy up this mainactivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         RatesService.getRetrofitService();
@@ -88,7 +89,17 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
         //call our function to initiate this dataset
         initFlagList();
 
+        setObservableBaseRate();
 
+    }
+
+    private void setObservableBaseRate() {
+        EditText base_rate_editText = (EditText) findViewById(R.id.edit_text_base_rate);
+        base_rate_editText.setText("100");
+
+        //make an InitialValueObservable out of the base_rate_editText
+        InitialValueObservable<CharSequence> baseRateInput =
+                RxTextView.textChanges(base_rate_editText);
     }
 
     //TODO refactor so this is a list of rates

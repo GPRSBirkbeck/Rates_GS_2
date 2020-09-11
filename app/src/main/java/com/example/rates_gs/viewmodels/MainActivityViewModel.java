@@ -17,6 +17,7 @@ public class MainActivityViewModel extends ViewModel {
     private CurrencyRate mBaseRate;
 
     public MainActivityViewModel(){
+        //TODO make a livedata for the ratesResponse from Client to here
         mRatesRepository = RatesRepository.getInstance();
     }
 
