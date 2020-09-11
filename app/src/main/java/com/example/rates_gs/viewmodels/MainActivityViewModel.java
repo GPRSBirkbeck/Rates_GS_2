@@ -18,6 +18,7 @@ public class MainActivityViewModel extends ViewModel {
 
     public MainActivityViewModel(){
         //TODO make a livedata for the ratesResponse from Client to here
+        //TODO check push
         mRatesRepository = RatesRepository.getInstance();
     }
 
