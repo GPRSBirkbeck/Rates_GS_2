@@ -316,13 +316,6 @@
         app:layout_constraintTop_toBottomOf="@id/canadian_dollar_currency_layout">
 
     </androidx.recyclerview.widget.RecyclerView>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@+id/currency_recycler_view"
-        android:id="@+id/test"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
 
 
 

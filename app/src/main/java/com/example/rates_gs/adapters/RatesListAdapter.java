@@ -67,7 +67,7 @@ public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate
 
         //this int is used for swapping as position will lead to incorrect usage
         int swapInt = position;
-        
+
         holder.textView_short.setText(mCurrencyRate.get(position).getRateNamesShort());
         holder.textView_long.setText(mCurrencyRate.get(position).getRateNamesLong());
         holder.circleImageView.setImageResource(mCurrencyRate.get(position).getFlagImage());
@@ -79,7 +79,6 @@ public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate
         return mCurrencyRate.size();
     }
 
-    //TODO refactor these all as CurrencyRates (new class to hold this data type)
     public void swapRates(int fromPosition){
         Collections.swap(mCurrencyRate, fromPosition, 0);
         notifyItemMoved(fromPosition, 0);

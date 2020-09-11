@@ -1,6 +1,5 @@
 package com.example.rates_gs;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,16 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rates_gs.adapters.RatesListAdapter;
 import com.example.rates_gs.models.CurrencyRate;
-import com.example.rates_gs.requests.RatesAPI;
-import com.example.rates_gs.requests.responses.RatesResponse;
-import com.example.rates_gs.requests.responses.RevolutApiResponse;
-import com.example.rates_gs.util.Testing;
 import com.example.rates_gs.viewmodels.MainActivityViewModel;
 import com.jakewharton.rxbinding2.InitialValueObservable;
 import com.jakewharton.rxbinding2.widget.RxTextView;
@@ -64,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //RatesService.getRetrofitService();
+        RatesService.getRetrofitService();
         setTitle("Rates");
 
         Log.d(TAG, "onCreate: started");
@@ -77,12 +72,6 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
         //instantiation of the viewmodelprovider
         mMainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
-
-/*
-        //call init on the viewmodel to instantiate the data (which comes from repository)
-        mMainActivityViewModel.init();
-
-
         //to observe changes done to viewmodel and the objects in it (live data objects)
         mMainActivityViewModel.getCurrencyRates().observe(this, new androidx.lifecycle.Observer<List<CurrencyRate>>() {
             @Override
@@ -90,43 +79,15 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
                 //we are viewing livedata so that the data doesnt change if the user changes state (e.g. screen lock)
                 //we want the adapter below to be notified if changes are made to our livedata
                 mRatesListAdapter.notifyDataSetChanged();
-
             }
-        });*/
+        });
 
         //call our function to call and set all our observables
         //getObservableRateCalls();
 
         //call our function to initiate this dataset
         initFlagList();
-        subScribeObservers();
-        findViewById(R.id.test).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                testRetrofitGetRequest();
-            }
-        });
-    }
 
-    public void subScribeObservers(){
-        mMainActivityViewModel.getRates().observe(this, new androidx.lifecycle.Observer<List<CurrencyRate>>() {
-            @Override
-            public void onChanged(@Nullable List<CurrencyRate> currencyRates) {
-                if(currencyRates!= null){
-                    Testing.printRates(currencyRates, "rates test");
-                }
-            }
-        });
-    }
-
-    //method below takes inputs for our repository search method
-    public void searchRatesApi(String baseRate){
-        mMainActivityViewModel.searchRates(baseRate);
-    }
-
-    private void testRetrofitGetRequest(){
-        searchRatesApi("EUR");
-        Log.d(TAG, "testRetrofitGetRequest: Success!");
 
     }
 
@@ -142,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
         mImages.add(R.drawable.flag_usd);
         mRateDouble.add(100.00);
         //maybe make these observers?
+        //TODO this is here to make a push work
 
         mRateNamesLong.add("Zar");
         mRateNamesShort.add("Zuid Afrikaanse Rand");
@@ -166,10 +128,10 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
         mImages.add(R.drawable.flag_sek);
         mRateDouble.add(146.12);
 
+        initRecyclerView();
 
         //TODO make all flags of the preferred image type for android
 
-        //initRecyclerView();
     }
 
     //this method finds the recyclerview, and then sets the adapter for the recyclerview as the RatesListAdapter created in that class
@@ -177,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
         //the below sets the mRatesListAdapater to a list of CurrencyRates
         //to populate our recyclerview i need to pass the adapter our context, ratenames long and short and imageviews - this is now all handled in the rateslist
         //adapter class due to refactoring
-        mRatesListAdapter = new RatesListAdapter(this, mMainActivityViewModel.getRates().getValue(), this);
+        mRatesListAdapter = new RatesListAdapter(this, mMainActivityViewModel.getCurrencyRates().getValue(), this);
         Log.d(TAG, "initRecyclerView: started");
         RecyclerView recyclerView = findViewById(R.id.currency_recycler_view);
 
@@ -192,6 +154,8 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
     @Override
     public void onRateClick(int position) {
         mRateNamesLong.get(position);
+        Toast.makeText(this, mRateNamesLong.get(position), Toast.LENGTH_SHORT).show();
+
 
     }
 
@@ -200,8 +164,8 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
     //this should all be in the viewModel
     //this class first builds a retrofit call, and then makes an observable for
     //the baserate, which is taken by making the edittext an observable using Jake Whartons RxBinding work
-    //it then builds an observable for the rates class
- /*   private void getObservableRateCalls() {
+  /*  //it then builds an observable for the rates class
+    private void getObservableRateCalls() {
 
         //refactor: make this a seperate service class
         //retrofit call for our rates from the revolut API
@@ -239,30 +203,30 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
 
         //create an observable by turning the instance of the ratesAPI into an observable of type Rates
         //it also refreshes every second
-        Observable<RatesResponse> ratesObservable =
-                ratesAPI.getObservableRates("GBP")
+        Observable<Rates> ratesObservable =
+                ratesAPI.getObservableRates()
                         .toObservable()
                         .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
-                .map(new Function<RevolutApiResponse, RatesResponse>() {
-                    @Override
-                    public RatesResponse apply(RevolutApiResponse ratesApiAllData) throws Exception {
-                        return ratesApiAllData.getRates();
-                    }
-                });
+                        .map(new Function<RatesApiAllData, Rates>() {
+                            @Override
+                            public Rates apply(RatesApiAllData ratesApiAllData) throws Exception {
+                                return ratesApiAllData.getRates();
+                            }
+                        });
         //call the setDouble method to set all the edittext values to values created by the observables.
         setDouble(baseRateObservable, usd_rate_textView, getUsdObservableRate(ratesObservable));
         setDouble(baseRateObservable, eur_rate_textView, getEurbservableRate(ratesObservable));
         setDouble(baseRateObservable, brl_rate_textView, getBrlObservableRate(ratesObservable));
         setDouble(baseRateObservable, cad_rate_textView, getCadObservableRate(ratesObservable));
-    }*/
+    }
 
     //each of the below four returns an observable double of the intended currency
- /*   public Observable<Double> getUsdObservableRate(Observable<RatesResponse> ratesObservable){
+    public Observable<Double> getUsdObservableRate(Observable<Rates> ratesObservable){
         Observable<Double> usdRatesApiAllDataObservable =
                 ratesObservable
-                        .map(new Function<RatesResponse, Double>() {
+                        .map(new Function<Rates, Double>() {
                             @Override
-                            public Double apply(RatesResponse rates) throws Exception {
+                            public Double apply(Rates rates) throws Exception {
                                 return (rates.getuSD());
                             }
                         });
@@ -270,36 +234,36 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
         return usdRatesApiAllDataObservable;
     }
     //as above
-    public Observable<Double> getEurbservableRate(Observable<RatesResponse> ratesObservable){
+    public Observable<Double> getEurbservableRate(Observable<Rates> ratesObservable){
         Observable<Double> usdRatesApiAllDataObservable =
                 ratesObservable
-                        .map(new Function<RatesResponse, Double>() {
+                        .map(new Function<Rates, Double>() {
                             @Override
-                            public Double apply(RatesResponse rates) throws Exception {
+                            public Double apply(Rates rates) throws Exception {
                                 return (rates.getCNY());
                             }
                         });
 
         return usdRatesApiAllDataObservable;
     }
-    public Observable<Double> getBrlObservableRate(Observable<RatesResponse> ratesObservable){
+    public Observable<Double> getBrlObservableRate(Observable<Rates> ratesObservable){
         Observable<Double> usdRatesApiAllDataObservable =
                 ratesObservable
-                        .map(new Function<RatesResponse, Double>() {
+                        .map(new Function<Rates, Double>() {
                             @Override
-                            public Double apply(RatesResponse rates) throws Exception {
+                            public Double apply(Rates rates) throws Exception {
                                 return (rates.getBRL());
                             }
                         });
 
         return usdRatesApiAllDataObservable;
     }
-    public Observable<Double> getCadObservableRate(Observable<RatesResponse> ratesObservable){
+    public Observable<Double> getCadObservableRate(Observable<Rates> ratesObservable){
         Observable<Double> usdRatesApiAllDataObservable =
                 ratesObservable
-                        .map(new Function<RatesResponse, Double>() {
+                        .map(new Function<Rates, Double>() {
                             @Override
-                            public Double apply(RatesResponse rates) throws Exception {
+                            public Double apply(Rates rates) throws Exception {
                                 return (rates.getCAD());
                             }
                         });
@@ -349,6 +313,4 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
                     }
                 });
     }*/
-
-
 }

@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -27,6 +30,10 @@ public class RatesAPIClient {
     private static RatesAPIClient instance;
     private MutableLiveData<List<CurrencyRate>> mCurrencyRates;
     private RetrieveRatesRunnable mRetrieveRatesRunnable;
+
+    //TODO figure out what to do with this
+    private ArrayList<CurrencyRate> currencyRatesDataSet = new ArrayList<>();
+
 
     public static RatesAPIClient getInstance() {
         if (instance == null) {
@@ -40,9 +47,32 @@ public class RatesAPIClient {
     }
 
     public LiveData<List<CurrencyRate>> getRates() {
-        return mCurrencyRates;
+        //this is mimicking what it would be like to get the data from the webservices by calling the set method.
+        if(currencyRatesDataSet.size()==0){
+            setCurrencyRates();
+        }
+        MutableLiveData<List<CurrencyRate>> data = new MutableLiveData<>();
+        //this sets our data to the currencyRatesDataSet which theoretically is called from the API and DB just not done eyt, having called this method
+        data.setValue(currencyRatesDataSet);
+        return data;
     }
 
+    private void setCurrencyRates(){
+        //instead of phony data below use real linked data
+        //dummy data - to fill the arraylists
+        currencyRatesDataSet.add(new CurrencyRate("Second set of Dollars", "USD",R.drawable.flag_usd,100.00 ));
+        currencyRatesDataSet.add(new CurrencyRate("Zuid Afrikaanse Rand", "ZAR",R.drawable.flag_zar,130.00 ));
+        currencyRatesDataSet.add(new CurrencyRate("Thai Bhat", "TBH",R.drawable.flag_thb,2450.00 ));
+        currencyRatesDataSet.add(new CurrencyRate("Singapore Dollar", "SGD",R.drawable.flag_sgd,22.57 ));
+        currencyRatesDataSet.add(new CurrencyRate("Swedish Krona", "SEK",R.drawable.flag_sek,146.12 ));
+        currencyRatesDataSet.add(new CurrencyRate("German Krona", "SEK",R.drawable.flag_gbp,146.12 ));
+        currencyRatesDataSet.add(new CurrencyRate("ZSwedish Krona", "SEK",R.drawable.flag_dkk,146.12 ));
+
+
+    }
+
+
+    //TODO refactor this in the
     public void getRatesApi(String baseRate) {
         if (mRetrieveRatesRunnable != null) {
             mRetrieveRatesRunnable = null;
@@ -76,8 +106,130 @@ public class RatesAPIClient {
         @Override
         public void run() {
             //This is the actual line of code that will run on the background thread
+                Flowable<RevolutApiResponse> ratesApiResponse = getRates(baseRate);
+                if (cancelRequest) {
+                    List<CurrencyRate> list = new ArrayList<>();
+                    Observable<RatesResponse> ratesObservable =
+                            ratesApiResponse
+                                    .toObservable()
+                                    .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
+                                    .map(new Function<RevolutApiResponse, RatesResponse>() {
+                                        @Override
+                                        public RatesResponse apply(RevolutApiResponse revolutApiResponse) throws Exception {
+                                            return revolutApiResponse.getRates();
+                                        }
+                                    });
+
+                    Observable<Double> aud = ratesObservable
+                            .map(new Function<RatesResponse, Double>() {
+                                @Override
+                                public Double apply(RatesResponse rates) throws Exception {
+                                    return (rates.getAUD());
+                                }
+                            });
+                    CurrencyRate currrencyRate1 = new CurrencyRate("Australian Dollar", "AUD", R.drawable.flag_aud, 1.00);
+                    currrencyRate1.setRateDouble(aud.blockingLast());
+                    list.add(currrencyRate1);
+
+                    Observable<Double> bgn = ratesObservable
+                            .map(new Function<RatesResponse, Double>() {
+                                @Override
+                                public Double apply(RatesResponse rates) throws Exception {
+                                    return (rates.getBGN());
+                                }
+                            });
+                    currrencyRate1 = new CurrencyRate("Bulgarian Lev", "BGN", R.drawable.flag_bgn, 1.00);
+                    currrencyRate1.setRateDouble(bgn.blockingLast());
+                    list.add(currrencyRate1);
+
+                    Observable<Double> brl = ratesObservable
+                            .map(new Function<RatesResponse, Double>() {
+                                @Override
+                                public Double apply(RatesResponse rates) throws Exception {
+                                    return (rates.getBRL());
+                                }
+                            });
+                    currrencyRate1 = new CurrencyRate("Brazilian Real", "BRL", R.drawable.flag_brl, 1.00);
+                    currrencyRate1.setRateDouble(brl.blockingLast());
+                    list.add(currrencyRate1);
+
+                    Observable<Double> cad = ratesObservable
+                            .map(new Function<RatesResponse, Double>() {
+                                @Override
+                                public Double apply(RatesResponse rates) throws Exception {
+                                    return (rates.getCAD());
+                                }
+                            });
+                    currrencyRate1 = new CurrencyRate("Canadian Dollar", "CAD", R.drawable.flag_cad, 1.00);
+                    currrencyRate1.setRateDouble(cad.blockingLast());
+                    list.add(currrencyRate1);
+
+                    Observable<Double> chf = ratesObservable
+                            .map(new Function<RatesResponse, Double>() {
+                                @Override
+                                public Double apply(RatesResponse rates) throws Exception {
+                                    return (rates.getCHF());
+                                }
+                            });
+                    currrencyRate1 = new CurrencyRate("Swiss Franc", "CHF", R.drawable.flag_chf, 1.00);
+                    currrencyRate1.setRateDouble(chf.blockingLast());
+                    list.add(currrencyRate1);
+
+                    Observable<Double> cny = ratesObservable
+                            .map(new Function<RatesResponse, Double>() {
+                                @Override
+                                public Double apply(RatesResponse rates) throws Exception {
+                                    return (rates.getCNY());
+                                }
+                            });
+                    currrencyRate1 = new CurrencyRate("Chinese Yuan", "CNY", R.drawable.flag_cny, 1.00);
+                    currrencyRate1.setRateDouble(cny.blockingLast());
+                    list.add(currrencyRate1);
+
+                    Observable<Double> czk = ratesObservable
+                            .map(new Function<RatesResponse, Double>() {
+                                @Override
+                                public Double apply(RatesResponse rates) throws Exception {
+                                    return (rates.getCZK());
+                                }
+                            });
+                    currrencyRate1 = new CurrencyRate("Czech Koruna", "CZK", R.drawable.flag_czk, 1.00);
+                    currrencyRate1.setRateDouble(czk.blockingLast());
+                    list.add(currrencyRate1);
+
+                    Observable<Double> dkk = ratesObservable
+                            .map(new Function<RatesResponse, Double>() {
+                                @Override
+                                public Double apply(RatesResponse rates) throws Exception {
+                                    return (rates.getDKK());
+                                }
+                            });
+                    currrencyRate1 = new CurrencyRate("Danish Krone", "DKK", R.drawable.flag_dkk, 1.00);
+                    currrencyRate1.setRateDouble(dkk.blockingLast());
+                    list.add(currrencyRate1);
+
+                    Observable<Double> eur = ratesObservable
+                            .map(new Function<RatesResponse, Double>() {
+                                @Override
+                                public Double apply(RatesResponse rates) throws Exception {
+                                    return (rates.getEUR());
+                                }
+                            });
+                    currrencyRate1 = new CurrencyRate("Euro", "EUR", R.drawable.flag_eur, 1.00);
+                    currrencyRate1.setRateDouble(eur.blockingLast());
+                    list.add(currrencyRate1);
+
+                    // TODO figure out how to handle this list
+                    mCurrencyRates.postValue(list);
+                    Log.d(TAG, "run: it worked");
+                }
+        }
+
+/*        @Override
+        public void run() {
+            //This is the actual line of code that will run on the background thread
             try {
-                Response response = getRates(baseRate).execute();
+                Flowable<RevolutApiResponse> response = getRates(baseRate);
                 if (cancelRequest) {
                     return;
                 }
@@ -100,15 +252,12 @@ public class RatesAPIClient {
                 e.printStackTrace();
                 mCurrencyRates.postValue(null);
             }
-        }
+        }*/
 
-        private Call<RevolutApiResponse> getRates(String baseRate) {
+        private Flowable<RevolutApiResponse> getRates(String baseRate) {
             return ServiceGenerator.getRecipeApi().getObservableRates(
                     baseRate
             );
-/*            return revolutApiResponseToRatesResponse(ServiceGenerator.getRecipeApi().getObservableRates(
-                    baseRate
-            ));*/
         }
 
         //TODO figure out what to do with the below...
