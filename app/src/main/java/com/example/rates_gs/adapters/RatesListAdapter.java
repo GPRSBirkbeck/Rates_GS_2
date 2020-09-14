@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -39,9 +38,10 @@ public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate
     private OnRateListener mOnRateListener;
 
     //default constructor.
-    public RatesListAdapter(Context mContext, List<CurrencyRate> mCurrencyRate, OnRateListener onRateListener) {
-        this.mContext = mContext;
-        this.mCurrencyRate = mCurrencyRate;
+    //public RatesListAdapter(Context mContext, List<CurrencyRate> mCurrencyRate, OnRateListener onRateListener) {
+    public RatesListAdapter(OnRateListener onRateListener) {
+        //this.mContext = mContext;
+        //this.mCurrencyRate = mCurrencyRate;
         this.mOnRateListener = onRateListener;
     }
 
@@ -84,6 +84,11 @@ public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate
     public void swapRates(int fromPosition){
         Collections.swap(mCurrencyRate, fromPosition, 0);
         notifyItemMoved(fromPosition, 0);
+    }
+
+    public void setRates(List<CurrencyRate> rates){
+        mCurrencyRate = rates;
+        notifyDataSetChanged();
     }
 
     //TODO use or do not use this

@@ -19,19 +19,6 @@ import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static java.lang.Math.round;
 
 public class MainActivity extends AppCompatActivity implements RatesListAdapter.OnRateListener{
     //view elements
@@ -40,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
     private TextView eur_rate_textView;
     private TextView brl_rate_textView;
     private TextView cad_rate_textView;
+    private RecyclerView mRecyclerView;
 
     //adapter for our ViewModel
     private RatesListAdapter mRatesListAdapter;
@@ -69,29 +57,60 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
         eur_rate_textView = findViewById(R.id.textview_num_eur);
         brl_rate_textView = findViewById(R.id.textview_num_brl);
         cad_rate_textView = findViewById(R.id.textview_num_cad);
+        mRecyclerView = findViewById(R.id.currency_recycler_view);
+
 
         //instantiation of the viewmodelprovider
         mMainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
         //to observe changes done to viewmodel and the objects in it (live data objects)
-        mMainActivityViewModel.getCurrencyRates().observe(this, new androidx.lifecycle.Observer<List<CurrencyRate>>() {
+/*        mMainActivityViewModel.getCurrencyRates().observe(this, new androidx.lifecycle.Observer<List<CurrencyRate>>() {
             @Override
             public void onChanged(List<CurrencyRate> currencyRates) {
                 //we are viewing livedata so that the data doesnt change if the user changes state (e.g. screen lock)
                 //we want the adapter below to be notified if changes are made to our livedata
                 mRatesListAdapter.notifyDataSetChanged();
             }
-        });
+        });*/
 
         //call our function to call and set all our observables
         //getObservableRateCalls();
 
         //call our function to initiate this dataset
-        initFlagList();
-
+        //initFlagList();
+        initRecylcerView();
         setObservableBaseRate();
+        subscribeObservers();
+        testRetrofitGetRequest();
 
     }
+
+    public void subscribeObservers(){
+        mMainActivityViewModel.getCurrencyRates().observe(this, new androidx.lifecycle.Observer<List<CurrencyRate>>() {
+            @Override
+            public void onChanged(List<CurrencyRate> currencyRates) {
+                //we are viewing livedata so that the data doesnt change if the user changes state (e.g. screen lock)
+                //we want the adapter below to be notified if changes are made to our livedata
+                mRatesListAdapter.setRates(currencyRates);
+            }
+        });
+    }
+
+    private void initRecylcerView(){
+        mRatesListAdapter = new RatesListAdapter(this);
+        mRecyclerView.setAdapter(mRatesListAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    //method below takes inputs for our repository search method
+    public void searchRatesApi(String baseRate){
+        mMainActivityViewModel.searchRates(baseRate);
+    }
+
+    private void testRetrofitGetRequest(){
+        searchRatesApi("ZAR");
+    }
+
 
     private void setObservableBaseRate() {
         EditText base_rate_editText = (EditText) findViewById(R.id.edit_text_base_rate);
@@ -105,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
     //TODO refactor so this is a list of rates
     //The below initiates several variables to fill the lists and then calls
     //initRecyclerview
-    private void initFlagList(){
+/*    private void initFlagList(){
         Log.d(TAG, "flagList: preparing flaglist");
 
         //dummy data - to fill the arraylists
@@ -143,22 +162,9 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
 
         //TODO make all flags of the preferred image type for android
 
-    }
+    }*/
 
-    //this method finds the recyclerview, and then sets the adapter for the recyclerview as the RatesListAdapter created in that class
-    private void initRecyclerView(){
-        //the below sets the mRatesListAdapater to a list of CurrencyRates
-        //to populate our recyclerview i need to pass the adapter our context, ratenames long and short and imageviews - this is now all handled in the rateslist
-        //adapter class due to refactoring
-        mRatesListAdapter = new RatesListAdapter(this, mMainActivityViewModel.getCurrencyRates().getValue(), this);
-        Log.d(TAG, "initRecyclerView: started");
-        RecyclerView recyclerView = findViewById(R.id.currency_recycler_view);
 
-        //use the above adapter as the adapter for this recyclerview
-        recyclerView.setAdapter(mRatesListAdapter);
-        //this attaches the layout manager to the RecyclerView
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
 
     // this works with the onRateClick interface as defined in rateslistadapter and gets the position of the clicked item,
     // to return to the onclick method of the Rate_view_holder class

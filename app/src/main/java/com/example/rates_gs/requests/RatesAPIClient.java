@@ -69,8 +69,6 @@ public class RatesAPIClient {
         currencyRatesDataSet.add(new CurrencyRate("Swedish Krona", "SEK",R.drawable.flag_sek,146.12 ));
         currencyRatesDataSet.add(new CurrencyRate("German Krona", "SEK",R.drawable.flag_gbp,146.12 ));
         currencyRatesDataSet.add(new CurrencyRate("ZSwedish Krona", "SEK",R.drawable.flag_dkk,146.12 ));
-
-
     }
 
 
