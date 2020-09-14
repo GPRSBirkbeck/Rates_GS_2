@@ -34,6 +34,7 @@ public class RatesAPIClient {
     //TODO figure out what to do with this
     private ArrayList<CurrencyRate> currencyRatesDataSet = new ArrayList<>();
 
+    //TODO figure out if we'd be better of with a regular call and only have the observables at the end (viewmodel)
 
     public static RatesAPIClient getInstance() {
         if (instance == null) {
@@ -57,6 +58,7 @@ public class RatesAPIClient {
         return data;
     }
 
+    //TODO figure out why this list can only work with the same length as the list in MainActivity for interactions
     private void setCurrencyRates(){
         //instead of phony data below use real linked data
         //dummy data - to fill the arraylists

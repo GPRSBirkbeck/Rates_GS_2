@@ -22,7 +22,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate_view_holder>{
+public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate_view_holder> implements View.OnClickListener {
     //this class adapts each currency from the layout_rates_listitem into the main activity
     //this TAG is just for logging
     private static final String TAG = "RatesListAdapter";
@@ -35,7 +35,6 @@ public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate
 
     private List<CurrencyRate> mCurrencyRate = new ArrayList<>();
 
-
     //declare onRateListener within the Adapter class;
     private OnRateListener mOnRateListener;
 
@@ -47,7 +46,6 @@ public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate
     }
 
     //these are the methods that RatesListAdapter needs as a class if it extends Recyclerview.Adapter
-
     //This method creates and returns an instance of the rate_view_holder (which we will use for each of our rates)
     @NonNull
     @Override
@@ -76,12 +74,22 @@ public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate
 
     @Override
     public int getItemCount() {
-        return mCurrencyRate.size();
+        if(mCurrencyRate != null){
+            return mCurrencyRate.size();
+        }
+        return 0;
+
     }
 
     public void swapRates(int fromPosition){
         Collections.swap(mCurrencyRate, fromPosition, 0);
         notifyItemMoved(fromPosition, 0);
+    }
+
+    //TODO use or do not use this
+    @Override
+    public void onClick(View v) {
+
     }
 
     //this class is our viewholder for the recyclerview.
