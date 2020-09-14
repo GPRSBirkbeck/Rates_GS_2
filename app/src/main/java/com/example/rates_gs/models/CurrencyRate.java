@@ -1,32 +1,28 @@
 package com.example.rates_gs.models;
 
-import java.util.ArrayList;
-
-import io.reactivex.Observable;
-
 public class CurrencyRate {
 
     //this class represents the POJO for the rates that are actually displayed in the ratesListAdapter
-    private String rateNamesLong;
-    private String rateNamesShort;
+    private String rateNameShort;
+    private String rateNameLong;
     private Integer flagImage;
     private Double rateDouble;
 
     //constructor
-    public CurrencyRate(String rateNamesLong, String rateNamesShort, Integer flagImage, Double rateDouble) {
-        this.rateNamesLong = rateNamesLong;
-        this.rateNamesShort = rateNamesShort;
+    public CurrencyRate(String rateNameShort, String rateNameLong, Integer flagImage, Double rateDouble) {
+        this.rateNameShort = rateNameShort;
+        this.rateNameLong = rateNameLong;
         this.flagImage = flagImage;
         this.rateDouble = rateDouble;
     }
 
     //getters and setters below
-    public void setRateNamesLong(String rateNamesLong) {
-        this.rateNamesLong = rateNamesLong;
+    public void setRateNameShort(String rateNameShort) {
+        this.rateNameShort = rateNameShort;
     }
 
-    public void setRateNamesShort(String rateNamesShort) {
-        this.rateNamesShort = rateNamesShort;
+    public void setRateNameLong(String rateNameLong) {
+        this.rateNameLong = rateNameLong;
     }
 
     public void setFlagImage(Integer flagImage) {
@@ -37,12 +33,12 @@ public class CurrencyRate {
         this.rateDouble = rateDouble;
     }
 
-    public String getRateNamesLong() {
-        return rateNamesLong;
+    public String getRateNameShort() {
+        return rateNameShort;
     }
 
-    public String getRateNamesShort() {
-        return rateNamesShort;
+    public String getRateNameLong() {
+        return rateNameLong;
     }
 
     public Integer getFlagImage() {
