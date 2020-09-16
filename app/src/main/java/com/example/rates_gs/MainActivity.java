@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.rates_gs.adapters.OnRateListener;
 import com.example.rates_gs.adapters.RatesListAdapter;
 import com.example.rates_gs.models.CurrencyRate;
 import com.example.rates_gs.viewmodels.MainActivityViewModel;
@@ -20,7 +21,7 @@ import com.jakewharton.rxbinding2.widget.RxTextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements RatesListAdapter.OnRateListener{
+public class MainActivity extends AppCompatActivity implements OnRateListener {
     //view elements
     public RatesService ratesService;
     private TextView usd_rate_textView;
@@ -63,21 +64,7 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
         //instantiation of the viewmodelprovider
         mMainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
-        //to observe changes done to viewmodel and the objects in it (live data objects)
-/*        mMainActivityViewModel.getCurrencyRates().observe(this, new androidx.lifecycle.Observer<List<CurrencyRate>>() {
-            @Override
-            public void onChanged(List<CurrencyRate> currencyRates) {
-                //we are viewing livedata so that the data doesnt change if the user changes state (e.g. screen lock)
-                //we want the adapter below to be notified if changes are made to our livedata
-                mRatesListAdapter.notifyDataSetChanged();
-            }
-        });*/
-
-        //call our function to call and set all our observables
-        //getObservableRateCalls();
-
         //call our function to initiate this dataset
-        //initFlagList();
         initRecylcerView();
         setObservableBaseRate();
         subscribeObservers();
@@ -89,18 +76,16 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
         mMainActivityViewModel.getCurrencyRates().observe(this, new androidx.lifecycle.Observer<List<CurrencyRate>>() {
             @Override
             public void onChanged(List<CurrencyRate> currencyRates) {
-                //we are viewing livedata so that the data doesnt change if the user changes state (e.g. screen lock)
-                //we want the adapter below to be notified if changes are made to our livedata
-                mRatesListAdapter.setRates(currencyRates);
+                if(currencyRates != null){
+                    //we are viewing livedata so that the data doesnt change if the user changes state (e.g. screen lock)
+                    //we want the adapter below to be notified if changes are made to our livedata
+                    mRatesListAdapter.setRates(currencyRates);
+                }
+
             }
         });
     }
 
-    private void initRecylcerView(){
-        mRatesListAdapter = new RatesListAdapter(this);
-        mRecyclerView.setAdapter(mRatesListAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
 
     //method below takes inputs for our repository search method
     public void searchRatesApi(String baseRate){
@@ -111,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
         searchRatesApi("ZAR");
     }
 
-
     private void setObservableBaseRate() {
         EditText base_rate_editText = (EditText) findViewById(R.id.edit_text_base_rate);
         base_rate_editText.setText("100");
@@ -121,58 +105,28 @@ public class MainActivity extends AppCompatActivity implements RatesListAdapter.
                 RxTextView.textChanges(base_rate_editText);
     }
 
-    //TODO refactor so this is a list of rates
-    //The below initiates several variables to fill the lists and then calls
-    //initRecyclerview
-/*    private void initFlagList(){
-        Log.d(TAG, "flagList: preparing flaglist");
-
-        //dummy data - to fill the arraylists
-        mRateNamesLong.add("USD");
-        mRateNamesShort.add("Second set of Dollars");
-        mImages.add(R.drawable.flag_usd);
-        mRateDouble.add(100.00);
-        //maybe make these observers?
-        //TODO this is here to make a push work
-
-        mRateNamesLong.add("Zar");
-        mRateNamesShort.add("Zuid Afrikaanse Rand");
-        mImages.add(R.drawable.flag_zar);
-        mRateDouble.add(130.00);
-
-        mRateNamesLong.add("TBH");
-        mRateNamesShort.add("Thai Bhat");
-        mImages.add(R.drawable.flag_thb);
-        mRateDouble.add(2450.00);
-
-
-        mRateNamesLong.add("SGD");
-        mRateNamesShort.add("Singapore Dollar");
-        mImages.add(R.drawable.flag_sgd);
-        mRateDouble.add(22.57);
-
-
-        mRateNamesLong.add("SEK");
-        mRateNamesShort.add("Swedish Krona");
-        //something about the type of this flag makes android studio happy
-        mImages.add(R.drawable.flag_sek);
-        mRateDouble.add(146.12);
-
-        initRecyclerView();
-
-        //TODO make all flags of the preferred image type for android
-
-    }*/
-
-
-
     // this works with the onRateClick interface as defined in rateslistadapter and gets the position of the clicked item,
     // to return to the onclick method of the Rate_view_holder class
-    @Override
-    public void onRateClick(int position) {
-        mRateNamesLong.get(position);
-        Toast.makeText(this, mRateNamesLong.get(position), Toast.LENGTH_SHORT).show();
 
+
+    private void initRecylcerView(){
+        mRatesListAdapter = new RatesListAdapter(this);
+        mRecyclerView.setAdapter(mRatesListAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    // this works with the onRateClick interface as defined in OnRateListener and gets the position of the clicked item,
+    // to return to the onclick method of the Rate_view_holder class
+    @Override
+    public void onRatesClick(int position) {
+        //mMainActivityViewModel.getCurrencyRates()
+        //mRateNamesLong.get(position);
+        //Toast.makeText(this, mRateNamesLong.get(position), Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onBaseRateClick(int position) {
 
     }
 

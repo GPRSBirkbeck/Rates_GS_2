@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
         
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/flag_image"
+            android:id="@+id/flag_image_recycler"
             android:layout_width="40dp"
             android:layout_height="40dp">
 
@@ -28,22 +28,22 @@
             android:paddingRight="64dp">
 
             <TextView
-                android:id="@+id/textView_currency_short"
+                android:id="@+id/textView_currency_short_recycler"
                 style="@style/rate_title"
-                android:text="CAD"
+                android:text=""
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:id="@+id/textView_currency_long"
+                android:id="@+id/textView_currency_long_recycler"
                 android:layout_width="match_parent"
-                android:text="Kind Canadian Dollar"
+                android:text=""
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
 
         <EditText
-            android:id="@+id/edittext_rate"
+            android:id="@+id/edittext_rate_recycler"
             android:hint="0"
             android:layout_width="wrap_content"
             android:paddingRight="8dp"

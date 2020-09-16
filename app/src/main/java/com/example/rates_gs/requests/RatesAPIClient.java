@@ -63,7 +63,7 @@ public class RatesAPIClient {
         //instead of phony data below use real linked data
         //dummy data - to fill the arraylists
         currencyRatesDataSet.add(new CurrencyRate("EUR","Euro",R.drawable.flag_eur,100.00 ));
-        currencyRatesDataSet.add(new CurrencyRate("AUD","Australian Dollar", R.drawable.flag_aud,130.00 ));
+        currencyRatesDataSet.add(new CurrencyRate("AUD","Australian Dollar", R.drawable.flag_aud,1.26 ));
         currencyRatesDataSet.add(new CurrencyRate("BGN","Bulgarian Lev", R.drawable.flag_bgn,2450.00 ));
         currencyRatesDataSet.add(new CurrencyRate("BRL","Brazilian Real", R.drawable.flag_brl,22.57 ));
         currencyRatesDataSet.add(new CurrencyRate("CAD","Canadian Dollar", R.drawable.flag_cad,146.12 ));
@@ -96,6 +96,34 @@ public class RatesAPIClient {
         currencyRatesDataSet.add(new CurrencyRate("SGD","Singapore Dollar", R.drawable.flag_sgd,100.00 ));
         currencyRatesDataSet.add(new CurrencyRate("THB","Thai Baht", R.drawable.flag_thb,100.00 ));
         currencyRatesDataSet.add(new CurrencyRate("USD","US Dollar", R.drawable.flag_usd,100.00 ));
+    }
+
+    private Flowable<RevolutApiResponse> getObservableData(String baseRate) {
+        return ServiceGenerator.getRecipeApi().getObservableRates(
+                baseRate
+        );
+    }
+    private Double getThisRate(){
+        Flowable<RevolutApiResponse> ratesApiResponse = getObservableData("ZAR");
+            Observable<RatesResponse> ratesObservable =
+                    ratesApiResponse
+                            .toObservable()
+                            .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
+                            .map(new Function<RevolutApiResponse, RatesResponse>() {
+                                @Override
+                                public RatesResponse apply(RevolutApiResponse revolutApiResponse) throws Exception {
+                                    return revolutApiResponse.getRates();
+                                }
+                            });
+
+            Observable<Double> aud = ratesObservable
+                    .map(new Function<RatesResponse, Double>() {
+                        @Override
+                        public Double apply(RatesResponse rates) throws Exception {
+                            return (rates.getAUD());
+                        }
+                    });
+            return aud.blockingLast();
     }
 
 

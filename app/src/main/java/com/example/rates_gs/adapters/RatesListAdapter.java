@@ -21,8 +21,43 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate_view_holder> implements View.OnClickListener {
-    //this class adapts each currency from the layout_rates_listitem into the main activity
+public class RatesListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private List<CurrencyRate> mCurrencyRate = new ArrayList<>();
+    private OnRateListener onRateListener;
+
+    public RatesListAdapter(OnRateListener onRateListener) {
+        this.onRateListener = onRateListener;
+    }
+
+    @NonNull
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_rates_listitem, parent, false);
+        return new RatesViewholder(view, onRateListener);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        ((RatesViewholder)holder).ratesname_short.setText(mCurrencyRate.get(position).getRateNameShort());
+        ((RatesViewholder)holder).ratesname_long.setText(mCurrencyRate.get(position).getRateNameLong());
+        ((RatesViewholder)holder).rates_double.setText(String.valueOf(mCurrencyRate.get(position).getRateDouble()));
+        ((RatesViewholder)holder).flag_image.setImageResource(mCurrencyRate.get(position).getFlagImage());
+
+    }
+
+    @Override
+    public int getItemCount() {
+        if(mCurrencyRate != null){
+            return mCurrencyRate.size();
+        }
+        return 0;
+    }
+    public void setRates(List<CurrencyRate> rates){
+        mCurrencyRate = rates;
+        notifyDataSetChanged();
+    }
+
+/*    //this class adapts each currency from the layout_rates_listitem into the main activity
     //this TAG is just for logging
     private static final String TAG = "RatesListAdapter";
 
@@ -135,5 +170,5 @@ public class RatesListAdapter extends RecyclerView.Adapter<RatesListAdapter.Rate
     public interface OnRateListener{
         //send the position of the clicked rate
         void onRateClick(int position);
-    }
+    }*/
 }
