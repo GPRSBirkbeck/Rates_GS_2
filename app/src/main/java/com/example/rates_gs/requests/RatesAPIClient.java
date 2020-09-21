@@ -1,5 +1,6 @@
 package com.example.rates_gs.requests;
 
+import android.telecom.Call;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -11,7 +12,6 @@ import com.example.rates_gs.requests.responses.RatesResponse;
 import com.example.rates_gs.models.CurrencyRate;
 import com.example.rates_gs.requests.responses.RevolutApiResponse;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
@@ -20,8 +20,6 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
-import retrofit2.Call;
-import retrofit2.Response;
 
 import static com.example.rates_gs.util.Constants.NETWORK_TIMEOUT;
 
@@ -30,12 +28,31 @@ public class RatesAPIClient {
     private static RatesAPIClient instance;
     private MutableLiveData<List<CurrencyRate>> mCurrencyRates;
     private RetrieveRatesRunnable mRetrieveRatesRunnable;
+    public ServiceGenerator serviceGenerator;
 
     //TODO figure out what to do with this
     private ArrayList<CurrencyRate> currencyRatesDataSet = new ArrayList<>();
+    private RatesAPIClient() {
+        mCurrencyRates = new MutableLiveData<>();
+    }
+
+    public Observable getObservableData(String baseRate){
+        RatesAPI ratesAPI = ServiceGenerator.getObservableRatesApi();
+        Observable<RatesResponse> ratesObservable =
+                ratesAPI.getObservableRates(baseRate)
+                        .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
+                        .map(new Function<RevolutApiResponse, RatesResponse>() {
+                            @Override
+                            public RatesResponse apply(RevolutApiResponse revolutApiResponse) throws Exception {
+                                return revolutApiResponse.getRates();
+                            }
+                        });
+        return ratesObservable;
+    }
+
+
 
     //TODO figure out if we'd be better of with a regular call and only have the observables at the end (viewmodel)
-
     public static RatesAPIClient getInstance() {
         if (instance == null) {
             instance = new RatesAPIClient();
@@ -43,9 +60,6 @@ public class RatesAPIClient {
         return instance;
     }
 
-    private RatesAPIClient() {
-        mCurrencyRates = new MutableLiveData<>();
-    }
 
     public LiveData<List<CurrencyRate>> getRates() {
         //this is mimicking what it would be like to get the data from the webservices by calling the set method.
@@ -98,33 +112,7 @@ public class RatesAPIClient {
         currencyRatesDataSet.add(new CurrencyRate("USD","US Dollar", R.drawable.flag_usd,100.00 ));
     }
 
-    private Flowable<RevolutApiResponse> getObservableData(String baseRate) {
-        return ServiceGenerator.getRecipeApi().getObservableRates(
-                baseRate
-        );
-    }
-    private Double getThisRate(){
-        Flowable<RevolutApiResponse> ratesApiResponse = getObservableData("ZAR");
-            Observable<RatesResponse> ratesObservable =
-                    ratesApiResponse
-                            .toObservable()
-                            .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
-                            .map(new Function<RevolutApiResponse, RatesResponse>() {
-                                @Override
-                                public RatesResponse apply(RevolutApiResponse revolutApiResponse) throws Exception {
-                                    return revolutApiResponse.getRates();
-                                }
-                            });
 
-            Observable<Double> aud = ratesObservable
-                    .map(new Function<RatesResponse, Double>() {
-                        @Override
-                        public Double apply(RatesResponse rates) throws Exception {
-                            return (rates.getAUD());
-                        }
-                    });
-            return aud.blockingLast();
-    }
 
 
     //TODO refactor this in the
@@ -158,7 +146,7 @@ public class RatesAPIClient {
         }
 
         //this run is responsible for running the query
-        @Override
+/*        @Override
         public void run() {
             //This is the actual line of code that will run on the background thread
                 Flowable<RevolutApiResponse> ratesApiResponse = getRates(baseRate);
@@ -278,7 +266,7 @@ public class RatesAPIClient {
                     mCurrencyRates.postValue(list);
                     Log.d(TAG, "run: it worked");
                 }
-        }
+        }*/
 
 /*        @Override
         public void run() {
@@ -309,11 +297,11 @@ public class RatesAPIClient {
             }
         }*/
 
-        private Flowable<RevolutApiResponse> getRates(String baseRate) {
-            return ServiceGenerator.getRecipeApi().getObservableRates(
+/*        private Call<RevolutApiResponse> getRates(String baseRate) {
+            return ServiceGenerator.getObservableRatesApi().getObservableRates(
                     baseRate
             );
-        }
+        }*/
 
         //TODO figure out what to do with the below...
 /*        private Observable<RatesResponse> getRates(String baseRate){
@@ -324,6 +312,11 @@ public class RatesAPIClient {
         private void cancelRequest() {
             Log.d(TAG, "instance initializer: cancelling the search request");
             cancelRequest = true;
+        }
+
+        @Override
+        public void run() {
+
         }
     }
 }

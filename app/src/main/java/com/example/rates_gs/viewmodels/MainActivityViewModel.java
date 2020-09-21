@@ -6,8 +6,11 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.rates_gs.models.CurrencyRate;
 import com.example.rates_gs.repositories.RatesRepository;
+import com.example.rates_gs.requests.responses.RatesResponse;
 
 import java.util.List;
+
+import io.reactivex.Observable;
 
 public class MainActivityViewModel extends ViewModel {
     //a mutable version of livedata: it can be changed
@@ -26,11 +29,19 @@ public class MainActivityViewModel extends ViewModel {
         return mRatesRepository.getCurrencyRates();
     }
 
+
     //method below takes inputs for our repository search method
     public void searchRates(String baseRate){
         mRatesRepository.searchRates(baseRate);
     }
+
     // TODO Add the logic for updating based on the baserate here
+    public Observable<RatesResponse> getObservableData(String baseRate){
+        return mRatesRepository.getObservableData(baseRate);
+    }
+
+
+
 /*
     public void init(){
         if(mCurrencyRates!=null){

@@ -48,6 +48,10 @@ public class RatesRepository {
     public LiveData<List<CurrencyRate>> getCurrencyRates(){
         return mRatesAPIClient.getRates();
     }
+    //our observable rates
+    public Observable<RatesResponse> getObservableData(String baseRate){
+        return mRatesAPIClient.getObservableData(baseRate);
+    }
 
     //method below takes inputs for our client search query
     public void searchRates(String baseRate){
