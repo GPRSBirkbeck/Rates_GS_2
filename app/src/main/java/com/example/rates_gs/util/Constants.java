@@ -16,7 +16,7 @@ public class Constants {
             "Mexican Peso", "Malaysian Ringgit",
 
             "Norwegian Krone", "New Zealand Dollar", "Philippine peso", "Poland złoty", "Romanian Leu",
-            "Russian Ruble", "Swedish Krona","Singapore Dollar","Thai Baht","US Dollar"
+            "Russian Ruble", "Swedish Krona","Singapore Dollar","Thai Baht","US Dollar", "South African Rand"
     };
 
     public static final String[] RATE_NAMES_SHORT = {
@@ -30,27 +30,27 @@ public class Constants {
             "MXN", "MYR",
 
             "NOK", "NZD", "PHP", "PLN", "RON",
-            "RUB", "SEK","SGD","THB","USD"
+            "RUB", "SEK","SGD","THB","USD", "ZAR"
     };
 
     public static final String[] FLAGS = {
-            "flag_EUR", "flag_AUD", "flag_BGN", "flag_BRL", "flag_CAD",
-            "flag_CHF", "flag_CNY",
+            "flag_eur", "flag_aud", "flag_bgn", "flag_brl", "flag_cad",
+            "flag_chf", "flag_cny",
 
-            "flag_CZK", "flag_DKK", "flag_GBP", "flag_HKD", "flag_HRK",
-            "flag_HUF", "flag_IDR",
+            "flag_czk", "flag_dkk", "flag_gbp", "flag_hkd", "flag_hrk",
+            "flag_huf", "flag_idk",
 
-            "flag_ILS", "flag_INR", "flag_ISK", "flag_JPY", "flag_KRW",
-            "flag_MXN", "flag_MYR",
+            "flag_ils", "flag_inr", "flag_isk", "flag_jpy", "flag_krw",
+            "flag_mxn", "flag_myr",
 
-            "flag_NOK", "flag_NZD", "flag_PHP", "flag_PLN", "flag_RON",
-            "flag_RUB", "flag_SEK","flag_SGD","flag_THB","flag_USD"
+            "flag_nok", "flag_nzd", "flag_php", "flag_pln", "flag_ron",
+            "flag_rub", "flag_sek","flag_sgd","flag_thb","flag_usd", "flag_zar"
     };
 
     public static final double[] DEFAULT_EXCHANGE_RATES = {
             1.00,2.00,3.00,4.00,5.00,6.00,7.00,
             8.00,9.00,10.00,11.00,12.00,13.00,14.00,
             15.00,16.00,17.00,18.00,19.00,20.00,21.00,
-            22.00,23.00,24.00,25.00,26.00,27.00,28.00,29.00,30.00,31.00
+            22.00,23.00,24.00,25.00,26.00,27.00,28.00,29.00,30.00,31.00,32.00
     };
 }

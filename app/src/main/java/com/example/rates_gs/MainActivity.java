@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rates_gs.adapters.OnRateListener;
 import com.example.rates_gs.adapters.RatesListAdapter;
@@ -19,6 +20,7 @@ import com.jakewharton.rxbinding2.InitialValueObservable;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -115,19 +117,23 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
     }
 
     // this works with the onRateClick interface as defined in OnRateListener and gets the position of the clicked item,
-    // to return to the onclick method of the Rate_view_holder class
+    // to return to the onclick method of the RateViewHolder class
+    //all the interface does is get the position of the rate
     @Override
     public void onRatesClick(int position) {
         //mMainActivityViewModel.getCurrencyRates()
         //mRateNamesLong.get(position);
         //Toast.makeText(this, mRateNamesLong.get(position), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Clicked me!", Toast.LENGTH_SHORT).show();
+        mRatesListAdapter.swapRates(position);
 
     }
-
-    @Override
-    public void onBaseRateClick(int position) {
-
+    public void swapRates(int fromPosition){
+        Collections.swap((List<?>) mMainActivityViewModel.getCurrencyRates(), fromPosition, 0);
+        //notifyItemMoved(fromPosition, 0);
     }
+
+
 
     private Observable<Double> getObservableBaseRate() {
         EditText base_rate_editText = (EditText) findViewById(R.id.edit_text_base_rate);

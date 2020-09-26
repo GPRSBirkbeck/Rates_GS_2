@@ -35,6 +35,6 @@ public class RatesViewholder extends RecyclerView.ViewHolder implements View.OnC
         //TODO make the list shuffle when clicked.
         ///RatesListAdapter.swapRates
 
-
     }
+
 }
