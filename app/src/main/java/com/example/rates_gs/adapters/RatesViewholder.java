@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rates_gs.R;
 
+import java.util.Collections;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RatesViewholder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -31,6 +33,8 @@ public class RatesViewholder extends RecyclerView.ViewHolder implements View.OnC
     public void onClick(View v) {
         onRateListener.onRatesClick(getAdapterPosition());
         //TODO make the list shuffle when clicked.
+        ///RatesListAdapter.swapRates
+
 
     }
 }

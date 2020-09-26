@@ -56,6 +56,10 @@ public class RatesListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         mCurrencyRate = rates;
         notifyDataSetChanged();
     }
+    public void swapRates(int fromPosition){
+        Collections.swap(mCurrencyRate, fromPosition, 0);
+        notifyItemMoved(fromPosition, 0);
+    }
 
 /*    //this class adapts each currency from the layout_rates_listitem into the main activity
     //this TAG is just for logging

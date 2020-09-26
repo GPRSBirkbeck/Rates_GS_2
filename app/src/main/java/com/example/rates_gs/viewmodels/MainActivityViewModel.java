@@ -39,23 +39,4 @@ public class MainActivityViewModel extends ViewModel {
     public Observable<RatesResponse> getObservableData(String baseRate){
         return mRatesRepository.getObservableData(baseRate);
     }
-
-
-
-/*
-    public void init(){
-        if(mCurrencyRates!=null){
-            return;
-        }
-        //get instance of repository
-        mRatesRepository = mRatesRepository.getInstance();
-        //get the data from that repository
-        mCurrencyRates = mRatesRepository.getCurrencyRates();
-
-    }*/
-
-    //a getter for our mutableLiveData mCurrencyRates
-/*    public LiveData<List<CurrencyRate>> getCurrencyRates(){
-        return mCurrencyRates;
-    }*/
 }
