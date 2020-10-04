@@ -29,7 +29,6 @@ public class MainActivityViewModel extends ViewModel {
         return mRatesRepository.getCurrencyRates();
     }
 
-
     //method below takes inputs for our repository search method
     public void searchRates(String baseRate){
         mRatesRepository.searchRates(baseRate);

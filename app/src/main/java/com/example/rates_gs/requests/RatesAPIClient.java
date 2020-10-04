@@ -29,7 +29,6 @@ public class RatesAPIClient {
     //TODO use the mutbleLiveData to update the values based on what comes out of the observable
     private MutableLiveData<List<CurrencyRate>> mCurrencyRates;
     private RetrieveRatesRunnable mRetrieveRatesRunnable;
-    public ServiceGenerator serviceGenerator;
 
     //TODO figure out what to do with this
     private ArrayList<CurrencyRate> currencyRatesDataSet = new ArrayList<>();
@@ -49,7 +48,9 @@ public class RatesAPIClient {
                             }
                         });
         return ratesObservable;
+
     }
+
 
 
 
@@ -75,26 +76,27 @@ public class RatesAPIClient {
 
     //TODO figure out why this list can only work with the same length as the list in MainActivity for interactions
     private void setCurrencyRates(){
+
         //instead of phony data below use real linked data
         //dummy data - to fill the arraylists
-        currencyRatesDataSet.add(new CurrencyRate("EUR","Euro",R.drawable.flag_eur,100.00 ));
-        currencyRatesDataSet.add(new CurrencyRate("AUD","Australian Dollar", R.drawable.flag_aud,1.26 ));
-        currencyRatesDataSet.add(new CurrencyRate("BGN","Bulgarian Lev", R.drawable.flag_bgn,2450.00 ));
-        currencyRatesDataSet.add(new CurrencyRate("BRL","Brazilian Real", R.drawable.flag_brl,22.57 ));
-        currencyRatesDataSet.add(new CurrencyRate("CAD","Canadian Dollar", R.drawable.flag_cad,146.12 ));
-        currencyRatesDataSet.add(new CurrencyRate("CHF","Swiss Franc", R.drawable.flag_chf,146.12 ));
-        currencyRatesDataSet.add(new CurrencyRate("CNY","Chinese Yuan", R.drawable.flag_cny,146.12 ));
+        currencyRatesDataSet.add(new CurrencyRate("EUR","Euro",R.drawable.flag_eur,100.01));
+        currencyRatesDataSet.add(new CurrencyRate("AUD","Australian Dollar", R.drawable.flag_aud,100.00));
+        currencyRatesDataSet.add(new CurrencyRate("BGN","Bulgarian Lev", R.drawable.flag_bgn,100.00));
+        currencyRatesDataSet.add(new CurrencyRate("BRL","Brazilian Real", R.drawable.flag_brl,100.00));
+        currencyRatesDataSet.add(new CurrencyRate("CAD","Canadian Dollar", R.drawable.flag_cad,100.00));
+        currencyRatesDataSet.add(new CurrencyRate("CHF","Swiss Franc", R.drawable.flag_chf,100.00));
+        currencyRatesDataSet.add(new CurrencyRate("CNY","Chinese Yuan", R.drawable.flag_cny,100.00));
 
-        currencyRatesDataSet.add(new CurrencyRate("CZK","Czech Koruna", R.drawable.flag_czk,100.00 ));
-        currencyRatesDataSet.add(new CurrencyRate("DKK","Danish Krone", R.drawable.flag_dkk,130.00 ));
-        currencyRatesDataSet.add(new CurrencyRate("GBP","Pound sterling", R.drawable.flag_gbp,2450.00 ));
-        currencyRatesDataSet.add(new CurrencyRate("HKD","Hong Kong Dollar", R.drawable.flag_hkd,22.57 ));
-        currencyRatesDataSet.add(new CurrencyRate("HRK","Croatian Kuna", R.drawable.flag_hrk,146.12 ));
-        currencyRatesDataSet.add(new CurrencyRate("HUF","Hungarian Forint", R.drawable.flag_huf,146.12 ));
-        currencyRatesDataSet.add(new CurrencyRate("IDR","Indonesian Rupiah", R.drawable.flag_idr,146.12 ));
+        currencyRatesDataSet.add(new CurrencyRate("CZK","Czech Koruna", R.drawable.flag_czk,100.00));
+        currencyRatesDataSet.add(new CurrencyRate("DKK","Danish Krone", R.drawable.flag_dkk,100.00));
+        currencyRatesDataSet.add(new CurrencyRate("GBP","Pound sterling", R.drawable.flag_gbp,100.00));
+        currencyRatesDataSet.add(new CurrencyRate("HKD","Hong Kong Dollar", R.drawable.flag_hkd,100.00 ));
+        currencyRatesDataSet.add(new CurrencyRate("HRK","Croatian Kuna", R.drawable.flag_hrk,100.00));
+        currencyRatesDataSet.add(new CurrencyRate("HUF","Hungarian Forint", R.drawable.flag_huf,100.00 ));
+        currencyRatesDataSet.add(new CurrencyRate("IDR","Indonesian Rupiah", R.drawable.flag_idr,100.00));
 
 
-        currencyRatesDataSet.add(new CurrencyRate("ILS","Israeli New Shekel", R.drawable.flag_ils,100.00 ));
+        currencyRatesDataSet.add(new CurrencyRate("ILS","Israeli New Shekel", R.drawable.flag_ils,100.00));
         currencyRatesDataSet.add(new CurrencyRate("INR","Indian Rupee", R.drawable.flag_inr,100.00 ));
         currencyRatesDataSet.add(new CurrencyRate("ISK","Icelandic Króna", R.drawable.flag_isk,100.00 ));
         currencyRatesDataSet.add(new CurrencyRate("JPY","Japanese Yen", R.drawable.flag_jpy,100.00 ));
@@ -112,9 +114,6 @@ public class RatesAPIClient {
         currencyRatesDataSet.add(new CurrencyRate("THB","Thai Baht", R.drawable.flag_thb,100.00 ));
         currencyRatesDataSet.add(new CurrencyRate("USD","US Dollar", R.drawable.flag_usd,100.00 ));
     }
-
-
-
 
     //TODO refactor this in the
     public void getRatesApi(String baseRate) {

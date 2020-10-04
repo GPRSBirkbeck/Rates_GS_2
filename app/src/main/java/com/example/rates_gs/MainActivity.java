@@ -19,8 +19,6 @@ import com.example.rates_gs.viewmodels.MainActivityViewModel;
 import com.jakewharton.rxbinding2.InitialValueObservable;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -40,16 +38,8 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
 
     //adapter for our ViewModel
     private RatesListAdapter mRatesListAdapter;
-
-    //variables -arraylists that populate the recyclerview
-    private ArrayList<String> mRateNamesLong = new ArrayList<>();
-    private ArrayList<String> mRateNamesShort = new ArrayList<>();
-    private ArrayList<Integer> mImages = new ArrayList<>();
-    private ArrayList<Double> mRateDouble = new ArrayList<>();
-
     //viewmodel object for running the viewmodel
     private MainActivityViewModel mMainActivityViewModel;
-
     private static final String TAG = "MainActivity";
 
     @Override
@@ -58,26 +48,22 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("Rates");
-
         Log.d(TAG, "onCreate: started");
-
         usd_rate_textView = findViewById(R.id.textview_num_usd);
         eur_rate_textView = findViewById(R.id.textview_num_eur);
         brl_rate_textView = findViewById(R.id.textview_num_brl);
         cad_rate_textView = findViewById(R.id.textview_num_cad);
         mRecyclerView = findViewById(R.id.currency_recycler_view);
 
-
         //instantiation of the viewmodelprovider
         mMainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
-        //call our function to initiate this dataset
+        //call our functions
+        subscribeObservers();
+        setObservableRates("ZAR");
         initRecylcerView();
         getObservableBaseRate();
-        setObservableRates("ZAR");
-        subscribeObservers();
         testRetrofitGetRequest();
-
     }
 
     public void subscribeObservers(){
@@ -89,26 +75,17 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
                     //we want the adapter below to be notified if changes are made to our livedata
                     mRatesListAdapter.setRates(currencyRates);
                 }
-
             }
         });
     }
-
 
     //method below takes inputs for our repository search method
     public void searchRatesApi(String baseRate){
         mMainActivityViewModel.searchRates(baseRate);
     }
-
     private void testRetrofitGetRequest(){
         searchRatesApi("ZAR");
     }
-
-
-
-    // this works with the onRateClick interface as defined in rateslistadapter and gets the position of the clicked item,
-    // to return to the onclick method of the Rate_view_holder class
-
 
     private void initRecylcerView(){
         mRatesListAdapter = new RatesListAdapter(this);
@@ -124,16 +101,14 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
         //mMainActivityViewModel.getCurrencyRates()
         //mRateNamesLong.get(position);
         //Toast.makeText(this, mRateNamesLong.get(position), Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "Clicked me!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Clicked me!" + mRatesListAdapter.getItemCount() , Toast.LENGTH_SHORT).show();
         mRatesListAdapter.swapRates(position);
-
+        List list = mMainActivityViewModel.getCurrencyRates().getValue();
+        CurrencyRate myrate = (CurrencyRate) list.get(position);
+        String baserate = myrate.getRateNameShort();
+        setObservableRates(baserate);
+        Toast.makeText(this, "Clicked me!" + baserate, Toast.LENGTH_SHORT).show();
     }
-    public void swapRates(int fromPosition){
-        Collections.swap((List<?>) mMainActivityViewModel.getCurrencyRates(), fromPosition, 0);
-        //notifyItemMoved(fromPosition, 0);
-    }
-
-
 
     private Observable<Double> getObservableBaseRate() {
         EditText base_rate_editText = (EditText) findViewById(R.id.edit_text_base_rate);
@@ -158,11 +133,6 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
                     }
                 });
         return baseRateObservable;
-    }
-
-    private Observable<RatesResponse> getAllObservableRates(String baseRate){
-        Observable<RatesResponse> ratesResponseObservable = mMainActivityViewModel.getObservableData(baseRate);
-        return ratesResponseObservable;
     }
 
     //this observable takes an observable baserate, an edittext textview, and an observable rate from the API
@@ -213,35 +183,13 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
     //the baserate, which is taken by making the edittext an observable using Jake Whartons RxBinding work
     //it then builds an observable for the rates class
     private void setObservableRates(String baseRate) {
-        //Observable<Double> baseRateObservable = getObservableBaseRate();
-        //Observable<RatesResponse> ratesObservable = getAllObservableRates(baseRate);
-
-        EditText base_rate_editText = (EditText) findViewById(R.id.edit_text_base_rate);
-        InitialValueObservable<CharSequence> baseRateInput =
-                RxTextView.textChanges(base_rate_editText);
         Observable<RatesResponse> ratesObservable = mMainActivityViewModel.getObservableData(baseRate);
 
-
-        //map the baserate input so that it returns zero if empty, and a double of its value otherwise
-        Observable<Double> baseRateObservable =
-                baseRateInput.map(new Function<CharSequence, Double>() {
-                    @Override
-                    public Double apply(CharSequence charSequence) throws Exception {
-                        if(charSequence.length()<1){
-                            //this sets the baserate observable to zero when empty
-                            return 0.00;
-                        }
-                        else{
-                            return Double.parseDouble(charSequence.toString());
-                        }
-                    }
-                });
-
         //call the setDouble method to set all the edittext values to values created by the observables.
-        setDouble(baseRateObservable, usd_rate_textView, getUsdObservableRate(ratesObservable));
-        setDouble(baseRateObservable, eur_rate_textView, getEurbservableRate(ratesObservable));
-        setDouble(baseRateObservable, brl_rate_textView, getBrlObservableRate(ratesObservable));
-        setDouble(baseRateObservable, cad_rate_textView, getCadObservableRate(ratesObservable));
+        setDouble(getObservableBaseRate(), usd_rate_textView, getUsdObservableRate(ratesObservable));
+        setDouble(getObservableBaseRate(), eur_rate_textView, getEurbservableRate(ratesObservable));
+        setDouble(getObservableBaseRate(), brl_rate_textView, getBrlObservableRate(ratesObservable));
+        setDouble(getObservableBaseRate(), cad_rate_textView, getCadObservableRate(ratesObservable));
     }
 
     //each of the below four returns an observable double of the intended currency
@@ -254,10 +202,9 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
                                 return (rates.getuSD());
                             }
                         });
-
         return usdRatesApiAllDataObservable;
     }
-    //as above
+
     public Observable<Double> getEurbservableRate(Observable<RatesResponse> ratesObservable){
         Observable<Double> usdRatesApiAllDataObservable =
                 ratesObservable
@@ -267,9 +214,9 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
                                 return (rates.getCNY());
                             }
                         });
-
         return usdRatesApiAllDataObservable;
     }
+
     public Observable<Double> getBrlObservableRate(Observable<RatesResponse> ratesObservable){
         Observable<Double> usdRatesApiAllDataObservable =
                 ratesObservable
@@ -279,9 +226,9 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
                                 return (rates.getBRL());
                             }
                         });
-
         return usdRatesApiAllDataObservable;
     }
+
     public Observable<Double> getCadObservableRate(Observable<RatesResponse> ratesObservable){
         Observable<Double> usdRatesApiAllDataObservable =
                 ratesObservable
@@ -291,7 +238,6 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
                                 return (rates.getCAD());
                             }
                         });
-
         return usdRatesApiAllDataObservable;
     }
 }

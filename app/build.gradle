@@ -52,6 +52,9 @@ dependencies {
 
     // RxBinding wrappers for UI
     compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+    // RxBinding try 2
+    implementation 'com.jakewharton.rxbinding4:rxbinding-core:4.0.0'
+
 
 
     //Recyclerview dependencies
