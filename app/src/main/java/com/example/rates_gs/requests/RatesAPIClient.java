@@ -25,11 +25,31 @@ import static com.example.rates_gs.util.Constants.NETWORK_TIMEOUT;
 
 public class RatesAPIClient {
     private static final String TAG = "RatesAPIClient";
-    private static RatesAPIClient instance;
     //TODO use the mutbleLiveData to update the values based on what comes out of the observable
     private MutableLiveData<List<CurrencyRate>> mCurrencyRates;
-    private RetrieveRatesRunnable mRetrieveRatesRunnable;
+    /*
+    below is all the observable information
+     */
+    public Observable getObservableData(String baseRate){
+        RatesAPI ratesAPI = ServiceGenerator.getObservableRatesApi();
+        Observable<RatesResponse> ratesObservable =
+                ratesAPI.getObservableRates(baseRate)
+                        .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
+                        .map(new Function<RevolutApiResponse, RatesResponse>() {
+                            @Override
+                            public RatesResponse apply(RevolutApiResponse revolutApiResponse) throws Exception {
+                                return revolutApiResponse.getRates();
+                            }
+                        });
+        return ratesObservable;
+    }
 
+
+
+
+
+    private RetrieveRatesRunnable mRetrieveRatesRunnable;
+    private static RatesAPIClient instance;
     //TODO figure out if we'd be better of with a regular call and only have the observables at the end (viewmodel)
     public static RatesAPIClient getInstance() {
         if (instance == null) {
@@ -45,20 +65,7 @@ public class RatesAPIClient {
         mCurrencyRates = new MutableLiveData<>();
     }
 
-    public Observable getObservableData(String baseRate){
-        RatesAPI ratesAPI = ServiceGenerator.getObservableRatesApi();
-        Observable<RatesResponse> ratesObservable =
-                ratesAPI.getObservableRates(baseRate)
-                        .repeatWhen(completed -> completed.delay(1, TimeUnit.SECONDS))
-                        .map(new Function<RevolutApiResponse, RatesResponse>() {
-                            @Override
-                            public RatesResponse apply(RevolutApiResponse revolutApiResponse) throws Exception {
-                                return revolutApiResponse.getRates();
-                            }
-                        });
-        return ratesObservable;
 
-    }
 
     public LiveData<List<CurrencyRate>> getRates() {
         //this is mimicking what it would be like to get the data from the webservices by calling the set method.
@@ -73,7 +80,6 @@ public class RatesAPIClient {
 
     //TODO figure out why this list can only work with the same length as the list in MainActivity for interactions
     private void setCurrencyRates(){
-
         //instead of phony data below use real linked data
         //dummy data - to fill the arraylists
         currencyRatesDataSet.add(new CurrencyRate("EUR","Euro",R.drawable.flag_eur,100.01));
