@@ -14,7 +14,9 @@ import android.widget.Toast;
 import com.example.rates_gs.adapters.OnRateListener;
 import com.example.rates_gs.adapters.RatesListAdapter;
 import com.example.rates_gs.models.CurrencyRate;
+import com.example.rates_gs.models.ModelListCurrencyRate;
 import com.example.rates_gs.requests.responses.RatesResponse;
+import com.example.rates_gs.requests.responses.RevolutApiResponse;
 import com.example.rates_gs.viewmodels.MainActivityViewModel;
 import com.jakewharton.rxbinding2.InitialValueObservable;
 import com.jakewharton.rxbinding2.widget.RxTextView;
@@ -67,6 +69,28 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
     }
 
     public void subscribeObservers(){
+        mMainActivityViewModel.getCurrencyRates().observe(this, new androidx.lifecycle.Observer<RevolutApiResponse>() {
+            @Override
+            public void onChanged(RevolutApiResponse revolutApiResponse) {
+                if(revolutApiResponse!=null){
+                    //we are viewing livedata so that the data doesnt change if the user changes state (e.g. screen lock)
+                    //we want the adapter below to be notified if changes are made to our livedata
+                    ModelListCurrencyRate modelListCurrencyRate = new ModelListCurrencyRate(revolutApiResponse);
+                    mRatesListAdapter.setRates(modelListCurrencyRate.getCurrencyRateList());
+                }
+            }
+/*            @Override
+            public void onChanged(List<CurrencyRate> currencyRates) {
+                if(currencyRates != null){
+                    //we are viewing livedata so that the data doesnt change if the user changes state (e.g. screen lock)
+                    //we want the adapter below to be notified if changes are made to our livedata
+                    mRatesListAdapter.setRates(currencyRates);
+                }
+            }*/
+        });
+    }
+
+/*    public void subscribeObservers(){
         mMainActivityViewModel.getCurrencyRates().observe(this, new androidx.lifecycle.Observer<List<CurrencyRate>>() {
             @Override
             public void onChanged(List<CurrencyRate> currencyRates) {
@@ -77,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
                 }
             }
         });
-    }
+    }*/
 
     //method below takes inputs for our repository search method
     public void searchRatesApi(String baseRate){
@@ -103,7 +127,8 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
         //Toast.makeText(this, mRateNamesLong.get(position), Toast.LENGTH_SHORT).show();
         Toast.makeText(this, "Clicked me!" + mRatesListAdapter.getItemCount() , Toast.LENGTH_SHORT).show();
         mRatesListAdapter.swapRates(position);
-        List list = mMainActivityViewModel.getCurrencyRates().getValue();
+        //List list = mMainActivityViewModel.getCurrencyRates().getValue();
+        List list = new ModelListCurrencyRate(mMainActivityViewModel.getCurrencyRates().getValue()).getCurrencyRateList();
         CurrencyRate myrate = (CurrencyRate) list.get(position);
         String baserate = myrate.getRateNameShort();
         setObservableRates(baserate);

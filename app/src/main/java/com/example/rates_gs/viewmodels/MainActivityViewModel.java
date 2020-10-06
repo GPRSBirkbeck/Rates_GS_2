@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.rates_gs.models.CurrencyRate;
 import com.example.rates_gs.repositories.RatesRepository;
 import com.example.rates_gs.requests.responses.RatesResponse;
+import com.example.rates_gs.requests.responses.RevolutApiResponse;
 
 import java.util.List;
 
@@ -25,7 +26,12 @@ public class MainActivityViewModel extends ViewModel {
     }
 
     //the equivalent of using getters and setters, livedata cant be editted, mutablelivedata can
+/*
     public LiveData<List<CurrencyRate>> getCurrencyRates(){
+        return mRatesRepository.getCurrencyRates();
+    }
+*/
+    public LiveData<RevolutApiResponse> getCurrencyRates(){
         return mRatesRepository.getCurrencyRates();
     }
 
