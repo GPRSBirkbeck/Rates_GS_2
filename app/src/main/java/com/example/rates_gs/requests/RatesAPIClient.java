@@ -30,6 +30,15 @@ public class RatesAPIClient {
     private MutableLiveData<List<CurrencyRate>> mCurrencyRates;
     private RetrieveRatesRunnable mRetrieveRatesRunnable;
 
+    //TODO figure out if we'd be better of with a regular call and only have the observables at the end (viewmodel)
+    public static RatesAPIClient getInstance() {
+        if (instance == null) {
+            instance = new RatesAPIClient();
+        }
+        return instance;
+    }
+
+
     //TODO figure out what to do with this
     private ArrayList<CurrencyRate> currencyRatesDataSet = new ArrayList<>();
     private RatesAPIClient() {
@@ -50,18 +59,6 @@ public class RatesAPIClient {
         return ratesObservable;
 
     }
-
-
-
-
-    //TODO figure out if we'd be better of with a regular call and only have the observables at the end (viewmodel)
-    public static RatesAPIClient getInstance() {
-        if (instance == null) {
-            instance = new RatesAPIClient();
-        }
-        return instance;
-    }
-
 
     public LiveData<List<CurrencyRate>> getRates() {
         //this is mimicking what it would be like to get the data from the webservices by calling the set method.
@@ -94,7 +91,6 @@ public class RatesAPIClient {
         currencyRatesDataSet.add(new CurrencyRate("HRK","Croatian Kuna", R.drawable.flag_hrk,100.00));
         currencyRatesDataSet.add(new CurrencyRate("HUF","Hungarian Forint", R.drawable.flag_huf,100.00 ));
         currencyRatesDataSet.add(new CurrencyRate("IDR","Indonesian Rupiah", R.drawable.flag_idr,100.00));
-
 
         currencyRatesDataSet.add(new CurrencyRate("ILS","Israeli New Shekel", R.drawable.flag_ils,100.00));
         currencyRatesDataSet.add(new CurrencyRate("INR","Indian Rupee", R.drawable.flag_inr,100.00 ));
