@@ -45,9 +45,7 @@ public class RatesRepository {
     private RatesRepository(){
         mRatesAPIClient = RatesAPIClient.getInstance();
     }
-/*    public LiveData<List<CurrencyRate>> getCurrencyRates(){
-        return mRatesAPIClient.getRates();
-    }*/
+
     public LiveData<RevolutApiResponse> getCurrencyRates(){
         return mRatesAPIClient.getRates();
     }

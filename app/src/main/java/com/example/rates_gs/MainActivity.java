@@ -63,9 +63,9 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
         //call our functions
         subscribeObservers();
         setObservableRates("ZAR");
+        searchRatesApi("ZAR");
         initRecylcerView();
         getObservableBaseRate();
-        testRetrofitGetRequest();
     }
 
     public void subscribeObservers(){
@@ -79,36 +79,12 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
                     mRatesListAdapter.setRates(modelListCurrencyRate.getCurrencyRateList());
                 }
             }
-/*            @Override
-            public void onChanged(List<CurrencyRate> currencyRates) {
-                if(currencyRates != null){
-                    //we are viewing livedata so that the data doesnt change if the user changes state (e.g. screen lock)
-                    //we want the adapter below to be notified if changes are made to our livedata
-                    mRatesListAdapter.setRates(currencyRates);
-                }
-            }*/
         });
     }
-
-/*    public void subscribeObservers(){
-        mMainActivityViewModel.getCurrencyRates().observe(this, new androidx.lifecycle.Observer<List<CurrencyRate>>() {
-            @Override
-            public void onChanged(List<CurrencyRate> currencyRates) {
-                if(currencyRates != null){
-                    //we are viewing livedata so that the data doesnt change if the user changes state (e.g. screen lock)
-                    //we want the adapter below to be notified if changes are made to our livedata
-                    mRatesListAdapter.setRates(currencyRates);
-                }
-            }
-        });
-    }*/
 
     //method below takes inputs for our repository search method
     public void searchRatesApi(String baseRate){
         mMainActivityViewModel.searchRates(baseRate);
-    }
-    private void testRetrofitGetRequest(){
-        searchRatesApi("ZAR");
     }
 
     private void initRecylcerView(){
@@ -122,17 +98,13 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
     //all the interface does is get the position of the rate
     @Override
     public void onRatesClick(int position) {
-        //mMainActivityViewModel.getCurrencyRates()
-        //mRateNamesLong.get(position);
-        //Toast.makeText(this, mRateNamesLong.get(position), Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "Clicked me!" + mRatesListAdapter.getItemCount() , Toast.LENGTH_SHORT).show();
         mRatesListAdapter.swapRates(position);
-        //List list = mMainActivityViewModel.getCurrencyRates().getValue();
+        //the next three lines are used to get the value of the rate we clicked, might be easier to build a function for this in model class
         List list = new ModelListCurrencyRate(mMainActivityViewModel.getCurrencyRates().getValue()).getCurrencyRateList();
         CurrencyRate myrate = (CurrencyRate) list.get(position);
         String baserate = myrate.getRateNameShort();
         setObservableRates(baserate);
-        Toast.makeText(this, "Clicked me!" + baserate, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "New baserate is" + baserate, Toast.LENGTH_SHORT).show();
     }
 
     private Observable<Double> getObservableBaseRate() {

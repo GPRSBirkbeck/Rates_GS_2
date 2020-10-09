@@ -25,12 +25,6 @@ public class MainActivityViewModel extends ViewModel {
         mRatesRepository = RatesRepository.getInstance();
     }
 
-    //the equivalent of using getters and setters, livedata cant be editted, mutablelivedata can
-/*
-    public LiveData<List<CurrencyRate>> getCurrencyRates(){
-        return mRatesRepository.getCurrencyRates();
-    }
-*/
     public LiveData<RevolutApiResponse> getCurrencyRates(){
         return mRatesRepository.getCurrencyRates();
     }
