@@ -63,9 +63,15 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
         //call our functions
         subscribeObservers();
         setObservableRates("ZAR");
-        searchRatesApi("ZAR");
         initRecylcerView();
         getObservableBaseRate();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        searchRatesApi("ZAR");
+
     }
 
     public void subscribeObservers(){
@@ -103,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
         List list = new ModelListCurrencyRate(mMainActivityViewModel.getCurrencyRates().getValue()).getCurrencyRateList();
         CurrencyRate myrate = (CurrencyRate) list.get(position);
         String baserate = myrate.getRateNameShort();
-        setObservableRates(baserate);
+        searchRatesApi(baserate);
         Toast.makeText(this, "New baserate is" + baserate, Toast.LENGTH_SHORT).show();
     }
 
@@ -181,12 +187,13 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
     //it then builds an observable for the rates class
     private void setObservableRates(String baseRate) {
         Observable<RatesResponse> ratesObservable = mMainActivityViewModel.getObservableData(baseRate);
+        Observable<Double> baseRateObservable = getObservableBaseRate();
 
         //call the setDouble method to set all the edittext values to values created by the observables.
-        setDouble(getObservableBaseRate(), usd_rate_textView, getUsdObservableRate(ratesObservable));
-        setDouble(getObservableBaseRate(), eur_rate_textView, getEurbservableRate(ratesObservable));
-        setDouble(getObservableBaseRate(), brl_rate_textView, getBrlObservableRate(ratesObservable));
-        setDouble(getObservableBaseRate(), cad_rate_textView, getCadObservableRate(ratesObservable));
+        setDouble(baseRateObservable, usd_rate_textView, getUsdObservableRate(ratesObservable));
+        setDouble(baseRateObservable, eur_rate_textView, getEurbservableRate(ratesObservable));
+        setDouble(baseRateObservable, brl_rate_textView, getBrlObservableRate(ratesObservable));
+        setDouble(baseRateObservable, cad_rate_textView, getCadObservableRate(ratesObservable));
     }
 
     //each of the below four returns an observable double of the intended currency
