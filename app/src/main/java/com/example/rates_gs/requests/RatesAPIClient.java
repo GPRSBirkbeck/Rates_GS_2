@@ -110,7 +110,6 @@ public class RatesAPIClient {
                 e.printStackTrace();
                 mCurrencyRatesResponse.postValue(null);
             }
-
         }
 
         private Call<RevolutApiResponse> getRates(String baseRate) {

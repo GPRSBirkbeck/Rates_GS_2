@@ -22,6 +22,8 @@ import com.jakewharton.rxbinding2.InitialValueObservable;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
     private TextView brl_rate_textView;
     private TextView cad_rate_textView;
     private RecyclerView mRecyclerView;
+    private String mBaseRate;
 
     //adapter for our ViewModel
     private RatesListAdapter mRatesListAdapter;
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
         //instantiation of the viewmodelprovider
         mMainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
+        mBaseRate = "EUR";
         //call our functions
         subscribeObservers();
         setObservableRates("ZAR");
@@ -70,9 +74,17 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
     @Override
     protected void onStart() {
         super.onStart();
-        searchRatesApi("ZAR");
-
+        searchRatesApi(mBaseRate);
+        Timer timer = new Timer();
+        timer.schedule(new refreshClass(), 0, 3000);
     }
+    //TODO find a better way of running the below
+    class refreshClass extends TimerTask {
+        public void run() {
+            searchRatesApi(mBaseRate);
+        }
+    }
+
 
     public void subscribeObservers(){
         mMainActivityViewModel.getCurrencyRates().observe(this, new androidx.lifecycle.Observer<RevolutApiResponse>() {
@@ -89,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
     }
 
     //method below takes inputs for our repository search method
-    public void searchRatesApi(String baseRate){
+    public void searchRatesApi(String baseRate) {
         mMainActivityViewModel.searchRates(baseRate);
     }
 
@@ -108,9 +120,9 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
         //the next three lines are used to get the value of the rate we clicked, might be easier to build a function for this in model class
         List list = new ModelListCurrencyRate(mMainActivityViewModel.getCurrencyRates().getValue()).getCurrencyRateList();
         CurrencyRate myrate = (CurrencyRate) list.get(position);
-        String baserate = myrate.getRateNameShort();
-        searchRatesApi(baserate);
-        Toast.makeText(this, "New baserate is" + baserate, Toast.LENGTH_SHORT).show();
+        mBaseRate = myrate.getRateNameShort();
+        searchRatesApi(mBaseRate);
+        Toast.makeText(this, "New baserate is" + mBaseRate, Toast.LENGTH_SHORT).show();
     }
 
     private Observable<Double> getObservableBaseRate() {

@@ -38,11 +38,11 @@ public class RatesListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        //TODO add work for if position = 0
         ((RatesViewholder)holder).ratesname_short.setText(mCurrencyRate.get(position).getRateNameShort());
         ((RatesViewholder)holder).ratesname_long.setText(mCurrencyRate.get(position).getRateNameLong());
         ((RatesViewholder)holder).rates_double.setText(String.valueOf(mCurrencyRate.get(position).getRateDouble()));
         ((RatesViewholder)holder).flag_image.setImageResource(mCurrencyRate.get(position).getFlagImage());
-
     }
 
     @Override
