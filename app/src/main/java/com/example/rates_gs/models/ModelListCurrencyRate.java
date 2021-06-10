@@ -19,6 +19,7 @@ public class ModelListCurrencyRate {
     }
 
     public ModelListCurrencyRate(RevolutApiResponse revolutApiResponse) {
+        //todo insert DI
         currencyRateList = new ArrayList<>();
         String baseRate = revolutApiResponse.getBaseCurrency();
         RatesResponse r = revolutApiResponse.getRates();
