@@ -10,6 +10,7 @@ import com.example.rates_gs.requests.responses.RevolutApiResponse;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -73,8 +74,6 @@ public class ReflectionModelListRates {
             //reflection to get the currency's long name
             fieldName = fieldName.toUpperCase();
 
-            //currency name string
-            String currency_long_name;
             //currency name R.string id
             int currency_long_name_id = 0;
 
@@ -82,38 +81,57 @@ public class ReflectionModelListRates {
             int fieldFlagName = 0;
             String fieldNameLowerCase = fieldName.toLowerCase();
             String flagName = "flag_" + fieldNameLowerCase;
-            //Integer.parseInt("R.drawable.flag_" + fieldName);
+
+
+
+
             try {
                 currency_long_name_id = R.string.class.getField(fieldName).getInt(null);
                 fieldFlagName = R.drawable.class.getField(flagName).getInt(null);
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 e.printStackTrace();
             }
-            if(currency_long_name_id != 0){
-                currency_long_name = String.valueOf(currency_long_name_id);
+            if(currency_long_name_id == 0){
+                //exception handling - set currency name to unknown if currency isnt known
+                currency_long_name_id = R.string.UNK;
             }
-            else{
-                currency_long_name = "Unknown Currency";
-            }
+
             if(fieldFlagName == 0){
+                //exception handling - set currency flag to revolut logo if flag not known
                 fieldFlagName = R.drawable.flag_rev;
             }
-
-            //flag name
-            //int fieldFlagName = Integer.parseInt("R.drawable.flag_" + fieldName);
-
-            double fieldValue = 0.00;
-            try {
+/*            try {
+                if (!Modifier.isPublic(f.getModifiers())) {
+                    f.setAccessible(true);
+                }
                 fieldValue = f.getDouble(r);
+                //fieldValue = (double) f.get(r);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
-            }
-
-            int name = R.string.AUD;
-
+            }*/
             if (fieldName.equals(baseRate)) {
-                currencyRateList.add(0, new CurrencyRate(fieldName, currency_long_name_id, fieldFlagName, fieldValue));
+                currencyRateList.add(0, new CurrencyRate(fieldName, currency_long_name_id, fieldFlagName, 1.00));
             } else {
+                //field value as 0 for now
+                double fieldValue = 0.00;
+
+                try {
+                    //getter name
+                    String getter = "get" + fieldName;
+                    Method m = c.getDeclaredMethod(getter, null);
+
+                    Object[] response = new Object[] {r};
+                    Object[] responses = new Object[] {response};
+
+                    fieldValue = (double) m.invoke(r);
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+
                 currencyRateList.add(new CurrencyRate(fieldName, currency_long_name_id, fieldFlagName, fieldValue));
             }
         }

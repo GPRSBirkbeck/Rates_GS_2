@@ -121,12 +121,12 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
     public void onRatesClick(int position) {
         mRatesListAdapter.swapRates(position);
         //the next three lines are used to get the value of the rate we clicked, might be easier to build a function for this in model class
-        //List list = new ModelListCurrencyRate(mMainActivityViewModel.getCurrencyRates().getValue()).getCurrencyRateList();
         List list = new ReflectionModelListRates(mMainActivityViewModel.getCurrencyRates().getValue()).getCurrencyRateList();
-        CurrencyRate myrate = (CurrencyRate) list.get(position);
-        mBaseRate = myrate.getRateNameShort();
+        CurrencyRate myRate = (CurrencyRate) list.get(position);
+        mBaseRate = myRate.getRateNameShort();
+
         searchRatesApi(mBaseRate);
-        Toast.makeText(this, "New baserate is" + mBaseRate, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "New baserate is" + mBaseRate + "number of former currency is " + myRate.getRateDouble(), Toast.LENGTH_SHORT).show();
     }
 
     private Observable<Double> getObservableBaseRate() {

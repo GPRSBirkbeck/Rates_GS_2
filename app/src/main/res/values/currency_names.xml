@@ -38,5 +38,6 @@
         <string name="THB">Thai Baht</string>
         <string name="USD">US Dollar</string>
         <string name="ZAR">South African Rand</string>
+        <string name="UNK">Currency not known</string>
 
 </resources>
