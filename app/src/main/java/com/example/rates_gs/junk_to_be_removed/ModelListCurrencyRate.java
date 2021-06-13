@@ -1,6 +1,7 @@
-package com.example.rates_gs.models;
+package com.example.rates_gs.junk_to_be_removed;
 
 import com.example.rates_gs.R;
+import com.example.rates_gs.models.CurrencyRate;
 import com.example.rates_gs.requests.responses.RatesResponse;
 import com.example.rates_gs.requests.responses.RevolutApiResponse;
 
@@ -18,13 +19,15 @@ public class ModelListCurrencyRate {
         this.currencyRateList = currencyRateList;
     }
 
+    //TODO move to the junk zone
+
     public ModelListCurrencyRate(RevolutApiResponse revolutApiResponse) {
         //todo insert DI
         currencyRateList = new ArrayList<>();
         String baseRate = revolutApiResponse.getBaseCurrency();
         RatesResponse r = revolutApiResponse.getRates();
 
-        if(baseRate.equals("EUR")){
+  /*      if(baseRate.equals("EUR")){
             this.currencyRateList.add(0, new CurrencyRate("EUR","Euro", R.drawable.flag_eur,1.00));
         }
         else{
@@ -215,6 +218,6 @@ public class ModelListCurrencyRate {
         }
         else{
             this.currencyRateList.add(new CurrencyRate("ZAR","South African Rand", R.drawable.flag_zar,r.getzAR() ));
-        }
+        }*/
     }
 }

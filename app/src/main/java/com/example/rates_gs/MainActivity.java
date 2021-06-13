@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.example.rates_gs.adapters.OnRateListener;
 import com.example.rates_gs.adapters.RatesListAdapter;
 import com.example.rates_gs.models.CurrencyRate;
-import com.example.rates_gs.models.ModelListCurrencyRate;
+import com.example.rates_gs.models.ReflectionModelListRates;
 import com.example.rates_gs.requests.responses.RatesResponse;
 import com.example.rates_gs.requests.responses.RevolutApiResponse;
 import com.example.rates_gs.viewmodels.MainActivityViewModel;
@@ -93,8 +93,11 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
                 if(revolutApiResponse!=null){
                     //we are viewing livedata so that the data doesnt change if the user changes state (e.g. screen lock)
                     //we want the adapter below to be notified if changes are made to our livedata
-                    ModelListCurrencyRate modelListCurrencyRate = new ModelListCurrencyRate(revolutApiResponse);
-                    mRatesListAdapter.setRates(modelListCurrencyRate.getCurrencyRateList());
+
+                    //ModelListCurrencyRate modelListCurrencyRate = new ModelListCurrencyRate(revolutApiResponse);
+                    ReflectionModelListRates modelListRates = new ReflectionModelListRates(revolutApiResponse);
+                    //mRatesListAdapter.setRates(modelListCurrencyRate.getCurrencyRateList());
+                    mRatesListAdapter.setRates(modelListRates.getCurrencyRateList());
                 }
             }
         });
@@ -118,7 +121,8 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
     public void onRatesClick(int position) {
         mRatesListAdapter.swapRates(position);
         //the next three lines are used to get the value of the rate we clicked, might be easier to build a function for this in model class
-        List list = new ModelListCurrencyRate(mMainActivityViewModel.getCurrencyRates().getValue()).getCurrencyRateList();
+        //List list = new ModelListCurrencyRate(mMainActivityViewModel.getCurrencyRates().getValue()).getCurrencyRateList();
+        List list = new ReflectionModelListRates(mMainActivityViewModel.getCurrencyRates().getValue()).getCurrencyRateList();
         CurrencyRate myrate = (CurrencyRate) list.get(position);
         mBaseRate = myrate.getRateNameShort();
         searchRatesApi(mBaseRate);

@@ -4,12 +4,12 @@ public class CurrencyRate {
 
     //this class represents the POJO for the rates that are actually displayed in the ratesListAdapter
     private String rateNameShort;
-    private String rateNameLong;
+    private int rateNameLong;
     private Integer flagImage;
     private Double rateDouble;
 
     //constructor
-    public CurrencyRate(String rateNameShort, String rateNameLong, Integer flagImage, Double rateDouble) {
+    public CurrencyRate(String rateNameShort, int rateNameLong, Integer flagImage, Double rateDouble) {
         this.rateNameShort = rateNameShort;
         this.rateNameLong = rateNameLong;
         this.flagImage = flagImage;
@@ -21,7 +21,7 @@ public class CurrencyRate {
         this.rateNameShort = rateNameShort;
     }
 
-    public void setRateNameLong(String rateNameLong) {
+    public void setRateNameLong(int rateNameLong) {
         this.rateNameLong = rateNameLong;
     }
 
@@ -37,7 +37,7 @@ public class CurrencyRate {
         return rateNameShort;
     }
 
-    public String getRateNameLong() {
+    public int getRateNameLong() {
         return rateNameLong;
     }
 
