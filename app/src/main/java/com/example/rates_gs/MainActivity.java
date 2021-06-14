@@ -21,10 +21,12 @@ import com.example.rates_gs.viewmodels.MainActivityViewModel;
 import com.jakewharton.rxbinding2.InitialValueObservable;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -67,6 +69,10 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
         //call our functions
         subscribeObservers();
         setObservableRates("ZAR");
+
+        //call functions for rateslistobervers
+        //setObservableRatesList("ZAR");
+
         initRecylcerView();
         getObservableBaseRate();
     }
@@ -93,10 +99,19 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
                 if(revolutApiResponse!=null){
                     //we are viewing livedata so that the data doesnt change if the user changes state (e.g. screen lock)
                     //we want the adapter below to be notified if changes are made to our livedata
-
-                    //ModelListCurrencyRate modelListCurrencyRate = new ModelListCurrencyRate(revolutApiResponse);
                     ReflectionModelListRates modelListRates = new ReflectionModelListRates(revolutApiResponse);
-                    //mRatesListAdapter.setRates(modelListCurrencyRate.getCurrencyRateList());
+/*                    List<CurrencyRate> list = modelListRates.getCurrencyRateList();
+                    List<CurrencyRate> list2 = new ArrayList<>();
+                    double latestBaseRate = getLatestBaseRate();
+                    //TODO make the below much more sleek using live data
+                    for(CurrencyRate currencyRate : list){
+                        CurrencyRate adjustedRate = currencyRate;
+                        adjustedRate.setRateDouble(currencyRate.getRateDouble()*2);
+                        list2.add(adjustedRate);
+                    }*/
+
+
+
                     mRatesListAdapter.setRates(modelListRates.getCurrencyRateList());
                 }
             }
@@ -124,9 +139,12 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
         List list = new ReflectionModelListRates(mMainActivityViewModel.getCurrencyRates().getValue()).getCurrencyRateList();
         CurrencyRate myRate = (CurrencyRate) list.get(position);
         mBaseRate = myRate.getRateNameShort();
+        Toast.makeText(this, "New baserate is" + mBaseRate + " number of former currency is " + myRate.getRateDouble(), Toast.LENGTH_SHORT).show();
+        double formerRate = myRate.getRateDouble();
 
         searchRatesApi(mBaseRate);
-        Toast.makeText(this, "New baserate is" + mBaseRate + "number of former currency is " + myRate.getRateDouble(), Toast.LENGTH_SHORT).show();
+        //TODO make the line below work somehow
+        myRate.setRateDouble(formerRate);
     }
 
     private Observable<Double> getObservableBaseRate() {
@@ -260,4 +278,37 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
                         });
         return usdRatesApiAllDataObservable;
     }
+
+/*    public void setObservableRatesList(String baseRate){
+        Observable<RatesResponse> ratesObservable = mMainActivityViewModel.getObservableData(baseRate);
+        Observable<Double> baseRateObservable = getObservableBaseRate();
+
+    }*/
+private Double getLatestBaseRate() {
+    EditText base_rate_editText = (EditText) findViewById(R.id.edit_text_base_rate);
+    //base_rate_editText.setText("100");
+
+    //make an InitialValueObservable out of the base_rate_editText
+    InitialValueObservable<CharSequence> baseRateInput =
+            RxTextView.textChanges(base_rate_editText);
+
+    //map the baserate input so that it returns zero if empty, and a double of its value otherwise
+    Observable<Double> baseRateObservable =
+            baseRateInput.map(new Function<CharSequence, Double>() {
+                @Override
+                public Double apply(CharSequence charSequence) throws Exception {
+                    if(charSequence.length()<1){
+                        //this sets the baserate observable to zero when empty
+                        return 0.00;
+                    }
+                    else{
+                        return Double.parseDouble(charSequence.toString());
+                    }
+                }
+            });
+    Double baseRateDouble = baseRateObservable.blockingLast();
+    //Double baseRateDouble = Double.valueOf(String.valueOf(baseRateObservable.lastElement()));
+
+    return baseRateDouble;
+}
 }

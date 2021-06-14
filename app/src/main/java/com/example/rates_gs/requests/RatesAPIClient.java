@@ -42,7 +42,6 @@ public class RatesAPIClient {
     private static final String TAG = "RatesAPIClient";
     //TODO use the mutbleLiveData to update the values based on what comes out of the observable
     private static RatesAPIClient instance;
-    //private MutableLiveData<List<CurrencyRate>> mCurrencyRates;
     private MutableLiveData<RevolutApiResponse> mCurrencyRatesResponse;
     private RetrieveRatesRunnable mRetrieveRatesRunnable;
     //TODO figure out if we'd be better of with a regular call and only have the observables at the end (viewmodel)
@@ -53,7 +52,6 @@ public class RatesAPIClient {
         return instance;
     }
     private RatesAPIClient() { mCurrencyRatesResponse = new MutableLiveData<RevolutApiResponse>(); }
-    //public LiveData<List<CurrencyRate>> getRates() { return mCurrencyRates; }
     public MutableLiveData<RevolutApiResponse> getRates() { return mCurrencyRatesResponse; }
 
     //TODO refactor this in the
