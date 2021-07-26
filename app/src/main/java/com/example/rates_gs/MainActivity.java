@@ -109,6 +109,9 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
                         adjustedRate.setRateDouble(currencyRate.getRateDouble()*2);
                         list2.add(adjustedRate);
                     }*/
+                    Observable<Double> baseRateObservable = getObservableBaseRate();
+                    Double baseRate = baseRateObservable.blockingFirst();
+                    modelListRates.multiplyCRListByBaseRate(baseRate);
 
 
 

@@ -23,6 +23,17 @@ public class ReflectionModelListRates {
         this.currencyRateList = currencyRateList;
     }
 
+    public void multiplyCRListByBaseRate(Double BaseRate){
+        List<CurrencyRate> multiplyIt = this.currencyRateList;
+        for(CurrencyRate currencyRate: multiplyIt){
+            Double currentDouble = currencyRate.getRateDouble();
+            Double finalDouble = currentDouble*BaseRate;
+            currencyRate.setRateDouble(finalDouble);
+        }
+        this.currencyRateList = multiplyIt;
+
+    }
+
     public ReflectionModelListRates(RevolutApiResponse revolutApiResponse) {
         currencyRateList = new ArrayList<>();
         String baseRate = revolutApiResponse.getBaseCurrency();

@@ -5,10 +5,12 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.rates_gs.AppExecutors;
+import com.example.rates_gs.models.CurrencyRate;
 import com.example.rates_gs.requests.responses.RatesResponse;
 import com.example.rates_gs.requests.responses.RevolutApiResponse;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
@@ -53,6 +55,7 @@ public class RatesAPIClient {
     }
     private RatesAPIClient() { mCurrencyRatesResponse = new MutableLiveData<>(); }
     public MutableLiveData<RevolutApiResponse> getCurrencyRates() { return mCurrencyRatesResponse; }
+
 
     //TODO refactor this in the
     public void getRatesApi(String baseRate) {

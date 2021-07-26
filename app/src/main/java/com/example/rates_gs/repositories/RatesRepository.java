@@ -38,6 +38,7 @@ public class RatesRepository {
         return mRatesAPIClient.getCurrencyRates();
     }
 
+
     //our observable rates
     public Observable<RatesResponse> getObservableData(String baseRate){
         return mRatesAPIClient.getObservableData(baseRate);
