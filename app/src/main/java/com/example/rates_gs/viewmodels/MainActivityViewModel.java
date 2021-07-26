@@ -18,7 +18,10 @@ public class MainActivityViewModel extends ViewModel {
     //allows setting and posting - if not needed make it livedata
     //private MutableLiveData<List<CurrencyRate>> mCurrencyRates;
     private RatesRepository mRatesRepository;
-    private CurrencyRate mBaseRate;
+    private CurrencyRate mBaseCurrencyRate;
+
+    // Create a LiveData with a Double
+    private MutableLiveData<Double> mBaseRate;
 
     public MainActivityViewModel(){
         //TODO make a livedata for the ratesResponse from Client to here
@@ -37,5 +40,9 @@ public class MainActivityViewModel extends ViewModel {
     // TODO Add the logic for updating based on the baserate here
     public Observable<RatesResponse> getObservableData(String baseRate){
         return mRatesRepository.getObservableData(baseRate);
+    }
+
+    public LiveData<Double> getBaseRate(){
+        return mBaseRate;
     }
 }

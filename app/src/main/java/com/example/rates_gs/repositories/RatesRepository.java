@@ -1,24 +1,12 @@
 package com.example.rates_gs.repositories;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
-import com.example.rates_gs.R;
 import com.example.rates_gs.requests.RatesAPIClient;
 import com.example.rates_gs.requests.responses.RatesResponse;
-import com.example.rates_gs.requests.RatesAPI;
 import com.example.rates_gs.requests.responses.RevolutApiResponse;
-import com.example.rates_gs.models.CurrencyRate;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.Function;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * THis uses the singleton pattern, which is needed for accessing webservices or accessing database
@@ -47,7 +35,7 @@ public class RatesRepository {
     }
 
     public LiveData<RevolutApiResponse> getCurrencyRates(){
-        return mRatesAPIClient.getRates();
+        return mRatesAPIClient.getCurrencyRates();
     }
 
     //our observable rates

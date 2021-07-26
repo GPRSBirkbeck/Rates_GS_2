@@ -51,8 +51,8 @@ public class RatesAPIClient {
         }
         return instance;
     }
-    private RatesAPIClient() { mCurrencyRatesResponse = new MutableLiveData<RevolutApiResponse>(); }
-    public MutableLiveData<RevolutApiResponse> getRates() { return mCurrencyRatesResponse; }
+    private RatesAPIClient() { mCurrencyRatesResponse = new MutableLiveData<>(); }
+    public MutableLiveData<RevolutApiResponse> getCurrencyRates() { return mCurrencyRatesResponse; }
 
     //TODO refactor this in the
     public void getRatesApi(String baseRate) {
