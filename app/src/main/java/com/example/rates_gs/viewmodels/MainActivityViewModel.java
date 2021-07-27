@@ -32,6 +32,13 @@ public class MainActivityViewModel extends ViewModel {
         return mRatesRepository.getCurrencyRates();
     }
 
+    public LiveData<List<CurrencyRate>> getRates(){
+        return mRatesRepository.getRates();
+    }
+
+
+
+
     //method below takes inputs for our repository search method
     public void searchRates(String baseRate){
         mRatesRepository.searchRates(baseRate);
@@ -41,6 +48,9 @@ public class MainActivityViewModel extends ViewModel {
     public Observable<RatesResponse> getObservableData(String baseRate){
         return mRatesRepository.getObservableData(baseRate);
     }
+
+    public LiveData<String> getBaseCurrencyName(){ return mRatesRepository.getBaseCurrencyName(); }
+
 
     public LiveData<Double> getBaseRate(){
         return mBaseRate;

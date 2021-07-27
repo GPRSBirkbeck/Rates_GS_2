@@ -1,5 +1,7 @@
 package com.example.rates_gs.models;
 
+import java.util.Collections;
+
 public class CurrencyRate {
 
     //this class represents the POJO for the rates that are actually displayed in the ratesListAdapter

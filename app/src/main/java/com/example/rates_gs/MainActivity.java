@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
     private TextView cad_rate_textView;
     private RecyclerView mRecyclerView;
     private String mBaseRate;
+    private String mBaseCurrencyName;
 
     //adapter for our ViewModel
     private RatesListAdapter mRatesListAdapter;
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
         searchRatesApi(mBaseRate);
         Timer timer = new Timer();
         timer.schedule(new refreshClass(), 0, 3000);
+
     }
     //TODO find a better way of running the below
     class refreshClass extends TimerTask {
@@ -93,30 +95,23 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
 
 
     public void subscribeObservers(){
-        mMainActivityViewModel.getCurrencyRates().observe(this, new androidx.lifecycle.Observer<RevolutApiResponse>() {
+        mMainActivityViewModel.getRates().observe(this, new androidx.lifecycle.Observer<List<CurrencyRate>>() {
             @Override
-            public void onChanged(RevolutApiResponse revolutApiResponse) {
-                if(revolutApiResponse!=null){
+            public void onChanged(List<CurrencyRate> currencyRates) {
+                if(currencyRates!=null){
                     //we are viewing livedata so that the data doesnt change if the user changes state (e.g. screen lock)
-                    //we want the adapter below to be notified if changes are made to our livedata
-                    ReflectionModelListRates modelListRates = new ReflectionModelListRates(revolutApiResponse);
-/*                    List<CurrencyRate> list = modelListRates.getCurrencyRateList();
-                    List<CurrencyRate> list2 = new ArrayList<>();
-                    double latestBaseRate = getLatestBaseRate();
-                    //TODO make the below much more sleek using live data
-                    for(CurrencyRate currencyRate : list){
-                        CurrencyRate adjustedRate = currencyRate;
-                        adjustedRate.setRateDouble(currencyRate.getRateDouble()*2);
-                        list2.add(adjustedRate);
-                    }*/
-                    Observable<Double> baseRateObservable = getObservableBaseRate();
-                    Double baseRate = baseRateObservable.blockingFirst();
-                    modelListRates.multiplyCRListByBaseRate(baseRate);
 
-
-
-                    mRatesListAdapter.setRates(modelListRates.getCurrencyRateList());
+                    mRatesListAdapter.setRates(currencyRates);
                 }
+            }
+
+        });
+        mMainActivityViewModel.getBaseCurrencyName().observe(this, new androidx.lifecycle.Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Toast.makeText(MainActivity.this,"New baserate is" + mBaseCurrencyName + " number of former currency is not known",
+                        Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -139,10 +134,10 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
     public void onRatesClick(int position) {
         mRatesListAdapter.swapRates(position);
         //the next three lines are used to get the value of the rate we clicked, might be easier to build a function for this in model class
-        List list = new ReflectionModelListRates(mMainActivityViewModel.getCurrencyRates().getValue()).getCurrencyRateList();
+        List list = new ArrayList(mMainActivityViewModel.getRates().getValue());
         CurrencyRate myRate = (CurrencyRate) list.get(position);
         mBaseRate = myRate.getRateNameShort();
-        Toast.makeText(this, "New baserate is" + mBaseRate + " number of former currency is " + myRate.getRateDouble(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "New baserate is" + mBaseRate + " number of former currency is " + myRate.getRateDouble(), Toast.LENGTH_SHORT).show();
         double formerRate = myRate.getRateDouble();
 
         searchRatesApi(mBaseRate);
@@ -152,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
 
     private Observable<Double> getObservableBaseRate() {
         EditText base_rate_editText = (EditText) findViewById(R.id.edit_text_base_rate);
-        base_rate_editText.setText("100");
+        base_rate_editText.setText("50");
 
         //make an InitialValueObservable out of the base_rate_editText
         InitialValueObservable<CharSequence> baseRateInput =
@@ -215,6 +210,43 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
                     }
                 });
     }
+
+
+    //this observable takes an observable baserate, an edittext textview, and an observable rate from the API
+/*    public void setRateDouble(Observable<Double> baseRateObservable, Double ratesDouble){
+
+
+
+        //this subscriber is used to set the text of your textview to the double created in the previous observer
+        multipliedRateObservable
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Double>(){
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+                    @Override
+                    public void onNext(Double aDouble) {
+                        if(aDouble == 0){
+                            textView.setText("");
+                        }
+                        else{
+                            String strDouble = String.format("%.2f", aDouble);
+                            textView.setText(strDouble);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "Onerror: ", e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }*/
 
 
     //TODO make these all update concurrently (at present not the case and was the case when they were separate methods

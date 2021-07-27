@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+
 public class ReflectionModelListRates {
 
     private List<CurrencyRate> currencyRateList;
@@ -23,16 +27,36 @@ public class ReflectionModelListRates {
         this.currencyRateList = currencyRateList;
     }
 
+    //TODO move this class, it DOES NOT belong here
     public void multiplyCRListByBaseRate(Double BaseRate){
         List<CurrencyRate> multiplyIt = this.currencyRateList;
+        //Observable<Double> baseRateObservable = BaseRate;
+
         for(CurrencyRate currencyRate: multiplyIt){
             Double currentDouble = currencyRate.getRateDouble();
             Double finalDouble = currentDouble*BaseRate;
             currencyRate.setRateDouble(finalDouble);
-        }
-        this.currencyRateList = multiplyIt;
 
-    }
+            //this double combines the latest baserate and rate from the API and returns that double
+/*            Observable<Double> obsInt = new Observable<Double>() {
+                @Override
+                protected void subscribeActual(Observer<? super Double> observer) {
+                    currencyRate.getRateDouble();
+                }*/
+            };
+/*
+
+            Observable<Double> multipliedRateObservable =
+                    (Observable<Double>) Observable.combineLatest(baseRateObservable, obsInt,
+                            (a, b) -> (a * b))
+                            //adding this to the observable to be subscribed to by subscriber seems to speed up the UI load
+                            .observeOn(AndroidSchedulers.mainThread());
+
+            currencyRate.setRateDouble(multipliedRateObservable.blockingLatest());*/
+        }
+
+
+
 
     public ReflectionModelListRates(RevolutApiResponse revolutApiResponse) {
         currencyRateList = new ArrayList<>();

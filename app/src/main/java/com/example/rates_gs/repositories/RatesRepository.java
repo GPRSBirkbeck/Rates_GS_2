@@ -1,10 +1,16 @@
 package com.example.rates_gs.repositories;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
+import com.example.rates_gs.models.CurrencyRate;
+import com.example.rates_gs.models.ReflectionModelListRates;
 import com.example.rates_gs.requests.RatesAPIClient;
 import com.example.rates_gs.requests.responses.RatesResponse;
 import com.example.rates_gs.requests.responses.RevolutApiResponse;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -37,6 +43,23 @@ public class RatesRepository {
     public LiveData<RevolutApiResponse> getCurrencyRates(){
         return mRatesAPIClient.getCurrencyRates();
     }
+
+    public LiveData<List<CurrencyRate>> getRates(){
+        return mRatesAPIClient.getRates();
+    }
+
+    public LiveData<String> getBaseCurrencyName(){ return mRatesAPIClient.getBaseCurrencyName(); }
+
+
+/*    public MutableLiveData<List<CurrencyRate>> getCurrencyRates() {
+        mRatesAPIClient.getCurrencyRates().observe(this, new Observer<RevolutApiResponse>() {
+            @Override
+            public void onChanged(RevolutApiResponse revolutApiResponse) {
+
+            }
+        });
+
+        return mCurrencyRatesResponse; }*/
 
 
     //our observable rates

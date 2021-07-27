@@ -6,10 +6,12 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.rates_gs.AppExecutors;
 import com.example.rates_gs.models.CurrencyRate;
+import com.example.rates_gs.models.ReflectionModelListRates;
 import com.example.rates_gs.requests.responses.RatesResponse;
 import com.example.rates_gs.requests.responses.RevolutApiResponse;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -45,6 +47,8 @@ public class RatesAPIClient {
     //TODO use the mutbleLiveData to update the values based on what comes out of the observable
     private static RatesAPIClient instance;
     private MutableLiveData<RevolutApiResponse> mCurrencyRatesResponse;
+    private MutableLiveData<List<CurrencyRate>> mRates;
+    private MutableLiveData<String> mBaseCurrencyName;
     private RetrieveRatesRunnable mRetrieveRatesRunnable;
     //TODO figure out if we'd be better of with a regular call and only have the observables at the end (viewmodel)
     public static RatesAPIClient getInstance() {
@@ -53,8 +57,19 @@ public class RatesAPIClient {
         }
         return instance;
     }
-    private RatesAPIClient() { mCurrencyRatesResponse = new MutableLiveData<>(); }
+    private RatesAPIClient() { mCurrencyRatesResponse = new MutableLiveData<>();
+                                mRates = new MutableLiveData<>();
+                                mBaseCurrencyName = new MutableLiveData<>();
+    }
     public MutableLiveData<RevolutApiResponse> getCurrencyRates() { return mCurrencyRatesResponse; }
+
+    public MutableLiveData<List<CurrencyRate>> getRates(){
+        return mRates;
+
+    }
+
+    public MutableLiveData<String> getBaseCurrencyName(){ return mBaseCurrencyName; }
+
 
 
     //TODO refactor this in the
@@ -101,6 +116,15 @@ public class RatesAPIClient {
                     //if we dont have any in our list yet (sub 15 as 15 is the amount we load per time)
                     //here we are sending value to the livedata
                     //postvalue used for background thread
+                    List<CurrencyRate> currencyRates= new ArrayList<>();
+                    assert revolutApiResponse != null;
+                    String baseRateName = revolutApiResponse.getBaseCurrency();
+                    mBaseCurrencyName.postValue(baseRateName);
+                    ReflectionModelListRates modelListRates = new ReflectionModelListRates(revolutApiResponse);
+
+                    mRates.postValue(modelListRates.getCurrencyRateList());
+
+
                     mCurrencyRatesResponse.postValue(revolutApiResponse);
                 } else {
                     String error = response.errorBody().string();
