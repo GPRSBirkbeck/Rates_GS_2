@@ -98,12 +98,14 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
                 if(currencyRates!=null){
                     //we are viewing livedata so that the data doesnt change if the user changes state (e.g. screen lock)
                     List<CurrencyRate> modifiedRates = currencyRates;
-                    for(CurrencyRate currencyRate: modifiedRates){
-                        Double currentDouble = currencyRate.getRateDouble();
-                        Double finalDouble = currentDouble*5;
+                    double firstrate = currencyRates.get(0).getRateDouble();
+                    for (int i = 1; i < modifiedRates.size(); i++) {
+
+                        Double currentDouble = modifiedRates.get(i).getRateDouble();
+                        Double finalDouble = currentDouble*firstrate;
                         double roundOff = Math.round(finalDouble * 100.0) / 100.0;
 
-                        currencyRate.setRateDouble(roundOff);
+                        modifiedRates.get(i).setRateDouble(roundOff);
                     }
 
                     mRatesListAdapter.setRates(modifiedRates);
