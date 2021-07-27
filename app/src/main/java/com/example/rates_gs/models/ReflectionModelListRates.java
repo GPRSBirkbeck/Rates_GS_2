@@ -56,8 +56,6 @@ public class ReflectionModelListRates {
         }
 
 
-
-
     public ReflectionModelListRates(RevolutApiResponse revolutApiResponse) {
         currencyRateList = new ArrayList<>();
         String baseRate = revolutApiResponse.getBaseCurrency();

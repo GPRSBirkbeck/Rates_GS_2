@@ -50,18 +50,6 @@ public class RatesRepository {
 
     public LiveData<String> getBaseCurrencyName(){ return mRatesAPIClient.getBaseCurrencyName(); }
 
-
-/*    public MutableLiveData<List<CurrencyRate>> getCurrencyRates() {
-        mRatesAPIClient.getCurrencyRates().observe(this, new Observer<RevolutApiResponse>() {
-            @Override
-            public void onChanged(RevolutApiResponse revolutApiResponse) {
-
-            }
-        });
-
-        return mCurrencyRatesResponse; }*/
-
-
     //our observable rates
     public Observable<RatesResponse> getObservableData(String baseRate){
         return mRatesAPIClient.getObservableData(baseRate);

@@ -39,6 +39,7 @@ public class MainActivityViewModel extends ViewModel {
 
 
 
+
     //method below takes inputs for our repository search method
     public void searchRates(String baseRate){
         mRatesRepository.searchRates(baseRate);
