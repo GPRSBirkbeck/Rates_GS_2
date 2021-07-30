@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.rates_gs.AppExecutors;
 import com.example.rates_gs.models.CurrencyRate;
+import com.example.rates_gs.models.ReflectionBaseRateData;
 import com.example.rates_gs.models.ReflectionModelListRates;
 import com.example.rates_gs.requests.responses.RatesResponse;
 import com.example.rates_gs.requests.responses.RevolutApiResponse;
@@ -29,7 +30,9 @@ public class RatesAPIClient {
     private static RatesAPIClient instance;
     private MutableLiveData<RatesResponse> mCurrencyRatesResponse;
     private MutableLiveData<List<CurrencyRate>> mRates;
-    private MutableLiveData<String> mBaseCurrencyName;
+    private MutableLiveData<String> mBaseCurrencyNameShort;
+    private MutableLiveData<Integer> mBaseCurrencyNameLong;
+    private MutableLiveData<Integer> mFlag;
     private RetrieveRatesRunnable mRetrieveRatesRunnable;
 
 
@@ -42,7 +45,9 @@ public class RatesAPIClient {
     private RatesAPIClient() {
         mCurrencyRatesResponse = new MutableLiveData<>();
         mRates = new MutableLiveData<>();
-        mBaseCurrencyName = new MutableLiveData<>();
+        mBaseCurrencyNameShort = new MutableLiveData<>();
+        mBaseCurrencyNameLong = new MutableLiveData<>();
+        mFlag = new MutableLiveData<>();
     }
 
     // Getters
@@ -50,7 +55,10 @@ public class RatesAPIClient {
 
     public MutableLiveData<List<CurrencyRate>> getRates(){ return mRates; }
 
-    public MutableLiveData<String> getBaseCurrencyName(){ return mBaseCurrencyName; }
+    public MutableLiveData<String> getBaseCurrencyName(){ return mBaseCurrencyNameShort; }
+
+    public MutableLiveData<Integer> getmBaseCurrencyNameLong() { return mBaseCurrencyNameLong; }
+    public MutableLiveData<Integer> getmFlag() { return mFlag; }
 
     //call the api on the network
     public void getRatesApi(String baseRate) {
@@ -100,13 +108,17 @@ public class RatesAPIClient {
                     List<CurrencyRate> currencyRates= new ArrayList<>();
                     assert revolutApiResponse != null;
                     String baseRateName = revolutApiResponse.getBaseCurrency();
-                    mBaseCurrencyName.postValue(baseRateName);
+                    mBaseCurrencyNameShort.postValue(baseRateName);
                     ReflectionModelListRates modelListRates = new ReflectionModelListRates(revolutApiResponse.getRates(), revolutApiResponse.getBaseCurrency());
-
                     mRates.postValue(modelListRates.getCurrencyRateList());
 
-
                     mCurrencyRatesResponse.postValue(revolutApiResponse.getRates());
+
+                    //mMainActivityViewModel.setBaseRateNameShort(mMainActivityViewModel.getBaseCurrencyName().getValue());
+                    ReflectionBaseRateData reflectionBaseRateData = new ReflectionBaseRateData(mBaseCurrencyNameShort.getValue());
+                    mBaseCurrencyNameLong.postValue(reflectionBaseRateData.getBaseRateLong());
+                    mFlag.postValue(reflectionBaseRateData.getBaseFieldFlagName());
+
                 } else {
                     String error = response.errorBody().string();
                     Log.e(TAG, "run: " + error);

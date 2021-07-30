@@ -36,22 +36,22 @@ public class MainActivityViewModel extends ViewModel  {
     private RatesRepository mRatesRepository;
 
     // Create a LiveData with a Double
-    private MutableLiveData<String> baseRateNameShort;
-    private MutableLiveData<Integer> baseRateNameLong;
-    private MutableLiveData<Integer> baseRateFlag;
+    private LiveData<String> baseRateNameShort = new MutableLiveData<>();
+    private LiveData<Integer> baseRateNameLong = new MutableLiveData<>();
+    private LiveData<Integer> baseRateFlag = new MutableLiveData<>();
 
 
     public MainActivityViewModel() {
         //TODO make a livedata for the ratesResponse from Client to here
         mRatesRepository = RatesRepository.getInstance();
-        //baseRateNameShort.setValue(mRatesRepository.getBaseCurrencyName().getValue());
-        //ReflectionBaseRateData reflectionBaseRateData = new ReflectionBaseRateData(baseRateNameShort.getValue());
-        //baseRateNameLong.setValue(reflectionBaseRateData.getBaseRateLong());
-        //baseRateFlag.setValue(reflectionBaseRateData.getBaseFieldFlagName());
+        //baseRateNameShort.setValue("Hi");
+        this.baseRateNameShort = getBaseCurrencyName();
+        this.baseRateNameLong = getmBaseCurrencyNameLong();
+        this.baseRateFlag = getmFlag();
 
     }
 
-    public MutableLiveData<Integer> getBaseRateFlag() {
+    public LiveData<Integer> getBaseRateFlag() {
         return baseRateFlag;
     }
 
@@ -59,7 +59,7 @@ public class MainActivityViewModel extends ViewModel  {
         this.baseRateFlag = baseRateFlag;
     }
 
-    public MutableLiveData<Integer> getBaseRateNameLong() {
+    public LiveData<Integer> getBaseRateNameLong() {
         return baseRateNameLong;
     }
 
@@ -67,12 +67,14 @@ public class MainActivityViewModel extends ViewModel  {
         this.baseRateNameLong = baseRateNameLong;
     }
 
-    public MutableLiveData<String> getBaseRateNameShort() {
+    public LiveData<String> getBaseRateNameShort() {
         return baseRateNameShort;
     }
 
-    public void setBaseRateNameShort(MutableLiveData<String> baseRateNameShort) {
-        this.baseRateNameShort = baseRateNameShort;
+    public void setBaseRateNameShort(String baseRateNameShort) {
+        MutableLiveData<String> thisData = new MutableLiveData<>();
+        thisData.postValue(baseRateNameShort);
+
     }
 
     public MutableLiveData<Double> getBaseRateDouble() {
@@ -86,6 +88,9 @@ public class MainActivityViewModel extends ViewModel  {
     public LiveData<RatesResponse> getCurrencyRates(){
         return mRatesRepository.getCurrencyRates();
     }
+
+    public LiveData<Integer> getmBaseCurrencyNameLong() { return mRatesRepository.getmBaseCurrencyNameLong(); }
+    public LiveData<Integer> getmFlag() { return mRatesRepository.getmFlag(); }
 
     public LiveData<List<CurrencyRate>> getRates(){
         return mRatesRepository.getRates();

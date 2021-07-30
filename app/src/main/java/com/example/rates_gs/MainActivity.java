@@ -2,6 +2,7 @@ package com.example.rates_gs;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,7 @@ import com.example.rates_gs.adapters.OnRateListener;
 import com.example.rates_gs.adapters.RatesListAdapter;
 import com.example.rates_gs.databinding.ActivityMainBinding;
 import com.example.rates_gs.models.CurrencyRate;
+import com.example.rates_gs.models.ReflectionBaseRateData;
 import com.example.rates_gs.models.ReflectionModelListRates;
 import com.example.rates_gs.requests.responses.RatesResponse;
 import com.example.rates_gs.requests.responses.RevolutApiResponse;
@@ -62,10 +64,10 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
     protected void onCreate(Bundle savedInstanceState) {
         //TODO tidy up this mainactivity
         super.onCreate(savedInstanceState);
+        mMainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
         //TODO figure out if i need this or whether the line below suffices? - if this, scrap the "setContentView(R.layout.activity_main);"
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        mMainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
         //The below is probably right
         binding.setLifecycleOwner(this);

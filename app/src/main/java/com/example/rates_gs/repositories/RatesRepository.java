@@ -46,6 +46,9 @@ public class RatesRepository {
 
     public LiveData<String> getBaseCurrencyName(){ return mRatesAPIClient.getBaseCurrencyName(); }
 
+    public LiveData<Integer> getmBaseCurrencyNameLong() { return mRatesAPIClient.getmBaseCurrencyNameLong(); }
+    public LiveData<Integer> getmFlag() { return mRatesAPIClient.getmFlag(); }
+
     //method below takes inputs for our client search query
     public void searchRates(String baseRate){
         mRatesAPIClient.getRatesApi(baseRate);
