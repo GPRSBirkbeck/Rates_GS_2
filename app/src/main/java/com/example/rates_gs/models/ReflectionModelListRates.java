@@ -56,10 +56,11 @@ public class ReflectionModelListRates {
         }
 
 
-    public ReflectionModelListRates(RevolutApiResponse revolutApiResponse) {
+    public ReflectionModelListRates(RatesResponse ratesResponse, String baseRate) {
         currencyRateList = new ArrayList<>();
-        String baseRate = revolutApiResponse.getBaseCurrency();
-        RatesResponse r = revolutApiResponse.getRates();
+        //String baseRate = revolutApiResponse.getBaseCurrency();
+        RatesResponse r = ratesResponse;
+        baseRate = baseRate;
 
         //reflection for method name
         Class c = r.getClass();
@@ -104,7 +105,7 @@ public class ReflectionModelListRates {
             }
 
             if (fieldName.equals(baseRate)) {
-                currencyRateList.add(0, new CurrencyRate(fieldName, currency_long_name_id, fieldFlagName, 1.00));
+                //currencyRateList.add(0, new CurrencyRate(fieldName, currency_long_name_id, fieldFlagName, 1.00));
             } else {
                 //field value as 0 for now
                 double fieldValue = 0.00;

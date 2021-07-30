@@ -46,7 +46,7 @@ public class RatesAPIClient {
     private static final String TAG = "RatesAPIClient";
     //TODO use the mutbleLiveData to update the values based on what comes out of the observable
     private static RatesAPIClient instance;
-    private MutableLiveData<RevolutApiResponse> mCurrencyRatesResponse;
+    private MutableLiveData<RatesResponse> mCurrencyRatesResponse;
     private MutableLiveData<List<CurrencyRate>> mRates;
     private MutableLiveData<String> mBaseCurrencyName;
     private RetrieveRatesRunnable mRetrieveRatesRunnable;
@@ -61,7 +61,7 @@ public class RatesAPIClient {
                                 mRates = new MutableLiveData<>();
                                 mBaseCurrencyName = new MutableLiveData<>();
     }
-    public MutableLiveData<RevolutApiResponse> getCurrencyRates() { return mCurrencyRatesResponse; }
+    public MutableLiveData<RatesResponse> getCurrencyRates() { return mCurrencyRatesResponse; }
 
     public MutableLiveData<List<CurrencyRate>> getRates(){
         return mRates;
@@ -120,12 +120,12 @@ public class RatesAPIClient {
                     assert revolutApiResponse != null;
                     String baseRateName = revolutApiResponse.getBaseCurrency();
                     mBaseCurrencyName.postValue(baseRateName);
-                    ReflectionModelListRates modelListRates = new ReflectionModelListRates(revolutApiResponse);
+                    ReflectionModelListRates modelListRates = new ReflectionModelListRates(revolutApiResponse.getRates(), revolutApiResponse.getBaseCurrency());
 
                     mRates.postValue(modelListRates.getCurrencyRateList());
 
 
-                    mCurrencyRatesResponse.postValue(revolutApiResponse);
+                    mCurrencyRatesResponse.postValue(revolutApiResponse.getRates());
                 } else {
                     String error = response.errorBody().string();
                     Log.e(TAG, "run: " + error);
