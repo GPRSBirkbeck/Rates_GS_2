@@ -42,19 +42,15 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements OnRateListener {
     //view elements
-    private TextView usd_rate_textView;
-    private TextView eur_rate_textView;
-    private TextView brl_rate_textView;
-    private TextView cad_rate_textView;
     private TextView textView_currency_short;
     private TextView textView_currency_long;
     private RecyclerView mRecyclerView;
     private String mBaseRate;
-    private String mBaseCurrencyName;
     private ImageView baseImage;
 
     //adapter for our ViewModel
     private RatesListAdapter mRatesListAdapter;
+
     //viewmodel object for running the viewmodel
     private MainActivityViewModel mMainActivityViewModel;
     private static final String TAG = "MainActivity";
@@ -66,7 +62,15 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
     protected void onCreate(Bundle savedInstanceState) {
         //TODO tidy up this mainactivity
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        //TODO figure out if i need this or whether the line below suffices? - if this, scrap the "setContentView(R.layout.activity_main);"
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mMainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+
+        //The below is probably right
+        binding.setLifecycleOwner(this);
+        binding.setViewmodel(mMainActivityViewModel);
+        //setContentView(R.layout.activity_main);
         setTitle("Rates");
         Log.d(TAG, "onCreate: started");
 
@@ -76,28 +80,12 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
         baseImage = findViewById(R.id.imageButton_Flag);
 
         //instantiation of the viewmodelprovider
-        mMainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
+
+        //setContentView(binding.getRoot());
         mBaseRate = "EUR";
         //call our functions
         subscribeObservers();
-
-        //call functions for rateslistobervers
-        //setObservableRatesList("ZAR");
-
-
-        //TODO figure out if i need this or whether the line below suffices? - if this, scrap the "setContentView(R.layout.activity_main);"
-        //ActivityMainBinding binding2 = DataBindingUtil.setContentView(this, R.layout.activity_main);
-
-
-        //The below is probably right
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        binding.setViewmodel(mMainActivityViewModel);
-        binding.setLifecycleOwner(this);
-
-        setContentView(binding.getRoot());
-        setContentView(binding.getRoot());
-
         initRecylcerView();
         getObservableBaseRate();
         subscribeBaseRate();
@@ -112,10 +100,6 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
         timer.schedule(new refreshClass(), 0, 3000);
 
 
-
-
-
-
     }
     //TODO find a better way of running the below
     class refreshClass extends TimerTask {
@@ -125,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
     }
 
     public void subscribeBaseRate(){
-        mMainActivityViewModel.getBaseRateDouble().observe(this, Double -> binding.editTextBaseRate.setText(Double + ""));
+        //mMainActivityViewModel.getBaseRateDouble().observe(this, Double -> binding.editTextBaseRate.setText(Double + ""));
     }
 
 
@@ -148,18 +132,9 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
                     }
 
                     mRatesListAdapter.setRates(modifiedRates);
-                    CurrencyRate myrate = createRate(mMainActivityViewModel.getBaseCurrencyName().getValue());
-                    setBaseRateXML(myrate);
                 }
             }
 
-        });
-        mMainActivityViewModel.getBaseCurrencyName().observe(this, new androidx.lifecycle.Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                System.out.println(mBaseCurrencyName);
-
-            }
         });
     }
 
@@ -218,94 +193,6 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
                     }
                 });
         return baseRateObservable;
-    }
-
-/*
-    private Double getPlainBaseRate() {
-        EditText base_rate_editText = (EditText) findViewById(R.id.edit_text_base_rate);
-        //base_rate_editText.setText("1");
-
-        //make an InitialValueObservable out of the base_rate_editText
-        InitialValueObservable<CharSequence> baseRateInput =
-                RxTextView.textChanges(base_rate_editText);
-        final double[] returndouble = new double[1];
-        //map the baserate input so that it returns zero if empty, and a double of its value otherwise
-        Double baseRateObservable =
-                baseRateInput.map(new Function<CharSequence, Double>() {
-                    @Override
-                    public Double apply(@NotNull CharSequence charSequence) throws Exception {
-                        if (charSequence.length() < 1) {
-                            //this sets the baserate observable to zero when empty
-                            return returndouble[0] = 0.00;
-                        } else {
-                            return returndouble[0] = Double.parseDouble(charSequence.toString());
-                        }
-                        //return returndouble[0];
-                    }
-                    //return returndouble[0];
-                });
-
-
-*/
-/*                baseRateInput.map(new Function<CharSequence, Double>() {
-                    @Override
-                    public Double apply(CharSequence charSequence) throws Exception {
-                        if(charSequence.length()<1){
-                            //this sets the baserate observable to zero when empty
-                            return 0.00;
-                        }
-                        else{
-                            return Double.parseDouble(charSequence.toString());
-                        }
-                    }
-                });*//*
-
-        //return baseRateObservable;
-    }
-
-*/
-
-    private CurrencyRate createRate(String rateNameShort){
-
-        EditText base_rate_editText = (EditText) findViewById(R.id.edit_text_base_rate);
-        base_rate_editText.setText("1");
-
-        String fieldName = rateNameShort;
-        //currency name R.string id
-        int currency_long_name_id = 0;
-        //flag id
-        int fieldFlagName = 0;
-        String fieldNameLowerCase = fieldName.toLowerCase();
-        String flagName = "flag_" + fieldNameLowerCase;
-
-        try {
-            currency_long_name_id = R.string.class.getField(fieldName).getInt(null);
-            fieldFlagName = R.drawable.class.getField(flagName).getInt(null);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        if(currency_long_name_id == 0){
-            //exception handling - set currency name to unknown if currency isnt known
-            currency_long_name_id = R.string.UNK;
-        }
-
-        if(fieldFlagName == 0){
-            //exception handling - set currency flag to revolut logo if flag not known
-            fieldFlagName = R.drawable.flag_rev;
-        }
-
-        //return new CurrencyRate(fieldName, currency_long_name_id, fieldFlagName, getObservableBaseRate().blockingLatest());
-        return new CurrencyRate(fieldName, currency_long_name_id, fieldFlagName, mMainActivityViewModel.getBaseRateDouble().getValue());
-    }
-
-    public void setBaseRateXML(CurrencyRate currencyRate){
-        baseImage.setImageResource(currencyRate.getFlagImage());
-        textView_currency_short.setText(currencyRate.getRateNameShort());
-        textView_currency_long.setText(currencyRate.getRateNameLong());
-
-
-
-
     }
 
 
