@@ -39,6 +39,7 @@ public class MainActivityViewModel extends ViewModel  {
     private LiveData<String> baseRateNameShort = new MutableLiveData<>();
     private LiveData<Integer> baseRateNameLong = new MutableLiveData<>();
     private LiveData<Integer> baseRateFlag = new MutableLiveData<>();
+    private LiveData<Integer> baseRateDoubleLive = new MutableLiveData<>();
 
 
     public MainActivityViewModel() {
@@ -50,6 +51,15 @@ public class MainActivityViewModel extends ViewModel  {
         this.baseRateFlag = getmFlag();
 
     }
+    public LiveData<Integer> getBaseRateDoubleLive() {
+        return baseRateDoubleLive;
+    }
+
+    public void setBaseRateDoubleLive(LiveData<Integer> baseRateDoubleLive) {
+        this.baseRateDoubleLive = baseRateDoubleLive;
+    }
+
+
 
     public LiveData<Integer> getBaseRateFlag() {
         return baseRateFlag;

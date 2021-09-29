@@ -129,7 +129,12 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
                         Double currentDouble = modifiedRates.get(i).getRateDouble();
                         Double finalDouble = currentDouble*firstrate;
                         double roundOff = Math.round(finalDouble * 100.0) / 100.0;
-
+                        try{
+                            roundOff *= mMainActivityViewModel.getBaseRateDoubleLive().getValue();
+                        }
+                        catch (NullPointerException n){
+                            roundOff = roundOff;
+                        }
                         modifiedRates.get(i).setRateDouble(roundOff);
                     }
 
