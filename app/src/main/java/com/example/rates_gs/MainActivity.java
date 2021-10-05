@@ -123,17 +123,19 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
                     //we are viewing livedata so that the data doesnt change if the user changes state (e.g. screen lock)
                     List<CurrencyRate> modifiedRates = currencyRates;
                     //modifiedRates.add(new CurrencyRate(mMainActivityViewModel.getBaseCurrencyName().getValue(),))
-                    double firstrate = currencyRates.get(0).getRateDouble();
-                    for (int i = 1; i < modifiedRates.size(); i++) {
+                    //double firstrate = currencyRates.get(0).getRateDouble();
+                    for (int i = 0; i < modifiedRates.size(); i++) {
 
                         Double currentDouble = modifiedRates.get(i).getRateDouble();
-                        Double finalDouble = currentDouble*firstrate;
-                        double roundOff = Math.round(finalDouble * 100.0) / 100.0;
+                        //Double finalDouble = currentDouble*firstrate;
+                        //double roundOff = Math.round(finalDouble * 100.0) / 100.0;
+                        double roundOff = Math.round(currentDouble * 100.0) / 100.0;
                         try{
-                            roundOff *= mMainActivityViewModel.getBaseRateDoubleLive().getValue();
+                            //TODO we are not setting baseratedoubleLive so ofc nothing happens...
+                            roundOff = mMainActivityViewModel.getBaseRateDoubleLive().getValue();
                         }
                         catch (NullPointerException n){
-                            roundOff = roundOff;
+                            roundOff = 19.00;
                         }
                         modifiedRates.get(i).setRateDouble(roundOff);
                     }
