@@ -22,6 +22,8 @@ import com.example.rates_gs.viewmodels.MainActivityViewModel;
 import com.jakewharton.rxbinding2.InitialValueObservable;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -125,15 +127,22 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
                         Double currentDouble = modifiedRates.get(i).getRateDouble();
                         //Double finalDouble = currentDouble*firstrate;
                         //double roundOff = Math.round(finalDouble * 100.0) / 100.0;
-                        double roundOff = Math.round(currentDouble * 100.0) / 100.0;
+                        DecimalFormat df = new DecimalFormat("#.##");
+                        //double roundOff = df.format(currentDouble);
+
+                        //Double roundOff = new BigDecimal(currentDouble).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+
+                        //double roundOff = Math.round(currentDouble * 100.0) / 100.0;
+                        Double roundOff = currentDouble;
                         try{
-                            //TODO we are not setting baseratedoubleLive so ofc nothing happens...
-                            //roundOff = roundOff
+                            //TODO make this observe live data, not the boring double
                             roundOff = roundOff * mMainActivityViewModel.getBoringDouble();
+                            roundOff = new BigDecimal(roundOff).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+
                             //roundOff = mMainActivityViewModel.getBaseRateDoubleLive().getValue();
                         }
                         catch (NullPointerException n){
-                            roundOff = 19.00;
+                            roundOff = currentDouble;
                         }
                         modifiedRates.get(i).setRateDouble(roundOff);
                     }

@@ -15,6 +15,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
+//TODO make this accept livedata
 public class Converter {
         @InverseMethod("rateToString")
         public static String rateToString(EditText view, Double oldValue, Double value) {

@@ -69,7 +69,7 @@
 
         </LinearLayout>
 
-        <!--android:text="@{com.example.rates_gs.util.Converter.rateToString(viewmodel.baseRateDoubleLive)}"-->
+        <!--TODO make this refer to a piece of livedata, not just a fixed variable-->
         <EditText
             android:id="@+id/etbaserate"
             android:layout_width="wrap_content"
@@ -78,6 +78,7 @@
             android:hint="0"
             android:inputType="number"
             android:paddingRight="8dp"
+
             android:text="@={Converter.toString(etbaserate, viewmodel.boringDouble,viewmodel.boringDouble )}"
             android:textAlignment="textEnd" />
 

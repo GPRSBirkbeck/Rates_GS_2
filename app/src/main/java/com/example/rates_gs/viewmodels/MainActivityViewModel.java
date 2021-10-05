@@ -58,7 +58,7 @@ public class MainActivityViewModel extends ViewModel  {
         oneRate.postValue(0.00);
         this.baseRateDoubleLive = oneRate;
         this.baseRateDoubleLive = getBaseRateDoubleLive();
-        this.boringDouble = 1.23;
+        this.boringDouble = 1.00;
 
     }
     public LiveData<Double> getBaseRateDoubleLive() { return baseRateDoubleLive; }
