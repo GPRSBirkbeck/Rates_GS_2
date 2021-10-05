@@ -2,7 +2,6 @@ package com.example.rates_gs;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,29 +17,17 @@ import com.example.rates_gs.adapters.OnRateListener;
 import com.example.rates_gs.adapters.RatesListAdapter;
 import com.example.rates_gs.databinding.ActivityMainBinding;
 import com.example.rates_gs.models.CurrencyRate;
-import com.example.rates_gs.models.ReflectionBaseRateData;
 import com.example.rates_gs.models.ReflectionModelListRates;
-import com.example.rates_gs.requests.responses.RatesResponse;
-import com.example.rates_gs.requests.responses.RevolutApiResponse;
 import com.example.rates_gs.viewmodels.MainActivityViewModel;
 import com.jakewharton.rxbinding2.InitialValueObservable;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import io.reactivex.Maybe;
 import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements OnRateListener {
     //view elements
@@ -91,6 +78,15 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
         initRecylcerView();
         getObservableBaseRate();
         subscribeBaseRate();
+/*        MutableLiveData<Double> baseRateDoubleIsZero = null;
+        baseRateDoubleIsZero.postValue(0.00);
+        
+        mMainActivityViewModel.setBaseRateDoubleLive(new LiveData<Double>() {
+            @Override
+            public void observe(@NonNull LifecycleOwner owner, @NonNull Observer<? super Double> observer) {
+                super.observe(owner, observer);
+            }
+        });*/
 
     }
 
@@ -132,7 +128,9 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
                         double roundOff = Math.round(currentDouble * 100.0) / 100.0;
                         try{
                             //TODO we are not setting baseratedoubleLive so ofc nothing happens...
-                            roundOff = mMainActivityViewModel.getBaseRateDoubleLive().getValue();
+                            //roundOff = roundOff
+                            roundOff = roundOff * mMainActivityViewModel.getBoringDouble();
+                            //roundOff = mMainActivityViewModel.getBaseRateDoubleLive().getValue();
                         }
                         catch (NullPointerException n){
                             roundOff = 19.00;
@@ -180,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
     }
 
     private Observable<Double> getObservableBaseRate() {
-        EditText base_rate_editText = (EditText) findViewById(R.id.edit_text_base_rate);
+        EditText base_rate_editText = (EditText) findViewById(R.id.etbaserate);
         base_rate_editText.setText("1");
 
         //make an InitialValueObservable out of the base_rate_editText

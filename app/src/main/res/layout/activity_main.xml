@@ -8,6 +8,12 @@
             name="viewmodel"
             type="com.example.rates_gs.viewmodels.MainActivityViewModel" />
 
+<!--        <variable
+            name="Converter"
+            type="com.example.rates_gs.util.Converter"/>-->
+
+        <import type="com.example.rates_gs.util.Converter"/>
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,26 +69,28 @@
 
         </LinearLayout>
 
+        <!--android:text="@{com.example.rates_gs.util.Converter.rateToString(viewmodel.baseRateDoubleLive)}"-->
         <EditText
-            android:id="@+id/edit_text_base_rate"
-            android:hint="0"
+            android:id="@+id/etbaserate"
             android:layout_width="wrap_content"
-            android:paddingRight="8dp"
+            android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
+            android:hint="0"
             android:inputType="number"
-            android:textAlignment="textEnd"
-            android:layout_height="wrap_content"/>
+            android:paddingRight="8dp"
+            android:text="@={Converter.toString(etbaserate, viewmodel.boringDouble,viewmodel.boringDouble )}"
+            android:textAlignment="textEnd" />
 
-    </LinearLayout>
+</LinearLayout>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/currency_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/base_currency_layout">
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/currency_recycler_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toBottomOf="@id/base_currency_layout">
 
-    </androidx.recyclerview.widget.RecyclerView>
+</androidx.recyclerview.widget.RecyclerView>
 
 
 

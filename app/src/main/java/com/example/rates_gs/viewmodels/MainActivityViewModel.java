@@ -39,7 +39,10 @@ public class MainActivityViewModel extends ViewModel  {
     private LiveData<String> baseRateNameShort = new MutableLiveData<>();
     private LiveData<Integer> baseRateNameLong = new MutableLiveData<>();
     private LiveData<Integer> baseRateFlag = new MutableLiveData<>();
-    private LiveData<Integer> baseRateDoubleLive = new MutableLiveData<>();
+    private LiveData<Double> baseRateDoubleLive = new MutableLiveData<>();
+
+    private MutableLiveData<Double> oneRate;
+    private Double boringDouble;
 
 
     public MainActivityViewModel() {
@@ -50,12 +53,17 @@ public class MainActivityViewModel extends ViewModel  {
         this.baseRateNameLong = getmBaseCurrencyNameLong();
         this.baseRateFlag = getmFlag();
 
-    }
-    public LiveData<Integer> getBaseRateDoubleLive() {
-        return baseRateDoubleLive;
-    }
+        //to set baserate to 1 when it starts
+        oneRate = new MutableLiveData<>();
+        oneRate.postValue(0.00);
+        this.baseRateDoubleLive = oneRate;
+        this.baseRateDoubleLive = getBaseRateDoubleLive();
+        this.boringDouble = 1.23;
 
-    public void setBaseRateDoubleLive(LiveData<Integer> baseRateDoubleLive) {
+    }
+    public LiveData<Double> getBaseRateDoubleLive() { return baseRateDoubleLive; }
+
+    public void setBaseRateDoubleLive(LiveData<Double> baseRateDoubleLive) {
         this.baseRateDoubleLive = baseRateDoubleLive;
     }
 
@@ -117,6 +125,14 @@ public class MainActivityViewModel extends ViewModel  {
 /*    public LiveData<Double> getBaseRate(){
         return mBaseRate;
     }*/
+
+    public Double getBoringDouble() {
+        return boringDouble;
+    }
+
+    public void setBoringDouble(Double boringDouble) {
+        this.boringDouble = boringDouble;
+    }
 
     @BindingAdapter({"android:src"})
     public static void setImageViewResource(ImageView imageView, MutableLiveData<Integer> baseRateFlag) {
