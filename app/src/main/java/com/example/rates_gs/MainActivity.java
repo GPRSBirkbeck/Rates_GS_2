@@ -6,7 +6,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -47,6 +52,9 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
     private static final String TAG = "MainActivity";
     private ActivityMainBinding binding;
 
+    private String connection_status;
+    private boolean connection_changed;
+
     //TODO In general, moving code out of the activity is great for maintainability and testability.
 
     @Override
@@ -71,8 +79,6 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
         baseImage = findViewById(R.id.imageButton_Flag);
 
         //instantiation of the viewmodelprovider
-
-
         //setContentView(binding.getRoot());
         mBaseRate = "EUR";
         //call our functions
@@ -80,15 +86,7 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
         initRecylcerView();
         getObservableBaseRate();
         subscribeBaseRate();
-/*        MutableLiveData<Double> baseRateDoubleIsZero = null;
-        baseRateDoubleIsZero.postValue(0.00);
-        
-        mMainActivityViewModel.setBaseRateDoubleLive(new LiveData<Double>() {
-            @Override
-            public void observe(@NonNull LifecycleOwner owner, @NonNull Observer<? super Double> observer) {
-                super.observe(owner, observer);
-            }
-        });*/
+
 
     }
 
@@ -99,17 +97,39 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
         Timer timer = new Timer();
         timer.schedule(new refreshClass(), 0, 3000);
 
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if(connection_changed){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //your method
+                                Toast toast = Toast.makeText(getApplicationContext(), connection_status, Toast.LENGTH_SHORT);
+                                toast.show();
+
+                        }
+                    });
+                }
+
+
+            }
+        }, 0, 10000);//put here time 1000 milliseconds=1 second
+
 
     }
     //TODO find a better way of running the below
     class refreshClass extends TimerTask {
         public void run() {
             searchRatesApi(mBaseRate);
+            checkStatus();
         }
+
+
     }
 
+
     public void subscribeBaseRate(){
-        //mMainActivityViewModel.getBaseRateDouble().observe(this, Double -> binding.editTextBaseRate.setText(Double + ""));
     }
 
 
@@ -125,21 +145,12 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
                     for (int i = 0; i < modifiedRates.size(); i++) {
 
                         Double currentDouble = modifiedRates.get(i).getRateDouble();
-                        //Double finalDouble = currentDouble*firstrate;
-                        //double roundOff = Math.round(finalDouble * 100.0) / 100.0;
-                        DecimalFormat df = new DecimalFormat("#.##");
-                        //double roundOff = df.format(currentDouble);
 
-                        //Double roundOff = new BigDecimal(currentDouble).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
-
-                        //double roundOff = Math.round(currentDouble * 100.0) / 100.0;
                         Double roundOff = currentDouble;
                         try{
                             //TODO make this observe live data, not the boring double
                             roundOff = roundOff * mMainActivityViewModel.getBoringDouble();
                             roundOff = new BigDecimal(roundOff).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-
-                            //roundOff = mMainActivityViewModel.getBaseRateDoubleLive().getValue();
                         }
                         catch (NullPointerException n){
                             roundOff = currentDouble;
@@ -211,6 +222,48 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
         return baseRateObservable;
     }
 
+    public void checkStatus(){
 
+        Context context= this;
+        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+
+        boolean wifiConnected;
+        boolean mobileDataConnected;
+        if (activeNetwork!=null && activeNetwork.isConnected()){
+            connection_changed = false;
+            wifiConnected = activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
+            mobileDataConnected = activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE;
+            int duration = Toast.LENGTH_SHORT;
+
+            if (wifiConnected){
+
+                CharSequence text = "WIFI is Connected";
+                if(connection_status != text){
+                    connection_changed = true;
+                    connection_status = (String) text;
+                }
+                //Toast toast = Toast.makeText(context, text, duration);
+                //toast.show();
+            } else if (mobileDataConnected){
+                CharSequence text = "Mobile data is Connected";
+                if(connection_status != text){
+                    connection_changed = true;
+                    connection_status = (String) text;
+                }
+                //Toast toast = Toast.makeText(context, text, duration);
+                //toast.show();
+            }
+        } else {
+            CharSequence text = "No data connection";
+            if(connection_status != text){
+                connection_changed = true;
+                connection_status = (String) text;
+            }
+            //int duration = Toast.LENGTH_SHORT;
+            //Toast toast = Toast.makeText(context, text, duration);
+            //toast.show();
+        }
+    }
 }
