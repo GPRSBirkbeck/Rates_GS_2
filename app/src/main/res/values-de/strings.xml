@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Preise GS</string>
+    <string name="AUD">Australischer Dollar</string>
+    <string name="BGN">Bulgarischer Lew</string>
+    <string name="BRL">Brasilianischer Real</string>
+    <string name="CAD">Kanadischer Dollar</string>
+    <string name="CHF">Schweizer Franken</string>
+    <string name="CNY">Chinesischer Yuan</string>
+    <string name="CZK">Tschechische Krone</string>
+    <string name="DKK">Dänische Krone</string>
+    <string name="EUR">Euro</string>
+    <string name="GBP">Pfund Sterling</string>
+    <string name="HKD">Hongkong-Dollar</string>
+    <string name="HRK">Kroatische Kuna</string>
+    <string name="HUF">Ungarischer Forint</string>
+    <string name="IDR">Indonesische Rupiah</string>
+    <string name="ILS">Israelischer Neuer Schekel</string>
+    <string name="INR">Indische Rupie</string>
+    <string name="ISK">Isländische Króna</string>
+    <string name="JPY">Japanischer Yen</string>
+    <string name="KRW">Südkoreanischer Won</string>
+    <string name="MXN">Mexikanischer Peso</string>
+    <string name="MYR">Malaysischer Ringgit</string>
+    <string name="NOK">Norwegische Krone</string>
+    <string name="NZD">Neuseeland-Dollar</string>
+    <string name="PHP">Philippinischer Peso</string>
+    <string name="PLN">Poland Gold</string>
+    <string name="RON">Rumänischer Leu</string>
+    <string name="RUB">Russischer Rubel</string>
+    <string name="SEK">Schwedische Krone</string>
+    <string name="SGD">Singapur-Dollar</string>
+    <string name="THB">Thailändischer Baht</string>
+    <string name="USD">US-Dollar</string>
+    <string name="ZAR">Südafrikanischer Rand</string>
+    <string name="UNK">Währung nicht bekannt</string>
+    <string name="error_converting_input">Bitte geben Sie eine Zahl größer als 0 ein</string>
+</resources>

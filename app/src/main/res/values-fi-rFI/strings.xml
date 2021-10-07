@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hinnat GS</string>
+    <string name="AUD">Australian dollari</string>
+    <string name="BGN">Bulgarialainen Lev</string>
+    <string name="BRL">Brasilian real</string>
+    <string name="CAD">Kanadan dollari</string>
+    <string name="CHF">Sveitsin frangi</string>
+    <string name="CNY">Kiinan juan</string>
+    <string name="CZK">Tšekin Koruna</string>
+    <string name="DKK">Tanskan kruunu</string>
+    <string name="EUR">Euro</string>
+    <string name="GBP">Punta</string>
+    <string name="HKD">Hongkongin dollari</string>
+    <string name="HRK">Kroatian Kuna</string>
+    <string name="HUF">Unkarin forintti</string>
+    <string name="IDR">Indonesian rupia</string>
+    <string name="ILS">Israelin uusi sekeli</string>
+    <string name="INR">Intian rupia</string>
+    <string name="ISK">Islannin króna</string>
+    <string name="JPY">Japanin jeni</string>
+    <string name="KRW">Etelä-Korean won</string>
+    <string name="MXN">Meksikon Peso</string>
+    <string name="MYR">Malesian Ringgit</string>
+    <string name="NOK">Norjan kruunu</string>
+    <string name="NZD">Uuden-Seelannin dollari</string>
+    <string name="PHP">Filippiinien Peso</string>
+    <string name="PLN">Puola Kulta</string>
+    <string name="RON">Romanian Leu</string>
+    <string name="RUB">Venäjän rupla</string>
+    <string name="SEK">Ruotsin kruunu</string>
+    <string name="SGD">Singaporen dollari</string>
+    <string name="THB">Thaimaan baht</string>
+    <string name="USD">Yhdysvaltain dollari</string>
+    <string name="ZAR">Etelä-Afrikan randi</string>
+    <string name="UNK">Valuuttaa ei tiedetä</string>
+    <string name="error_converting_input">Kirjoita luku, joka on suurempi kuin 0</string>
+</resources>

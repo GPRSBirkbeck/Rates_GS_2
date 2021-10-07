@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Priser GS</string>
+    <string name="AUD">Australske dollar</string>
+    <string name="BGN">Bulgarske lev</string>
+    <string name="BRL">Brasilianske Real</string>
+    <string name="CAD">Kanadiske dollar</string>
+    <string name="CHF">Sveitsiske franc</string>
+    <string name="CNY">Kinesisk yuan</string>
+    <string name="CZK">Tsjekkiske Koruna</string>
+    <string name="DKK">Danske kroner</string>
+    <string name="EUR">Euro</string>
+    <string name="GBP">Pund</string>
+    <string name="HKD">Hongkong dollar</string>
+    <string name="HRK">Kroatisk Kuna</string>
+    <string name="HUF">Ungarsk forint</string>
+    <string name="IDR">Indonesisk rupiah</string>
+    <string name="ILS">Israels nye shekel</string>
+    <string name="INR">Indisk rupi</string>
+    <string name="ISK">Islandske Króna</string>
+    <string name="JPY">Japanske yen</string>
+    <string name="KRW">Sørkoreanske won</string>
+    <string name="MXN">Meksikanske pesos</string>
+    <string name="MYR">Malaysiske Ringgit</string>
+    <string name="NOK">Norwegian Krone</string>
+    <string name="NZD">Newzealandske dollar</string>
+    <string name="PHP">Filippinske pesos</string>
+    <string name="PLN">Polen Gull</string>
+    <string name="RON">Rumensk Leu</string>
+    <string name="RUB">Russiske rubler</string>
+    <string name="SEK">Svenske kroner</string>
+    <string name="SGD">Singaporske dollar</string>
+    <string name="THB">Thailandsk baht</string>
+    <string name="USD">Amerikanske dollar</string>
+    <string name="ZAR">Sørafrikansk rand</string>
+    <string name="UNK">Valutaen er ikke kjent</string>
+    <string name="error_converting_input">Skriv inn et tall som er større enn 0</string>
+</resources>

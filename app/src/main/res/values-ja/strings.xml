@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">料金 GS</string>
+    <string name="AUD">オーストラリア・ドル</string>
+    <string name="BGN">ブルガリアレフ</string>
+    <string name="BRL">ブラジルレアル</string>
+    <string name="CAD">カナダドル</string>
+    <string name="CHF">スイスフラン</string>
+    <string name="CNY">中国元</string>
+    <string name="CZK">チェココルナ</string>
+    <string name="DKK">デンマーク クローネ</string>
+    <string name="EUR">ユーロ</string>
+    <string name="GBP">ポンド</string>
+    <string name="HKD">香港ドル</string>
+    <string name="HRK">クロアチアクーナ</string>
+    <string name="HUF">ハンガリー・フォーリント</string>
+    <string name="IDR">インドネシアルピア</string>
+    <string name="ILS">イスラエル新シェケル</string>
+    <string name="INR">インドルピー</string>
+    <string name="ISK">アイスランド・クローナ</string>
+    <string name="JPY">日本円</string>
+    <string name="KRW">韓国ウォン</string>
+    <string name="MXN">メキシコペソ</string>
+    <string name="MYR">マレーシアリンギット</string>
+    <string name="NOK">ノルウェークローネ</string>
+    <string name="NZD">ニュージーランドドル</string>
+    <string name="PHP">フィリピン ペソ</string>
+    <string name="PLN">ポーランド 金</string>
+    <string name="RON">ルーマニア・レウ</string>
+    <string name="RUB">ロシアルーブル</string>
+    <string name="SEK">スウェーデン・クローナ</string>
+    <string name="SGD">シンガポールドル</string>
+    <string name="THB">タイバーツ</string>
+    <string name="USD">米ドル</string>
+    <string name="ZAR">南アフリカランド</string>
+    <string name="UNK">通貨が不明</string>
+    <string name="error_converting_input">0 より大きい数値を入力してください</string>
+</resources>

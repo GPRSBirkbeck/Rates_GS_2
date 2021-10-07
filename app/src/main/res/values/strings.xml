@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Rates GS</string>
-    <string name="error_converting_input">Your input doesnt fit</string>
+    <string name="error_converting_input">Please enter a number larger than 0</string>
 </resources>

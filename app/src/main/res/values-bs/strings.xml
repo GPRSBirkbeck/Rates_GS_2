@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Stope GS</string>
+    <string name="AUD">australski dolar</string>
+    <string name="BGN">bugarski lev</string>
+    <string name="BRL">Brazilski Real</string>
+    <string name="CAD">Kanadski dolar</string>
+    <string name="CHF">Švicarski franak</string>
+    <string name="CNY">Kineski Yuan</string>
+    <string name="CZK">Češka kruna</string>
+    <string name="DKK">danski kruna</string>
+    <string name="EUR">Euro</string>
+    <string name="GBP">Funta Sterling</string>
+    <string name="HKD">hongkonški dolar</string>
+    <string name="HRK">Hrvatska kuna</string>
+    <string name="HUF">Mađarska Forinta</string>
+    <string name="IDR">Indonezijski Rupiah</string>
+    <string name="ILS">Izraelski Novi Šekel</string>
+    <string name="INR">Indijska rupija</string>
+    <string name="ISK">Islandska króna</string>
+    <string name="JPY">Japanski jen</string>
+    <string name="KRW">Južnokorejski Won</string>
+    <string name="MXN">Meksički pezo</string>
+    <string name="MYR">malezijski ringit</string>
+    <string name="NOK">norveška kruna</string>
+    <string name="NZD">novozelandski dolar</string>
+    <string name="PHP">filipinski pezo</string>
+    <string name="PLN">Poljska Zlatna</string>
+    <string name="RON">rumunski lej</string>
+    <string name="RUB">Ruska rublja</string>
+    <string name="SEK">švedska kruna</string>
+    <string name="SGD">Singapurski dolar</string>
+    <string name="THB">Tajlandski Baht</string>
+    <string name="USD">US Dollar</string>
+    <string name="ZAR">Južnoafrički Rand</string>
+    <string name="UNK">Valuta nije poznata</string>
+    <string name="error_converting_input">Unesite broj veći od 0</string>
+</resources>

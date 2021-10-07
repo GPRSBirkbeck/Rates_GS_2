@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Rati GS</string>
+    <string name="AUD">Dollaru Awstraljan</string>
+    <string name="BGN">Lev Bulgaru</string>
+    <string name="BRL">Real Brażiljan</string>
+    <string name="CAD">Dollaru Kanadiż</string>
+    <string name="CHF">Frank Svizzeru</string>
+    <string name="CNY">Ċiniż Yuan</string>
+    <string name="CZK">Koruna Ċeka</string>
+    <string name="DKK">Krone Daniż</string>
+    <string name="EUR">Euro</string>
+    <string name="GBP">Lira Sterlina</string>
+    <string name="HKD">Dollaru ta \'Ħong Kong</string>
+    <string name="HRK">Kuna Kroata</string>
+    <string name="HUF">Forint Ungeriż</string>
+    <string name="IDR">Rupiah Indoneżjan</string>
+    <string name="ILS">Iżraeljan Shekel Ġdida</string>
+    <string name="INR">Rupee Indjan</string>
+    <string name="ISK">Króna Islandiża</string>
+    <string name="JPY">Yen Ġappuniż</string>
+    <string name="KRW">Won tal-Korea t\'Isfel</string>
+    <string name="MXN">Peso Messiku</string>
+    <string name="MYR">Ringgit malasjan</string>
+    <string name="NOK">Krone Norveġiż</string>
+    <string name="NZD">Dollaru ta\' New Zealand</string>
+    <string name="PHP">Peso fil-Filippini</string>
+    <string name="PLN">Polonja Deheb</string>
+    <string name="RON">Leu Rumen</string>
+    <string name="RUB">Rublu Russu</string>
+    <string name="SEK">Krona Żvediża</string>
+    <string name="SGD">Dollaru ta \'Singapor</string>
+    <string name="THB">Baht Tajlandiż</string>
+    <string name="USD">Dollaru Amerikan</string>
+    <string name="ZAR">Rand tal-Afrika t\'Isfel</string>
+    <string name="UNK">Munita mhux magħrufa</string>
+    <string name="error_converting_input">Jekk jogħġbok daħħal numru akbar minn 0</string>
+</resources>

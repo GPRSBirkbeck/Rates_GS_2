@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sadzby GS</string>
+    <string name="AUD">Austrálsky dolár</string>
+    <string name="BGN">Bulharský lev</string>
+    <string name="BRL">Brazílsky Real</string>
+    <string name="CAD">Kanadský dolár</string>
+    <string name="CHF">Švajčiarsky frank</string>
+    <string name="CNY">Čínsky jüan</string>
+    <string name="CZK">Česká koruna</string>
+    <string name="DKK">Dánska koruna</string>
+    <string name="EUR">Euro</string>
+    <string name="GBP">Libra šterlingov</string>
+    <string name="HKD">Hongkonský dolár</string>
+    <string name="HRK">Chorvátska Kuna</string>
+    <string name="HUF">Maďarský forint</string>
+    <string name="IDR">Indonézska rupia</string>
+    <string name="ILS">Izraelský nový šekel</string>
+    <string name="INR">Indická rupia</string>
+    <string name="ISK">Islandská Króna</string>
+    <string name="JPY">Japonský jen</string>
+    <string name="KRW">Južná Kórea vyhrala</string>
+    <string name="MXN">Mexické peso</string>
+    <string name="MYR">Malajzijský Ringgit</string>
+    <string name="NOK">Nórska koruna</string>
+    <string name="NZD">Novozélandský dolár</string>
+    <string name="PHP">Filipínske peso</string>
+    <string name="PLN">Poľsko Zlato</string>
+    <string name="RON">Rumunské Leu</string>
+    <string name="RUB">Ruský rubeľ</string>
+    <string name="SEK">Švédska koruna</string>
+    <string name="SGD">Singapurský dolár</string>
+    <string name="THB">Thajský baht</string>
+    <string name="USD">Americký dolár</string>
+    <string name="ZAR">Juhoafrický rand</string>
+    <string name="UNK">Mena nie je známa</string>
+    <string name="error_converting_input">Zadajte číslo väčšie ako 0</string>
+</resources>

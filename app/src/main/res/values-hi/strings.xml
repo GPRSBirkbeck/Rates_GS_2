@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">दरें जीएस</string>
+    <string name="AUD">ऑस्ट्रेलियाई डॉलर</string>
+    <string name="BGN">बल्गेरियाई लेव</string>
+    <string name="BRL">रीयाल</string>
+    <string name="CAD">कनाडाई डॉलर</string>
+    <string name="CHF">स्विस फ्रैंक</string>
+    <string name="CNY">चीनी युआन</string>
+    <string name="CZK">चेक कोरुना</string>
+    <string name="DKK">डेनिश क्रोन</string>
+    <string name="EUR">यूरो</string>
+    <string name="GBP">पाउंड</string>
+    <string name="HKD">हांगकांग डॉलर</string>
+    <string name="HRK">क्रोएशियाई कुंआ</string>
+    <string name="HUF">हंगरी के फोरिंट</string>
+    <string name="IDR">इंडोनेशियाई रुपिया</string>
+    <string name="ILS">इजरायली न्यू शेकेल</string>
+    <string name="INR">भारतीय रुपया</string>
+    <string name="ISK">आइसलैंडिक कोरोना</string>
+    <string name="JPY">जापानी येन</string>
+    <string name="KRW">दक्षिण कोरियाई जीता</string>
+    <string name="MXN">मैक्सिकन पेसो</string>
+    <string name="MYR">मलेशियाई रिंगिट</string>
+    <string name="NOK">नार्वे क्रोन</string>
+    <string name="NZD">न्यूजीलैंड डॉलर</string>
+    <string name="PHP">फिलीपीन पेसो</string>
+    <string name="PLN">पोलैंड गोल्ड</string>
+    <string name="RON">रोमानियाई Leu</string>
+    <string name="RUB">रूसी रूबल</string>
+    <string name="SEK">स्वीडिश क्रोना</string>
+    <string name="SGD">सिंगापुर डॉलर</string>
+    <string name="THB">थाई बात</string>
+    <string name="USD">अमेरिकी डॉलर</string>
+    <string name="ZAR">दक्षिण अफ्रीकी रैंड</string>
+    <string name="UNK">मुद्रा का पता नहीं</string>
+    <string name="error_converting_input">कृपया 0 से बड़ा नंबर दर्ज करें</string>
+</resources>

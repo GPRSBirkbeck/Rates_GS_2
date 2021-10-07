@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">أسعار GS</string>
+    <string name="AUD">الدولار الأسترالي</string>
+    <string name="BGN">البلغاري ليف</string>
+    <string name="BRL">ريال برازيلي</string>
+    <string name="CAD">الدولار الكندي</string>
+    <string name="CHF">الفرنك السويسري</string>
+    <string name="CNY">يوان صيني</string>
+    <string name="CZK">كورونا التشيكية</string>
+    <string name="DKK">كرونة دنماركية</string>
+    <string name="EUR">يورو</string>
+    <string name="GBP">الجنيه الاسترليني</string>
+    <string name="HKD">دولار هونج كونج</string>
+    <string name="HRK">كونا الكرواتية</string>
+    <string name="HUF">فورنت المجرية</string>
+    <string name="IDR">روبية الإندونيسية</string>
+    <string name="ILS">شيكل الإسرائيلي الجديد</string>
+    <string name="INR">روبية هندية</string>
+    <string name="ISK">آيسلندا كرونا</string>
+    <string name="JPY">الين الياباني</string>
+    <string name="KRW">وون الكورية الجنوبية</string>
+    <string name="MXN">البيزو المكسيكي</string>
+    <string name="MYR">رينجيت الماليزية</string>
+    <string name="NOK">كرونة نرويجية</string>
+    <string name="NZD">دولار نيوزيلندا</string>
+    <string name="PHP">بيزو فلبيني</string>
+    <string name="PLN">بولندا الذهب</string>
+    <string name="RON">ليو الرومانية</string>
+    <string name="RUB">الروبل الروسي</string>
+    <string name="SEK">كرونا السويدية</string>
+    <string name="SGD">دولار سنغافورة</string>
+    <string name="THB">التايلاندية باهت</string>
+    <string name="USD">الدولار الأمريكي</string>
+    <string name="ZAR">راند جنوب أفريقيا</string>
+    <string name="UNK">العملة غير معروفة</string>
+    <string name="error_converting_input">الرجاء إدخال رقم أكبر من 0</string>
+</resources>

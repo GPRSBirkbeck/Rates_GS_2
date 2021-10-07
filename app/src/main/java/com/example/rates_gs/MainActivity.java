@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements OnRateListener {
                         try{
                             //TODO make this observe live data, not the boring double
                             roundOff = roundOff * mMainActivityViewModel.getBoringDouble();
-                            roundOff = new BigDecimal(roundOff).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+                            roundOff = new BigDecimal(roundOff).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 
                             //roundOff = mMainActivityViewModel.getBaseRateDoubleLive().getValue();
                         }

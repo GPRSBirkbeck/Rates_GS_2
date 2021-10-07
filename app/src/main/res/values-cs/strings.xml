@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sazby GS</string>
+    <string name="AUD">Australský dolar</string>
+    <string name="BGN">Bulharský lev</string>
+    <string name="BRL">Brazilský Real</string>
+    <string name="CAD">Kanadský dolar</string>
+    <string name="CHF">Švýcarský frank</string>
+    <string name="CNY">Čínský jüan</string>
+    <string name="CZK">Czech Koruna</string>
+    <string name="DKK">Dánská koruna</string>
+    <string name="EUR">Euro</string>
+    <string name="GBP">Libra šterlinků</string>
+    <string name="HKD">Hongkongský dolar</string>
+    <string name="HRK">Chorvatská Kuna</string>
+    <string name="HUF">Maďarský forint</string>
+    <string name="IDR">Indonéská rupie</string>
+    <string name="ILS">Izraelský nový šekel</string>
+    <string name="INR">Indická rupie</string>
+    <string name="ISK">Islandská Króna</string>
+    <string name="JPY">Japonský jen</string>
+    <string name="KRW">Jihokorejská výhra</string>
+    <string name="MXN">Mexické peso</string>
+    <string name="MYR">Malajský Ringgit</string>
+    <string name="NOK">Norská koruna</string>
+    <string name="NZD">Novozélandský dolar</string>
+    <string name="PHP">Filipínské peso</string>
+    <string name="PLN">Polsko Zlato</string>
+    <string name="RON">Rumunský Leu</string>
+    <string name="RUB">Ruský rubl</string>
+    <string name="SEK">Švédská koruna</string>
+    <string name="SGD">Singapurský dolar</string>
+    <string name="THB">Thajský baht</string>
+    <string name="USD">Americký dolar</string>
+    <string name="ZAR">Jihoafrický rand</string>
+    <string name="UNK">Měna není známa</string>
+    <string name="error_converting_input">Zadejte číslo větší než 0</string>
+</resources>

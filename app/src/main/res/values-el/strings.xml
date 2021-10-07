@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Τιμές GS</string>
+    <string name="AUD">Δολάριο Αυστραλίας</string>
+    <string name="BGN">Λέβα</string>
+    <string name="BRL">Ρεάλ Βραζιλίας</string>
+    <string name="CAD">Δολάριο Καναδά</string>
+    <string name="CHF">Ελβετικό Φράγκο</string>
+    <string name="CNY">Γουάν Κίνας</string>
+    <string name="CZK">Κορόνα Τσεχίας</string>
+    <string name="DKK">Κορώνα Δανίας</string>
+    <string name="EUR">Ευρώ</string>
+    <string name="GBP">Λίρα</string>
+    <string name="HKD">Δολάριο Χονγκ Κονγκ</string>
+    <string name="HRK">Κούνα</string>
+    <string name="HUF">Φιορίνι Ουγγαρίας</string>
+    <string name="IDR">Ρουπία Ινδονησίας</string>
+    <string name="ILS">Ισραηλινό Νέο Σέκελ</string>
+    <string name="INR">Ρουπία Ινδίας</string>
+    <string name="ISK">Ισλανδική Κρόνα</string>
+    <string name="JPY">Γιεν Ιαπωνίας</string>
+    <string name="KRW">Γουόν Νότιας Κορέας</string>
+    <string name="MXN">Μεξικάνικο πέσο</string>
+    <string name="MYR">Ρινγκίτ Μαλαισίας</string>
+    <string name="NOK">Κορόνες Νορβηγίας</string>
+    <string name="NZD">Δολάριο Νέας Ζηλανδίας</string>
+    <string name="PHP">Πέσο Φιλιππίνων</string>
+    <string name="PLN">Πολωνία Χρυσός</string>
+    <string name="RON">Λέου Ρουμανίας</string>
+    <string name="RUB">Ρούβλι</string>
+    <string name="SEK">Κορόνα Σουηδίας</string>
+    <string name="SGD">Δολάριο Σιγκαπούρης</string>
+    <string name="THB">Μπατ Ταϊλάνδης</string>
+    <string name="USD">Δολάριο ΗΠΑ</string>
+    <string name="ZAR">Ραντ Νότιας Αφρικής</string>
+    <string name="UNK">Νόμισμα μη γνωστό</string>
+    <string name="error_converting_input">Πληκτρολογήστε έναν αριθμό μεγαλύτερο από 0</string>
+</resources>

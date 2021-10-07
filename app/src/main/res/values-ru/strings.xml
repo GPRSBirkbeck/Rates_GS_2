@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Тарифы GS</string>
+    <string name="AUD">Австрали́йский до́ллар</string>
+    <string name="BGN">Болгарский Лев</string>
+    <string name="BRL">Бразильский реал</string>
+    <string name="CAD">Канадский доллар</string>
+    <string name="CHF">Швейцарский франк</string>
+    <string name="CNY">Юань</string>
+    <string name="CZK">Чешская крона</string>
+    <string name="DKK">Крона</string>
+    <string name="EUR">Евро</string>
+    <string name="GBP">Фунт</string>
+    <string name="HKD">Гонконгский доллар</string>
+    <string name="HRK">Хорватская куна</string>
+    <string name="HUF">Венгерский форинт</string>
+    <string name="IDR">Индонезийская рупия</string>
+    <string name="ILS">Израильский Новый Шекель</string>
+    <string name="INR">Индийская рупия</string>
+    <string name="ISK">Исландская крона</string>
+    <string name="JPY">Иена</string>
+    <string name="KRW">Южнокорейская вон</string>
+    <string name="MXN">Мексиканское песо</string>
+    <string name="MYR">Малайзийский ринггит</string>
+    <string name="NOK">Норвежская крона</string>
+    <string name="NZD">Новозеландский доллар</string>
+    <string name="PHP">Филиппинское песо</string>
+    <string name="PLN">Польша Золото</string>
+    <string name="RON">Румынский лей</string>
+    <string name="RUB">Российский рубль</string>
+    <string name="SEK">Шведская крона</string>
+    <string name="SGD">Сингапурский доллар</string>
+    <string name="THB">Тайский бат</string>
+    <string name="USD">Доллар</string>
+    <string name="ZAR">Южноафриканский рэнд</string>
+    <string name="UNK">Валюта неизвестна</string>
+    <string name="error_converting_input">Пожалуйста, введите число больше 0</string>
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tarife GS</string>
+    <string name="AUD">Dolarul australian</string>
+    <string name="BGN">Lev bulgară</string>
+    <string name="BRL">Brazilian Real</string>
+    <string name="CAD">Dolar canadian</string>
+    <string name="CHF">Franc elvețian</string>
+    <string name="CNY">Yuan chinezesc</string>
+    <string name="CZK">Coroana cehă</string>
+    <string name="DKK">Coroană daneză</string>
+    <string name="EUR">Euro</string>
+    <string name="GBP">Liră sterlină</string>
+    <string name="HKD">Dolar hong kong</string>
+    <string name="HRK">Kuna croată</string>
+    <string name="HUF">Forinți maghiari</string>
+    <string name="IDR">Indoneziană Rupiah</string>
+    <string name="ILS">Israelian New Shekel</string>
+    <string name="INR">Rupia indiană</string>
+    <string name="ISK">Coroana islandeză</string>
+    <string name="JPY">Yen japonez</string>
+    <string name="KRW">Coreea de Sud a câștigat</string>
+    <string name="MXN">Mexican Peso</string>
+    <string name="MYR">Malaezia Ringgit</string>
+    <string name="NOK">Coroană norvegiană</string>
+    <string name="NZD">Dolarul neozeelandez</string>
+    <string name="PHP">Filipine Peso</string>
+    <string name="PLN">Polonia de aur</string>
+    <string name="RON">Leul românesc</string>
+    <string name="RUB">Rubla rusească</string>
+    <string name="SEK">Coroană suedeză</string>
+    <string name="SGD">Singapore Dolar</string>
+    <string name="THB">Thai Baht</string>
+    <string name="USD">Dolarul american</string>
+    <string name="ZAR">Rand din Africa de Sud</string>
+    <string name="UNK">Moneda nu este cunoscută</string>
+    <string name="error_converting_input">Vă rugăm să introduceți un număr mai mare de 0</string>
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Rátaí GS</string>
+    <string name="AUD">Dollar na hAstráile</string>
+    <string name="BGN">Lev na Bulgáire</string>
+    <string name="BRL">Real Brasaíle</string>
+    <string name="CAD">Dollar Cheanada</string>
+    <string name="CHF">Franc na hEilvéise</string>
+    <string name="CNY">Yuan Síneach</string>
+    <string name="CZK">Koruna na Seice</string>
+    <string name="DKK">Krone na Danmhairge</string>
+    <string name="EUR">An Euro</string>
+    <string name="GBP">Punt Steirling</string>
+    <string name="HKD">Dollar Hong Cong</string>
+    <string name="HRK">Kuna na Cróite</string>
+    <string name="HUF">Forint na hUngáire</string>
+    <string name="IDR">Rupiah Indinéisis</string>
+    <string name="ILS">Shekel Nua Iosrael</string>
+    <string name="INR">Rupee Indiach</string>
+    <string name="ISK">Króna Íoslainnis</string>
+    <string name="JPY">Yen na Seapáine</string>
+    <string name="KRW">Bhuaigh na Cóiré Theas</string>
+    <string name="MXN">Peso Mheicsiceo</string>
+    <string name="MYR">Ringgit na Malaeisia</string>
+    <string name="NOK">Coróin na hIorua</string>
+    <string name="NZD">Dollar na Nua-Shéalainne</string>
+    <string name="PHP">Peso na hOileáin Fhilipíneacha</string>
+    <string name="PLN">An Pholainn Óir</string>
+    <string name="RON">Rómáinis Leu</string>
+    <string name="RUB">Rúbal Rúisis</string>
+    <string name="SEK">Krona na Sualainne</string>
+    <string name="SGD">Dollar Singeapór</string>
+    <string name="THB">Baht Téalainnis</string>
+    <string name="USD">Dollar na Stát Aontaithe</string>
+    <string name="ZAR">Rand na hAfraice Theas</string>
+    <string name="UNK">Airgeadra nach bhfuil ar eolas</string>
+    <string name="error_converting_input">Iontráil uimhir níos mó ná 0</string>
+</resources>

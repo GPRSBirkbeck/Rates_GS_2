@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tarieven GS</string>
+    <string name="AUD">Australische dollar</string>
+    <string name="BGN">Bulgaarse Lev</string>
+    <string name="BRL">Braziliaanse Real</string>
+    <string name="CAD">Canadese dollar</string>
+    <string name="CHF">Zwitserse Frank</string>
+    <string name="CNY">Chinese Yuan</string>
+    <string name="CZK">Tsjechische kroon</string>
+    <string name="DKK">Deense kroon</string>
+    <string name="EUR">Euro</string>
+    <string name="GBP">Pond sterling</string>
+    <string name="HKD">Hongkongse dollar</string>
+    <string name="HRK">Kroatische Kuna</string>
+    <string name="HUF">Hongaarse Forint</string>
+    <string name="IDR">Indonesische Rupiah</string>
+    <string name="ILS">Israëlische Nieuwe Shekel</string>
+    <string name="INR">Indiase roepie</string>
+    <string name="ISK">IJslandse Króna</string>
+    <string name="JPY">Japanse Yen</string>
+    <string name="KRW">Zuid-Koreaanse Won</string>
+    <string name="MXN">Mexicaanse Peso</string>
+    <string name="MYR">Maleisische Ringgit</string>
+    <string name="NOK">Noorse kroon</string>
+    <string name="NZD">Nieuw-Zeelandse dollar</string>
+    <string name="PHP">Filipijnse Peso</string>
+    <string name="PLN">Polen Goud</string>
+    <string name="RON">Roemeense Leu</string>
+    <string name="RUB">Russische roebel</string>
+    <string name="SEK">Kroon</string>
+    <string name="SGD">Singaporese dollar</string>
+    <string name="THB">Thaise Baht</string>
+    <string name="USD">Amerikaanse dollar</string>
+    <string name="ZAR">Zuid-Afrikaanse Rand</string>
+    <string name="UNK">Valuta niet bekend</string>
+    <string name="error_converting_input">Voer een getal in dat groter is dan 0</string>
+</resources>

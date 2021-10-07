@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">شرحیں جی ایس</string>
+    <string name="AUD">آسٹریلوی ڈالر</string>
+    <string name="BGN">بلغاریہ لیو</string>
+    <string name="BRL">برازیل ریئل</string>
+    <string name="CAD">کینیڈین ڈالر</string>
+    <string name="CHF">سوئس فرانک</string>
+    <string name="CNY">چینی یوآن</string>
+    <string name="CZK">چیک کورونا</string>
+    <string name="DKK">ڈینش کرون</string>
+    <string name="EUR">یورو</string>
+    <string name="GBP">پاؤنڈ سٹرلنگ</string>
+    <string name="HKD">ہانگ کانگ ڈالر</string>
+    <string name="HRK">کروشیائی کونا</string>
+    <string name="HUF">ہنگری فورنٹ</string>
+    <string name="IDR">انڈونیشیا روپیاہ</string>
+    <string name="ILS">اسرائیلی نیو شیکل</string>
+    <string name="INR">ہندوستانی روپیہ</string>
+    <string name="ISK">آئس لینڈ کی Króna</string>
+    <string name="JPY">جاپانی ین</string>
+    <string name="KRW">جنوبی کوریا کی فتح</string>
+    <string name="MXN">میکسیکن پیسو</string>
+    <string name="MYR">ملائیشین رنگٹ</string>
+    <string name="NOK">نارویجن کرون</string>
+    <string name="NZD">نیوزی لینڈ ڈالر</string>
+    <string name="PHP">فلپائن پیسو</string>
+    <string name="PLN">پولینڈ گولڈ</string>
+    <string name="RON">رومانیہ لیو</string>
+    <string name="RUB">روسی روبل</string>
+    <string name="SEK">سویڈش کرونا</string>
+    <string name="SGD">سنگاپور ڈالر</string>
+    <string name="THB">تھائی باہت</string>
+    <string name="USD">امریکی ڈالر</string>
+    <string name="ZAR">جنوبی افریقہ رینڈ</string>
+    <string name="UNK">کرنسی معلوم نہیں</string>
+    <string name="error_converting_input">براہ کرم 0 سے بڑا نمبر درج کریں</string>
+</resources>

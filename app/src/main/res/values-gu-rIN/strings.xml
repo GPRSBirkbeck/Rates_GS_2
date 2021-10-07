@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">દરો જી.એસ.</string>
+    <string name="AUD">ઓસ્ટ્રેલિયન ડોલર</string>
+    <string name="BGN">બલ્ગેરિયાના લેવ</string>
+    <string name="BRL">બ્રાઝિલિયન રિયલ</string>
+    <string name="CAD">કેનેડિયન ડોલર</string>
+    <string name="CHF">સ્વિસ ફ્રેન્ક</string>
+    <string name="CNY">ચાઇનીઝ યુઆન</string>
+    <string name="CZK">ચેક કોરુના</string>
+    <string name="DKK">ડેનિશ ક્રોન</string>
+    <string name="EUR">યુરો</string>
+    <string name="GBP">પાઉન્ડ સ્ટર્લિંગ</string>
+    <string name="HKD">હોંગકોંગ ડોલર</string>
+    <string name="HRK">ક્રોએશિયન કુના</string>
+    <string name="HUF">હંગેરિયન ફોર્નિન્ટ</string>
+    <string name="IDR">ઇન્ડોનેશિયન રુમિયાહ</string>
+    <string name="ILS">ઇઝરાયલ ન્યૂ શેકેલ</string>
+    <string name="INR">ભારતીય રૂપિયો</string>
+    <string name="ISK">આઇસલેન્ડિક Króna</string>
+    <string name="JPY">જાપાનીઝ યેન</string>
+    <string name="KRW">દક્ષિણ કોરિયન જીત્યા</string>
+    <string name="MXN">મેક્સિકન પેસો</string>
+    <string name="MYR">મલેશિયન રિંગિટ</string>
+    <string name="NOK">નોર્વેજીયન ક્રોન</string>
+    <string name="NZD">ન્યુઝીલેન્ડ ડોલર</string>
+    <string name="PHP">ફિલિપાઇન્સ પેસો</string>
+    <string name="PLN">પોલેન્ડ ગોલ્ડ</string>
+    <string name="RON">રોમાનિયન લ્યુ</string>
+    <string name="RUB">રશિયન રુબલ</string>
+    <string name="SEK">સ્વીડિશ ક્રોના</string>
+    <string name="SGD">સિંગાપોર ડોલર</string>
+    <string name="THB">થાઈ બાહત</string>
+    <string name="USD">યુએસ ડોલર</string>
+    <string name="ZAR">દક્ષિણ આફ્રિકન રેન્ડ</string>
+    <string name="UNK">ચલણ જાણી શકાયું નથી</string>
+    <string name="error_converting_input">કૃપા કરીને 0 થી મોટી સંખ્યા દાખલ કરો</string>
+</resources>

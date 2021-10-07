@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Määrad GS</string>
+    <string name="AUD">Austraalia dollar</string>
+    <string name="BGN">Bulgaaria Leev</string>
+    <string name="BRL">Brasiilia Reaalne</string>
+    <string name="CAD">Kanada dollar</string>
+    <string name="CHF">Šveitsi frank</string>
+    <string name="CNY">Hiina jüaan</string>
+    <string name="CZK">tšehhi Kroon</string>
+    <string name="DKK">Taani kroon</string>
+    <string name="EUR">Euro</string>
+    <string name="GBP">Naelsterling</string>
+    <string name="HKD">Hongkongi dollar</string>
+    <string name="HRK">horvaadi Kuna</string>
+    <string name="HUF">Ungari Forint</string>
+    <string name="IDR">Indoneesia Rupiah</string>
+    <string name="ILS">Iisraeli Uus Shekel</string>
+    <string name="INR">India ruupia</string>
+    <string name="ISK">Islandi Króna</string>
+    <string name="JPY">Jaapani jeen</string>
+    <string name="KRW">Lõuna-Korea võitis</string>
+    <string name="MXN">Mehhiko peeso</string>
+    <string name="MYR">Malaisia Ringgit</string>
+    <string name="NOK">Norra kroon</string>
+    <string name="NZD">Uus-Meremaa dollar</string>
+    <string name="PHP">Filipiinide peeso</string>
+    <string name="PLN">Poola kuld</string>
+    <string name="RON">rumeenia Leu</string>
+    <string name="RUB">Vene rubla</string>
+    <string name="SEK">Rootsi Kroon</string>
+    <string name="SGD">Singapuri dollar</string>
+    <string name="THB">Tai baht</string>
+    <string name="USD">USA dollar</string>
+    <string name="ZAR">Lõuna-Aafrika Rand</string>
+    <string name="UNK">Valuuta teadmata</string>
+    <string name="error_converting_input">Sisestage arv, mis on suurem kui 0</string>
+</resources>

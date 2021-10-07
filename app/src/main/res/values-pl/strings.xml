@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Stawki GS</string>
+    <string name="AUD">Dolar australijski</string>
+    <string name="BGN">Lew bułgarski</string>
+    <string name="BRL">Real brazylijski</string>
+    <string name="CAD">Dolar kanadyjski</string>
+    <string name="CHF">Szwajcarski</string>
+    <string name="CNY">Juan chiński</string>
+    <string name="CZK">Korona czeska</string>
+    <string name="DKK">Duńska</string>
+    <string name="EUR">Euro</string>
+    <string name="GBP">Funt</string>
+    <string name="HKD">Dolar hongkoński</string>
+    <string name="HRK">Kuna chorwacka</string>
+    <string name="HUF">Forint węgierski</string>
+    <string name="IDR">Rupia indonezyjska</string>
+    <string name="ILS">Nowy Szekel Izraelski</string>
+    <string name="INR">Rupia indyjska</string>
+    <string name="ISK">Korona islandzka</string>
+    <string name="JPY">Jen japoński</string>
+    <string name="KRW">Won południowokoreański</string>
+    <string name="MXN">Peso meksykańskie</string>
+    <string name="MYR">Ringgit malezyjski</string>
+    <string name="NOK">Norweska</string>
+    <string name="NZD">Dolar nowozelandzki</string>
+    <string name="PHP">Peso filipińskie</string>
+    <string name="PLN">Poland Złoty</string>
+    <string name="RON">Lej rumuński</string>
+    <string name="RUB">Rubel</string>
+    <string name="SEK">Szwedzka</string>
+    <string name="SGD">Dolar singapurski</string>
+    <string name="THB">Baht tajski</string>
+    <string name="USD">Dolar amerykański</string>
+    <string name="ZAR">Rand południowoafrykański</string>
+    <string name="UNK">Waluta nieznana</string>
+    <string name="error_converting_input">Wpisz liczbę większą niż 0</string>
+</resources>

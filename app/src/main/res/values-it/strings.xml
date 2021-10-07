@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tariffe GS</string>
+    <string name="AUD">Dollaro australiano</string>
+    <string name="BGN">Lev bulgaro</string>
+    <string name="BRL">Real brasiliano</string>
+    <string name="CAD">Dollaro canadese</string>
+    <string name="CHF">Franco svizzero</string>
+    <string name="CNY">Yuan cinese</string>
+    <string name="CZK">Corona ceca</string>
+    <string name="DKK">Corona danese</string>
+    <string name="EUR">Euro</string>
+    <string name="GBP">Sterlina</string>
+    <string name="HKD">Dollaro di Hong Kong</string>
+    <string name="HRK">Kuna croata</string>
+    <string name="HUF">Fiorino ungherese</string>
+    <string name="IDR">Rupia indonesiana</string>
+    <string name="ILS">Nuovo siclo israeliano</string>
+    <string name="INR">Rupia indiana</string>
+    <string name="ISK">Corona islandese</string>
+    <string name="JPY">Yen giapponese</string>
+    <string name="KRW">Won sudcoreano</string>
+    <string name="MXN">Peso messicano</string>
+    <string name="MYR">Ringgit malese</string>
+    <string name="NOK">Corona norvegese</string>
+    <string name="NZD">Dollaro neozelandese</string>
+    <string name="PHP">Peso filippino</string>
+    <string name="PLN">Polonia Oro</string>
+    <string name="RON">Leu rumeno</string>
+    <string name="RUB">Rublo russo</string>
+    <string name="SEK">Corona svedese</string>
+    <string name="SGD">Dollaro di Singapore</string>
+    <string name="THB">Baht tailandese</string>
+    <string name="USD">Dollaro</string>
+    <string name="ZAR">Rand sudafricano</string>
+    <string name="UNK">Valuta non nota</string>
+    <string name="error_converting_input">Inserisci un numero maggiore di 0</string>
+</resources>

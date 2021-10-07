@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Likmes GS</string>
+    <string name="AUD">Austrālijas dolārs</string>
+    <string name="BGN">Bulgārijas lev</string>
+    <string name="BRL">Brazīlijas reāls</string>
+    <string name="CAD">Kanādas dolārs</string>
+    <string name="CHF">Šveices franks</string>
+    <string name="CNY">Ķīnas juaņa</string>
+    <string name="CZK">Čehijas krona</string>
+    <string name="DKK">Dānijas krona</string>
+    <string name="EUR">Eiro</string>
+    <string name="GBP">Sterliņu</string>
+    <string name="HKD">Honkongas dolārs</string>
+    <string name="HRK">Horvātijas Kuna</string>
+    <string name="HUF">Ungāru forints</string>
+    <string name="IDR">Indonēzijas rūpija</string>
+    <string name="ILS">Izraēlas jaunais šekelis</string>
+    <string name="INR">Indijas rūpija</string>
+    <string name="ISK">Islandes króna</string>
+    <string name="JPY">Japānas jan</string>
+    <string name="KRW">Dienvidkorejas uzvarēja</string>
+    <string name="MXN">Meksikas peso</string>
+    <string name="MYR">Malaizijas Ringgit</string>
+    <string name="NOK">Norvēģijas krona</string>
+    <string name="NZD">Jaunzēlandes dolārs</string>
+    <string name="PHP">Filipīnu peso</string>
+    <string name="PLN">Polija Zelts</string>
+    <string name="RON">Rumānijas leja</string>
+    <string name="RUB">Krievijas rublis</string>
+    <string name="SEK">Zviedrijas krona</string>
+    <string name="SGD">Singapūras dolārs</string>
+    <string name="THB">Taizemes bats</string>
+    <string name="USD">ASV dolārs</string>
+    <string name="ZAR">Dienvidāfrikas rends</string>
+    <string name="UNK">Valūta nav zināma</string>
+    <string name="error_converting_input">Lūdzu , ievadiet skaitli , kas lielāks par 0</string>
+</resources>

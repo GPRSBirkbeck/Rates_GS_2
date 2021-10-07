@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">요금 GS</string>
+    <string name="AUD">오스트레일리아 달러</string>
+    <string name="BGN">불가리아 레프</string>
+    <string name="BRL">브라질 레알</string>
+    <string name="CAD">캐나다 달러</string>
+    <string name="CHF">스위스 프랑</string>
+    <string name="CNY">중국 위안</string>
+    <string name="CZK">체코 코루나</string>
+    <string name="DKK">덴마크 크로네</string>
+    <string name="EUR">유로</string>
+    <string name="GBP">파운드</string>
+    <string name="HKD">홍콩 달러</string>
+    <string name="HRK">크로아티아 쿠나</string>
+    <string name="HUF">헝가리 어 포린트</string>
+    <string name="IDR">인도네시아 루피아</string>
+    <string name="ILS">이스라엘 뉴 셰켈</string>
+    <string name="INR">인도 루피</string>
+    <string name="ISK">아이슬란드 크로나</string>
+    <string name="JPY">일본 엔</string>
+    <string name="KRW">한국원</string>
+    <string name="MXN">멕시코 페소</string>
+    <string name="MYR">말레이시아 링깃</string>
+    <string name="NOK">노르웨이 크로네</string>
+    <string name="NZD">뉴질랜드 달러</string>
+    <string name="PHP">필리핀 페소</string>
+    <string name="PLN">폴란드 골드</string>
+    <string name="RON">루마니아어 루</string>
+    <string name="RUB">러시아 루블</string>
+    <string name="SEK">스웨덴 크로나</string>
+    <string name="SGD">싱가포르 달러</string>
+    <string name="THB">타이 바트</string>
+    <string name="USD">미국 달러</string>
+    <string name="ZAR">남아프리카 랜드</string>
+    <string name="UNK">알려지지 않은 통화</string>
+    <string name="error_converting_input">0보다 큰 숫자를 입력하십시오.</string>
+</resources>

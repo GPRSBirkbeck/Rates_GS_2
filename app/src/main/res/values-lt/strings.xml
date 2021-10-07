@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tarifai GS</string>
+    <string name="AUD">Australijos doleris</string>
+    <string name="BGN">Bulgarijos Levas</string>
+    <string name="BRL">Brazilijos realas</string>
+    <string name="CAD">Kanados doleris</string>
+    <string name="CHF">Šveicarijos frankas</string>
+    <string name="CNY">Kinijos juanis</string>
+    <string name="CZK">Čekijos krona</string>
+    <string name="DKK">Danijos krona</string>
+    <string name="EUR">Euras</string>
+    <string name="GBP">Svaras sterlingų</string>
+    <string name="HKD">Honkongo doleris</string>
+    <string name="HRK">Kroatų Kuna</string>
+    <string name="HUF">Vengrų Forintas</string>
+    <string name="IDR">Indonezijos rupija</string>
+    <string name="ILS">Izraelio Naujasis Šekelis</string>
+    <string name="INR">Indijos rupija</string>
+    <string name="ISK">Islandijos Krona</string>
+    <string name="JPY">Japonijos jena</string>
+    <string name="KRW">Pietų Korėjos laimėjo</string>
+    <string name="MXN">Meksikos pesas</string>
+    <string name="MYR">Malaizijos Ringgit</string>
+    <string name="NOK">Norvegijos krona</string>
+    <string name="NZD">Naujosios Zelandijos doleris</string>
+    <string name="PHP">Filipinų pesas</string>
+    <string name="PLN">Lenkija Auksas</string>
+    <string name="RON">Rumunų Leu</string>
+    <string name="RUB">Rusijos rublis</string>
+    <string name="SEK">Švedijos krona</string>
+    <string name="SGD">Singapūro doleris</string>
+    <string name="THB">Tailando batas</string>
+    <string name="USD">JAV doleris</string>
+    <string name="ZAR">Pietų Afrikos Randas</string>
+    <string name="UNK">Valiuta nežinoma</string>
+    <string name="error_converting_input">Įveskite skaičių, didesnį už 0</string>
+</resources>

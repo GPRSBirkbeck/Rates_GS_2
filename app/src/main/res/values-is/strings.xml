@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Verð GS</string>
+    <string name="AUD">Ástralskur dalur</string>
+    <string name="BGN">Búlgarska Lev</string>
+    <string name="BRL">Brasilískt Real</string>
+    <string name="CAD">Kanadískur dalur</string>
+    <string name="CHF">Svissneskur franki</string>
+    <string name="CNY">Kínverska Yuan</string>
+    <string name="CZK">Tékknesk kóran</string>
+    <string name="DKK">Danska krónan</string>
+    <string name="EUR">Evra</string>
+    <string name="GBP">Sterlingspund</string>
+    <string name="HKD">Hong Kong dalur</string>
+    <string name="HRK">Króatíska Kuna</string>
+    <string name="HUF">Ungversk forint</string>
+    <string name="IDR">Indónesísk rúpía</string>
+    <string name="ILS">Ísraelska nýja skelin</string>
+    <string name="INR">Indversk rúpía</string>
+    <string name="ISK">Íslenska krónan</string>
+    <string name="JPY">Japanskt jen</string>
+    <string name="KRW">Suður-Kóreu vann</string>
+    <string name="MXN">Mexíkóskur pesi</string>
+    <string name="MYR">Malasískur Ringgit</string>
+    <string name="NOK">Norska krónan</string>
+    <string name="NZD">Nýja-Sjáland dalur</string>
+    <string name="PHP">Filippseyskra pesóa</string>
+    <string name="PLN">Pólland Gull</string>
+    <string name="RON">Rúmenska Leu</string>
+    <string name="RUB">Rússneska rúbla</string>
+    <string name="SEK">Sænska krónan</string>
+    <string name="SGD">Singapúr dalur</string>
+    <string name="THB">Tælenskt baht</string>
+    <string name="USD">Bandaríkjadalur</string>
+    <string name="ZAR">Suður-Afríku rand</string>
+    <string name="UNK">Gjaldmiðill ekki þekktur</string>
+    <string name="error_converting_input">Færa skal inn tölu sem er hærri en 0</string>
+</resources>

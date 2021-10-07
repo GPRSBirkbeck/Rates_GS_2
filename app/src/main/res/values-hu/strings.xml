@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GS árak</string>
+    <string name="AUD">Ausztrál dollár</string>
+    <string name="BGN">Bolgár lev</string>
+    <string name="BRL">Brazil Real</string>
+    <string name="CAD">Kanadai dollár</string>
+    <string name="CHF">Svájci frank</string>
+    <string name="CNY">Kínai jüan</string>
+    <string name="CZK">Cseh Korona</string>
+    <string name="DKK">Dán korona</string>
+    <string name="EUR">Euró</string>
+    <string name="GBP">Font sterling</string>
+    <string name="HKD">Hongkongi dollár</string>
+    <string name="HRK">Horvát kuna</string>
+    <string name="HUF">Hungarian Forint</string>
+    <string name="IDR">Indonéz rúpia</string>
+    <string name="ILS">Izraeli új sékel</string>
+    <string name="INR">Indiai rúpia</string>
+    <string name="ISK">Izlandi Króna</string>
+    <string name="JPY">Japán jen</string>
+    <string name="KRW">Dél-koreai won</string>
+    <string name="MXN">Mexikói peso</string>
+    <string name="MYR">Malajziai Ringgit</string>
+    <string name="NOK">Norvég korona</string>
+    <string name="NZD">Új-zélandi dollár</string>
+    <string name="PHP">Fülöp-szigeteki peso</string>
+    <string name="PLN">Lengyelország Arany</string>
+    <string name="RON">Román lej</string>
+    <string name="RUB">Orosz rubel</string>
+    <string name="SEK">Svéd korona</string>
+    <string name="SGD">Szingapúri dollár</string>
+    <string name="THB">Thai Baht</string>
+    <string name="USD">AMERIKAI dollár</string>
+    <string name="ZAR">Dél-afrikai rand</string>
+    <string name="UNK">Pénznem nem ismert</string>
+    <string name="error_converting_input">Adjon meg egy 0-nál nagyobb számot</string>
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">价格 GS</string>
+    <string name="AUD">澳元</string>
+    <string name="BGN">保加利亚列夫</string>
+    <string name="BRL">巴西雷亚尔</string>
+    <string name="CAD">加拿大元</string>
+    <string name="CHF">瑞士法郎</string>
+    <string name="CNY">人民币</string>
+    <string name="CZK">捷克科鲁纳</string>
+    <string name="DKK">丹麦克朗</string>
+    <string name="EUR">欧元</string>
+    <string name="GBP">英镑</string>
+    <string name="HKD">港币</string>
+    <string name="HRK">克罗地亚库纳</string>
+    <string name="HUF">匈牙利福林特</string>
+    <string name="IDR">印度尼西亚卢皮亚</string>
+    <string name="ILS">以色列新谢克尔</string>
+    <string name="INR">印度卢比</string>
+    <string name="ISK">冰岛克朗</string>
+    <string name="JPY">日圓</string>
+    <string name="KRW">韩元</string>
+    <string name="MXN">墨西哥比索</string>
+    <string name="MYR">马来西亚林吉特</string>
+    <string name="NOK">挪威克朗</string>
+    <string name="NZD">新西兰元</string>
+    <string name="PHP">菲律宾比索</string>
+    <string name="PLN">波兰黄金</string>
+    <string name="RON">罗马尼亚卢</string>
+    <string name="RUB">俄罗斯卢布</string>
+    <string name="SEK">瑞典克朗</string>
+    <string name="SGD">新加坡元</string>
+    <string name="THB">泰銖</string>
+    <string name="USD">美元</string>
+    <string name="ZAR">南非兰特</string>
+    <string name="UNK">货币不知道</string>
+    <string name="error_converting_input">请输入大于 0 的数字</string>
+</resources>

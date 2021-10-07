@@ -11,7 +11,7 @@
         <string name="DKK">Danish Krone</string>
 
         <string name="EUR">Euro</string>
-        <string name="GBP">Pound sterling</string>
+        <string name="GBP">Pound Sterling</string>
         <string name="HKD">Hong Kong Dollar</string>
         <string name="HRK">Croatian Kuna</string>
         <string name="HUF">Hungarian Forint</string>
@@ -28,8 +28,8 @@
         <string name="NOK">Norwegian Krone</string>
         <string name="NZD">New Zealand Dollar</string>
 
-        <string name="PHP">Philippine peso</string>
-        <string name="PLN">Poland złoty</string>
+        <string name="PHP">Philippine Peso</string>
+        <string name="PLN">Poland Złoty</string>
         <string name="RON">Romanian Leu</string>
         <string name="RUB">Russian Ruble</string>
         <string name="SEK">Swedish Krona</string>
